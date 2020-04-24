@@ -3,14 +3,18 @@ import { Provider } from 'react-redux'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { PersistGate } from 'redux-persist/integration/react'
+// @ts-ignore
+import { setCustomText } from 'react-native-global-props'
 
 import configureStore from './store'
 import { RootStackNavigatorParams } from './navigationTypes'
-import { Colors } from './styles'
+import { Colors, defaultTextProps } from './styles'
 
 import { HomeScreen } from './ui/screens/HomeScreen'
 import { WelcomeScreen } from './ui/screens/WelcomeScreen'
 import { InitialScreen } from './ui/screens/InitialScreen'
+
+setCustomText(defaultTextProps);
 
 const App = () => {
     const Stack = createStackNavigator<RootStackNavigatorParams>()
@@ -24,6 +28,10 @@ const App = () => {
                         screenOptions={{
                             headerTintColor: Colors.BLACK,
                             headerBackTitleVisible: false,
+                            headerTitleStyle: {
+                                fontFamily: 'NunitoSans-Bold',
+                                fontSize: 14,
+                            }
                         }}
                     >
                         <Stack.Screen
@@ -35,6 +43,7 @@ const App = () => {
                             component={HomeScreen}
                             options={{
                                 animationEnabled: false,
+                                headerShown: false,
                             }}
                         />
                         <Stack.Screen

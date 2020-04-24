@@ -1,16 +1,25 @@
 import * as React from 'react'
-import { FlatList, View, Text } from 'react-native'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import { NavigationProp } from '../../navigationTypes'
+import { Colors } from '../../styles'
+import { ActivityScreen } from './ActivityScreen'
+import { SpacesScreen } from './SpacesScreen'
+import { AccountScreen } from './AccountScreen'
+
+const Tab = createBottomTabNavigator();
 
 export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
     return (
-        <>
-            <FlatList
-                data={[]}
-                renderItem={item => <View/>}
-                keyExtractor={(item, index) => '' + index}
-            />
-        </>
+        <Tab.Navigator
+            tabBarOptions={{
+                activeTintColor: Colors.BLACK,
+                inactiveTintColor: Colors.LIGHTISH_GRAY,
+            }}
+        >
+            <Tab.Screen name="Activity" component={ActivityScreen} />
+            <Tab.Screen name="Spaces" component={SpacesScreen} />
+            <Tab.Screen name="Account" component={AccountScreen} />
+        </Tab.Navigator>
     )
 }
