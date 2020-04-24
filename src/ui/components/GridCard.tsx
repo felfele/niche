@@ -63,6 +63,13 @@ const styles = StyleSheet.create({
     },
     feedCard: {
         backgroundColor: Colors.WHITE,
+        shadowColor: Colors.BLACK,
+        shadowOpacity: 0.4,
+        shadowRadius: 0.6,
+        shadowOffset: {
+            width: 0,
+            height: 0.5,
+        },
     },
     feedCardOverlay: {
         position: 'absolute',

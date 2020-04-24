@@ -46,6 +46,30 @@ const data = [
         feedUrl: '',
         favicon: '',
     },
+    {
+        name: 'Page title',
+        url: '',
+        feedUrl: '',
+        favicon: '',
+    },
+    {
+        name: 'Page title',
+        url: '',
+        feedUrl: '',
+        favicon: '',
+    },
+    {
+        name: 'Page title',
+        url: '',
+        feedUrl: '',
+        favicon: '',
+    },
+    {
+        name: 'Page title',
+        url: '',
+        feedUrl: '',
+        favicon: '',
+    },
 ]
 
 export const SpacesScreen = (props: {navigation: NavigationProp<'Home'>}) => {
@@ -72,7 +96,7 @@ export const SpacesScreen = (props: {navigation: NavigationProp<'Home'>}) => {
                     );
                 }}
                 ListFooterComponent={<TabBarPlaceholder color={ComponentColors.BACKGROUND_COLOR}/>}
-                ListHeaderComponent={<HeaderPlaceholder/>}
+                ListHeaderComponent={<HeaderPlaceholder extraHeight={25} />}
             />
             <FloatingButton
                 iconName='plus'

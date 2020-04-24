@@ -18,10 +18,10 @@ export const TabBarPlaceholder = (props: { color?: string }) => {
     }
 };
 
-export const HeaderPlaceholder = (props: { color?: string }) => (
+export const HeaderPlaceholder = (props: { color?: string, extraHeight?: number }) => (
     <View
         style={{
-            height: NAVIGATION_BAR_HEIGHT + (Platform.OS === 'ios' ? 20 : 0),
+            height: NAVIGATION_BAR_HEIGHT + (Platform.OS === 'ios' ? 20 : 0) + (props.extraHeight ?? 0),
             backgroundColor: props.color ? props.color : ComponentColors.BACKGROUND_COLOR,
         }}
     />
