@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { View } from 'react-native';
 import {createIconSetFromIcoMoon} from 'react-native-vector-icons';
-// import icoMoonConfig from '../../../icomoon.json';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import icoMoonConfig from '../../../icomoon.json';
+// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Colors } from '../../styles';
 
-// export const Icon = createIconSetFromIcoMoon(icoMoonConfig);
+export const Icon = createIconSetFromIcoMoon(icoMoonConfig);
 export default Icon;
 
 export const CloseIcon = (props: {size: number, color?: string}) => (

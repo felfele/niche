@@ -5,6 +5,7 @@ export type RootStackNavigatorParams = {
     Home: undefined,
     Welcome: undefined,
     Init: undefined,
+    CreateSpace: undefined,
 }
 
 export type NavigationProp<T extends keyof RootStackNavigatorParams> = StackNavigationProp<

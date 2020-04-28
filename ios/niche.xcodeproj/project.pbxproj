@@ -16,6 +16,7 @@
 		9A97136A24520CA800DF392E /* NunitoSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9A97136624520CA700DF392E /* NunitoSans-Bold.ttf */; };
 		9A97136B24520CA800DF392E /* NunitoSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9A97136724520CA700DF392E /* NunitoSans-Regular.ttf */; };
 		9A97136C24520CA800DF392E /* NunitoSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9A97136824520CA700DF392E /* NunitoSans-SemiBold.ttf */; };
+		9A97136E24583E0400DF392E /* icomoon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9A97136D24583E0400DF392E /* icomoon.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		9A97136624520CA700DF392E /* NunitoSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NunitoSans-Bold.ttf"; path = "../assets/fonts/NunitoSans-Bold.ttf"; sourceTree = "<group>"; };
 		9A97136724520CA700DF392E /* NunitoSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NunitoSans-Regular.ttf"; path = "../assets/fonts/NunitoSans-Regular.ttf"; sourceTree = "<group>"; };
 		9A97136824520CA700DF392E /* NunitoSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "NunitoSans-SemiBold.ttf"; path = "../assets/fonts/NunitoSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		9A97136D24583E0400DF392E /* icomoon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = icomoon.ttf; path = ../assets/fonts/icomoon.ttf; sourceTree = "<group>"; };
 		AD4142A1225E1F09F120901B /* Pods-niche.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-niche.release.xcconfig"; path = "Target Support Files/Pods-niche/Pods-niche.release.xcconfig"; sourceTree = "<group>"; };
 		DDC5A9A148EF45D8C3D74DA4 /* Pods-niche.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-niche.debug.xcconfig"; path = "Target Support Files/Pods-niche/Pods-niche.debug.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
@@ -79,6 +81,7 @@
 		7F417421FB0648E9851B219E /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9A97136D24583E0400DF392E /* icomoon.ttf */,
 				9A97136624520CA700DF392E /* NunitoSans-Bold.ttf */,
 				9A97136524520CA700DF392E /* NunitoSans-Italic.ttf */,
 				9A97136724520CA700DF392E /* NunitoSans-Regular.ttf */,
@@ -190,6 +193,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A97136924520CA800DF392E /* NunitoSans-Italic.ttf in Resources */,
+				9A97136E24583E0400DF392E /* icomoon.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				9A97136B24520CA800DF392E /* NunitoSans-Regular.ttf in Resources */,
 				9A97136C24520CA800DF392E /* NunitoSans-SemiBold.ttf in Resources */,

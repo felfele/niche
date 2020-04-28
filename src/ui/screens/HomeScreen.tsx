@@ -2,7 +2,7 @@ import * as React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 
 import { NavigationProp } from '../../navigationTypes'
-import { Colors } from '../../styles'
+import { Colors, ComponentColors } from '../../styles'
 import { ActivityScreen } from './ActivityScreen'
 import { SpacesScreen } from './SpacesScreen'
 import { AccountScreen } from './AccountScreen'
@@ -15,6 +15,9 @@ export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
             tabBarOptions={{
                 activeTintColor: Colors.BLACK,
                 inactiveTintColor: Colors.LIGHTISH_GRAY,
+                style: {
+                    backgroundColor: ComponentColors.BACKGROUND_COLOR,
+                }
             }}
         >
             <Tab.Screen name="Activity" component={ActivityScreen} />

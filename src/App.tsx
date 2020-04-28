@@ -13,6 +13,7 @@ import { Colors, defaultTextProps } from './styles'
 import { HomeScreen } from './ui/screens/HomeScreen'
 import { WelcomeScreen } from './ui/screens/WelcomeScreen'
 import { InitialScreen } from './ui/screens/InitialScreen'
+import { CreateSpaceScreen } from './ui/screens/CreateSpaceScreen'
 
 setCustomText(defaultTextProps);
 
@@ -51,6 +52,13 @@ const App = () => {
                             component={WelcomeScreen}
                             options={{
                                 animationEnabled: false,
+                            }}
+                        />
+                        <Stack.Screen
+                            name='CreateSpace'
+                            component={CreateSpaceScreen}
+                            options={{
+                                headerShown: false,
                             }}
                         />
                     </Stack.Navigator>
