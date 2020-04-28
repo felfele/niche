@@ -1,5 +1,5 @@
 import { combineReducers, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Identity, defaultState, State, ContactMap, Contact } from './state'
+import { Identity, defaultState, State, ContactMap, Contact, Space } from './state'
 
 const identitySlice = createSlice({
     name: 'identity',
@@ -7,12 +7,10 @@ const identitySlice = createSlice({
     reducers: {
         setIdentity(state: Identity, action: PayloadAction<Identity>) {
             state.name = action.payload.name
-            state.seedMnemonic = action.payload.seedMnemonic
             state.publicKey = action.payload.publicKey
         },
         clearIdentity(state: Identity) {
             state.name = defaultState.identity.name
-            state.seedMnemonic = defaultState.identity.seedMnemonic
             state.publicKey = defaultState.identity.publicKey
         }
     }
@@ -33,12 +31,24 @@ const contactsSlice = createSlice({
     }
 })
 
+const spacesSlice = createSlice({
+    name: 'spaces',
+    initialState: defaultState.spaces,
+    reducers: {
+        addSpace(state: Space[], action: PayloadAction<Space>) {
+            state.push(action.payload)
+        }
+    }
+})
+
 export const { setIdentity, clearIdentity } = identitySlice.actions
 export const { addContact, clearContacts } = contactsSlice.actions
+export const { addSpace } = spacesSlice.actions
 
 const combinedReducers = combineReducers({
     identity: identitySlice.reducer,
     contacts: contactsSlice.reducer,
+    spaces: spacesSlice.reducer,
 })
 
 const loggingReducer = (state: RootState | undefined, action: PayloadAction<State>): RootState => {

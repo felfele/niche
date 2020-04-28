@@ -13,7 +13,8 @@ import { Colors, defaultTextProps } from './styles'
 import { HomeScreen } from './ui/screens/HomeScreen'
 import { WelcomeScreen } from './ui/screens/WelcomeScreen'
 import { InitialScreen } from './ui/screens/InitialScreen'
-import { CreateSpaceScreen } from './ui/screens/CreateSpaceScreen'
+import { CreateSpaceScreen } from './ui/screens/create-space/CreateSpaceScreen'
+import { CreateSpaceDoneScreen } from './ui/screens/create-space/CreateSpaceDoneScreen'
 
 setCustomText(defaultTextProps);
 
@@ -32,7 +33,8 @@ const App = () => {
                             headerTitleStyle: {
                                 fontFamily: 'NunitoSans-Bold',
                                 fontSize: 14,
-                            }
+                            },
+                            headerShown: false,
                         }}
                     >
                         <Stack.Screen
@@ -44,7 +46,6 @@ const App = () => {
                             component={HomeScreen}
                             options={{
                                 animationEnabled: false,
-                                headerShown: false,
                             }}
                         />
                         <Stack.Screen
@@ -57,9 +58,10 @@ const App = () => {
                         <Stack.Screen
                             name='CreateSpace'
                             component={CreateSpaceScreen}
-                            options={{
-                                headerShown: false,
-                            }}
+                        />
+                        <Stack.Screen
+                            name='CreateSpaceDone'
+                            component={CreateSpaceDoneScreen}
                         />
                     </Stack.Navigator>
                 </NavigationContainer>

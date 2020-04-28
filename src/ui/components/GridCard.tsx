@@ -10,7 +10,7 @@ import {
     ImageStyle,
 } from 'react-native';
 import { Colors } from '../../styles';
-import { MediumText } from './Text';
+import { MediumText, BoldText } from './Text';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface Props {
@@ -24,7 +24,7 @@ interface Props {
 export const GRID_SPACING = 10;
 export const GRID_CARD_COUNT_IN_ROW = 2;
 
-export const getGridCardSize = () => {
+export const calculateGridCardSize = () => {
     const windowWidth = Dimensions.get('window').width;
     return Math.floor((windowWidth - GRID_SPACING * (GRID_CARD_COUNT_IN_ROW + 1)) / GRID_CARD_COUNT_IN_ROW);
 };
@@ -38,13 +38,13 @@ export const GridCard = React.memo((props: Props) => (
             }, props.imageStyle]}
         />
         <View style={styles.feedCardTextContainer}>
-            <MediumText
+            <BoldText
                 style={styles.feedCardText}
                 ellipsizeMode='tail'
                 numberOfLines={1}
             >
                 {props.title}
-            </MediumText>
+            </BoldText>
         </View>
         {props.isSelected &&
             <View style={styles.feedCardOverlay}>

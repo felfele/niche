@@ -1,13 +1,16 @@
-import * as React from 'react';
-import { StyleSheet, KeyboardAvoidingView, View, TextInput, Dimensions, ScrollView, SafeAreaView } from 'react-native';
-import { FloatingButton } from '../components/FloatingButton';
-import { NavigationProp } from '../../navigationTypes';
-import { TouchableView } from '../components/TouchableView';
-import { RegularText, BoldText } from '../components/Text';
-import { Colors, ComponentColors } from '../../styles';
-import { ScreenHeader } from '../components/ScreenHeader';
-import Icon, { CloseIcon } from '../components/CustomIcon';
-import { HeaderPlaceholder } from '../components/Placeholder';
+import * as React from 'react'
+import { useState, useRef } from 'react'
+import { StyleSheet, KeyboardAvoidingView, View, TextInput, Dimensions, ScrollView, SafeAreaView } from 'react-native'
+import InputScrollView from 'react-native-input-scroll-view'
+
+import { FloatingButton } from '../../components/FloatingButton'
+import { NavigationProp } from '../../../navigationTypes'
+import { TouchableView } from '../../components/TouchableView'
+import { RegularText, BoldText } from '../../components/Text'
+import { Colors, ComponentColors } from '../../../styles'
+import { ScreenHeader } from '../../components/ScreenHeader'
+import Icon, { CloseIcon } from '../../components/CustomIcon'
+import { HeaderPlaceholder } from '../../components/Placeholder'
 
 interface StateProps {
     navigation: NavigationProp<'Home'>
@@ -70,46 +73,6 @@ interface StateProps {
 //     }
 // }
 
-interface ValidatorState {
-    title: string;
-    description: string;
-}
-
-type ValidatorFunction = (state: ValidatorState) => boolean;
-
-export class ValidatedCreatePage extends React.Component<StateProps & { isValid: ValidatorFunction}, ValidatorState> {
-    public state = {
-        title: '',
-        description: '',
-        picture: {},
-    };
-
-    public render() {
-        return (
-            <CreateSpaceView
-                isValid={this.props.isValid(this.state)}
-                navigation={this.props.navigation}
-                navigateNext={navigation => navigation.navigate('Home')}
-            />
-        );
-    }
-}
-
-export const CreateSpaceScreen = (props: StateProps) => (
-    <ValidatedCreatePage
-        {...props}
-        isValid={(state) => state.title !== ''}
-    />
-);
-
-interface ValidatorProps {
-    isValid: boolean;
-}
-
-interface NavigationProps {
-    navigateNext: (navigation: NavigationProp<'Home'>) => void;
-}
-
 interface ModalProps {
     isVisible: boolean;
     toggleModal: () => void;
@@ -117,21 +80,23 @@ interface ModalProps {
     hideModal: () => void;
 }
 
-export const CreateSpaceView = (props: StateProps & ValidatorProps & NavigationProps) => (
-    <>
-        <ScreenHeader
-            title='CREATE PAGE'
-            navigation={props.navigation}
-            leftButton={{
-                label: <CloseIcon size={40} />,
-                onPress: () => props.navigation.goBack(),
-            }}
-        />
-        <KeyboardAvoidingView
-            style={styles.container}
-            behavior='padding'
-        >
-            <ScrollView style={styles.scrollContainer}>
+export const CreateSpaceScreen = (props: StateProps) => {
+    const [name, setName] = useState('')
+    const [description, setDescription] = useState('')
+    const isValid = name !== ''
+    const descriptionInputRef = useRef<TextInput>(null)
+    const onDonePressed = () => props.navigation.navigate('CreateSpaceDone', { name, description })
+    return (
+        <View style={{flex: 1, flexDirection: 'column'}}>
+            <ScreenHeader
+                title='CREATE PAGE'
+                navigation={props.navigation}
+                leftButton={{
+                    label: <CloseIcon size={40} />,
+                    onPress: () => props.navigation.goBack(),
+                }}
+            />
+            <InputScrollView style={styles.scrollContainer}>
                 <HeaderPlaceholder/>
                 <TouchableView style={styles.coverImagePickerContainer}>
                     <View style={styles.coverImagePickerIconContainer}>
@@ -146,6 +111,9 @@ export const CreateSpaceView = (props: StateProps & ValidatorProps & NavigationP
                         placeholder='Your title'
                         enablesReturnKeyAutomatically={true}
                         returnKeyType='next'
+                        blurOnSubmit={false}
+                        onChangeText={text => setName(text)}
+                        onSubmitEditing={() => descriptionInputRef.current?.focus()}
                     ></TextInput>
                 </View>
                 <View style={styles.pageDescriptionContainer}>
@@ -155,18 +123,22 @@ export const CreateSpaceView = (props: StateProps & ValidatorProps & NavigationP
                         placeholder='What is this page about?'
                         multiline={true}
                         numberOfLines={4}
+                        returnKeyType='done'
+                        blurOnSubmit={true}
+                        onChangeText={text => setDescription(text)}
+                        ref={descriptionInputRef}
                     ></TextInput>
                 </View>
-            </ScrollView>
-            <FloatingButton
-                iconName='arrow2_right3'
-                iconSize={48}
-                onPress={() => props.navigateNext(props.navigation)}
-                enabled={props.isValid}
-            />
-        </KeyboardAvoidingView>
-    </>
-);
+                <FloatingButton
+                    iconName='arrow2_right3'
+                    iconSize={48}
+                    onPress={onDonePressed}
+                    enabled={isValid}
+                />
+            </InputScrollView>
+        </View>
+    )
+}
 
 const windowWidth = Dimensions.get('window').width;
 

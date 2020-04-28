@@ -26,10 +26,16 @@ export interface Transaction {
 
 export type ContactMap = {[publicKey: string]: Contact}
 
+export interface Space {
+    name: string
+    description: string
+}
+
 export interface State {
     identity: Identity
     history: Transaction[]
     contacts: ContactMap
+    spaces: Space[]
 }
 
 export const defaultState: State = {
@@ -41,4 +47,5 @@ export const defaultState: State = {
     },
     history: [],
     contacts: {},
+    spaces: [],
 }
