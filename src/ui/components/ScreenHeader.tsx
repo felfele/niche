@@ -34,7 +34,7 @@ export const HeaderDefaultLeftButtonIcon = <Icon name={'arrow-left'} color={BUTT
 export const ScreenHeader = (props: Props) => {
     const insets = useSafeArea()
     return (
-        <SafeAreaView style={[styles.headerContainer, { paddingTop: insets.top }, props.style]}>
+        <SafeAreaView style={[styles.headerContainer, { paddingTop: insets.top, height: NAVIGATION_BAR_HEIGHT + insets.top }, props.style]}>
             <TouchableView onPress={
                     props.leftButton != null
                         ? props.leftButton.onPress
@@ -105,7 +105,6 @@ const RightButton = (props: { onPress?: () => void, label?: string | React.React
 
 const styles = StyleSheet.create({
     headerContainer: {
-        height: 2 * NAVIGATION_BAR_HEIGHT,
         width: '100%',
         position: 'absolute',
         top: 0,
