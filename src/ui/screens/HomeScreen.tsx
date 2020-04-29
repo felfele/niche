@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { NavigationProp } from '../../navigationTypes'
 import { Colors, ComponentColors } from '../../styles'
@@ -20,9 +21,42 @@ export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
                 }
             }}
         >
-            <Tab.Screen name="Activity" component={ActivityScreen} />
-            <Tab.Screen name="Spaces" component={SpacesScreen} />
-            <Tab.Screen name="Account" component={AccountScreen} />
+            <Tab.Screen
+                name="Activity"
+                component={ActivityScreen}
+                options={{
+                    tabBarIcon: ({focused, color, size}) =>
+                        <MaterialCommunityIcon
+                            name={'bell-outline'}
+                            size={size}
+                            color={color}
+                        />,
+                }}
+            />
+            <Tab.Screen
+                name="Spaces"
+                component={SpacesScreen}
+                options={{
+                    tabBarIcon: ({focused, color, size}) =>
+                        <MaterialCommunityIcon
+                            name={'earth'}
+                            size={size}
+                            color={color}
+                        />,
+                }}
+            />
+            <Tab.Screen
+                name="Account"
+                component={AccountScreen}
+                options={{
+                    tabBarIcon: ({focused, color, size}) =>
+                        <MaterialCommunityIcon
+                            name={'fingerprint'}
+                            size={size}
+                            color={color}
+                        />,
+                }}
+            />
         </Tab.Navigator>
     )
 }

@@ -87,7 +87,7 @@ export const CreateSpaceScreen = (props: StateProps) => {
     const descriptionInputRef = useRef<TextInput>(null)
     const onDonePressed = () => props.navigation.navigate('CreateSpaceDone', { name, description })
     return (
-        <View style={{flex: 1, flexDirection: 'column'}}>
+        <View style={{flex: 1, flexDirection: 'column', height: '100%'}}>
             <ScreenHeader
                 title='CREATE PAGE'
                 navigation={props.navigation}
@@ -96,7 +96,11 @@ export const CreateSpaceScreen = (props: StateProps) => {
                     onPress: () => props.navigation.goBack(),
                 }}
             />
-            <InputScrollView style={styles.scrollContainer}>
+            <InputScrollView
+                style={styles.scrollContainer}
+                keyboardDismissMode='interactive'
+                keyboardShouldPersistTaps='handled'
+            >
                 <HeaderPlaceholder/>
                 <TouchableView style={styles.coverImagePickerContainer}>
                     <View style={styles.coverImagePickerIconContainer}>
@@ -141,6 +145,7 @@ export const CreateSpaceScreen = (props: StateProps) => {
 }
 
 const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {
@@ -150,6 +155,7 @@ const styles = StyleSheet.create({
     },
     scrollContainer: {
         flex: 1,
+        flexDirection: 'column',
         shadowColor: Colors.BLACK,
         shadowOpacity: 0.2,
         shadowOffset: {

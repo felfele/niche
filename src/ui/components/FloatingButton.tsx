@@ -25,7 +25,7 @@ const iconColor = (enabled?: boolean) => isEnabled(enabled)
     : Colors.BLACK + '4D'
 ;
 
-const DEFAULT_BOTTOM_STYLE = 40;
+const DEFAULT_BOTTOM_STYLE = 20;
 const extraBottomStyle = (extraBottom?: number) => extraBottom != null
     ? {
         bottom: extraBottom + DEFAULT_BOTTOM_STYLE,
