@@ -76,6 +76,11 @@ export const AccountScreen = (props: Props) => {
                     buttonStyle='navigate'
                     onPress={() => props.navigation.navigate('Home')}
                 />
+                <RowItem
+                    title='Debug'
+                    buttonStyle='navigate'
+                    onPress={() => props.navigation.navigate('Debug')}
+                />
 
                 <TabBarPlaceholder/>
             </ScrollView>

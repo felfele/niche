@@ -32,7 +32,7 @@ const BUTTON_COLOR = ComponentColors.NAVIGATION_BUTTON_COLOR;
 export const HeaderDefaultLeftButtonIcon = <Icon name={'arrow-left'} color={BUTTON_COLOR} size={24} />;
 
 export const ScreenHeader = (props: Props) => {
-    const insets = useSafeArea();
+    const insets = useSafeArea()
     return (
         <SafeAreaView style={[styles.headerContainer, { paddingTop: insets.top }, props.style]}>
             <TouchableView onPress={

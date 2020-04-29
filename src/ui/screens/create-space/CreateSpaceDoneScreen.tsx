@@ -16,10 +16,10 @@ interface StateProps {
 }
 
 export const CreateSpaceDoneScreen = (props: StateProps) => {
-    const { name, description } = props.route.params
+    const { name, description, image } = props.route.params
     const dispatch = useDispatch()
     const onDonePressed = () => {
-        dispatch(addSpace({name, description}))
+        dispatch(addSpace({name, description, coverImage: image}))
         props.navigation.navigate('Home')
     }
     return (
@@ -46,6 +46,7 @@ export const CreateSpaceDoneScreen = (props: StateProps) => {
                 onPress={onDonePressed}
                 isSelected={false}
                 size={calculateGridCardSize()}
+                image={image}
             />
             <FloatingButton
                 iconName='arrow2_right3'

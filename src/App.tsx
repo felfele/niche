@@ -15,6 +15,7 @@ import { WelcomeScreen } from './ui/screens/WelcomeScreen'
 import { InitialScreen } from './ui/screens/InitialScreen'
 import { CreateSpaceScreen } from './ui/screens/create-space/CreateSpaceScreen'
 import { CreateSpaceDoneScreen } from './ui/screens/create-space/CreateSpaceDoneScreen'
+import { DebugScreen } from './ui/screens/DebugScreen'
 
 setCustomText(defaultTextProps);
 
@@ -62,6 +63,10 @@ const App = () => {
                         <Stack.Screen
                             name='CreateSpaceDone'
                             component={CreateSpaceDoneScreen}
+                        />
+                        <Stack.Screen
+                            name='Debug'
+                            component={DebugScreen}
                         />
                     </Stack.Navigator>
                 </NavigationContainer>

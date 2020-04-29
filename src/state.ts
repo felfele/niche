@@ -1,4 +1,5 @@
 import { HexString } from "./hex"
+import { ImageData } from "./models/ImageData"
 
 export interface Contact {
     name: string
@@ -29,33 +30,10 @@ export type ContactMap = {[publicKey: string]: Contact}
 export interface Post {
 }
 
-interface ImageLocationPath {
-    path: string
-}
-
-interface ImageLocationURL {
-    url: string
-}
-
-interface ImageLocationData {
-    data: string
-}
-
-type ImageLocation =
-    | ImageLocationPath
-    | ImageLocationURL
-    | ImageLocationPath & ImageLocationURL
-    | ImageLocationData
-
-interface ImageData {
-    location: ImageLocation
-    width?: number
-    height?: number
-}
-
 export interface Space {
     name: string
     description: string
+    coverImage: ImageData
 }
 
 export interface State {

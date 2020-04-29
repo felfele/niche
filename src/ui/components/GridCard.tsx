@@ -12,6 +12,8 @@ import {
 import { Colors } from '../../styles';
 import { MediumText, BoldText } from './Text';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { ImageDataView } from './ImageDataView';
+import { ImageData } from '../../models/ImageData';
 
 interface Props {
     title: string;
@@ -19,6 +21,7 @@ interface Props {
     imageStyle?: StyleProp<ImageStyle>;
     size: number;
     isSelected: boolean;
+    image?: ImageData;
 }
 
 export const GRID_SPACING = 10;
@@ -31,7 +34,8 @@ export const calculateGridCardSize = () => {
 
 export const GridCard = React.memo((props: Props) => (
     <TouchableView style={styles.feedCard} onPress={props.onPress} hitSlop={ZERO_HIT_SLOP}>
-        <View
+        <ImageDataView
+            source={props.image}
             style={[{
                 width: props.size,
                 height: props.size,

@@ -31,11 +31,12 @@ export const SpacesScreen = (props: {navigation: NavigationProp<'Home'>}) => {
                             onPress={() => {}}
                             size={itemDimension}
                             isSelected={false}
+                            image={item.coverImage}
                         />
                     );
                 }}
                 ListFooterComponent={<TabBarPlaceholder color={ComponentColors.BACKGROUND_COLOR}/>}
-                ListHeaderComponent={<HeaderPlaceholder extraHeight={25} />}
+                ListHeaderComponent={<HeaderPlaceholder extraHeight={10} />}
             />
             <FloatingButton
                 iconName='plus'

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useState, useRef } from 'react'
-import { StyleSheet, KeyboardAvoidingView, View, TextInput, Dimensions, ScrollView, SafeAreaView } from 'react-native'
+import { StyleSheet, Image, View, TextInput, Dimensions, Platform } from 'react-native'
 import InputScrollView from 'react-native-input-scroll-view'
 
 import { FloatingButton } from '../../components/FloatingButton'
@@ -11,81 +11,25 @@ import { Colors, ComponentColors } from '../../../styles'
 import { ScreenHeader } from '../../components/ScreenHeader'
 import Icon, { CloseIcon } from '../../components/CustomIcon'
 import { HeaderPlaceholder } from '../../components/Placeholder'
+import { showImagePicker } from '../../../asyncImagePicker'
+import { ImageData } from '../../../models/ImageData'
+import { ImageDataView, isImageLocationPath } from '../../components/ImageDataView'
 
 interface StateProps {
     navigation: NavigationProp<'Home'>
 }
 
-// interface StatefulModalProps {
-//     isVisible: boolean;
-// }
-
-// const ModalMenuItem = (props: {iconName: string, label: string, onPress: () => void}) => (
-//     <View style={{
-//         flexDirection: 'row',
-//         justifyContent: 'flex-start',
-//         alignItems: 'center',
-//         paddingVertical: 18,
-//     }}>
-//         <View style={{width: 45}}><Icon name={props.iconName} size={40} /></View>
-//         <RegularText style={{fontSize: 18}}>{props.label}</RegularText>
-//     </View>
-// );
-
-// const ModalMenuSeparator = () => <View style={{
-//         borderBottomColor: Colors.BLACK + '26',
-//         borderBottomWidth: 1,
-//     }}/>
-// ;
-
-// class StatefulModal extends React.PureComponent<{}, StatefulModalProps> {
-//     public state = {
-//         isVisible: true,
-//     };
-
-//     public render() {
-//         return (
-//             <Modal
-//                 isVisible={this.state.isVisible}
-//                 onBackdropPress={() => this.setState({ isVisible: false })}
-//                 backdropTransitionOutTiming={0}
-//                 style={{
-//                     justifyContent: 'flex-end',
-//                     margin: 0,
-//                 }}
-//             >
-//                 <SafeAreaView style={{
-//                     position: 'absolute',
-//                     bottom: 0,
-//                     width: '100%',
-//                     flex: 1,
-//                     backgroundColor: ComponentColors.BACKGROUND_COLOR,
-//                 }}>
-//                     <View style={{flex: 1}}>
-//                         <ModalMenuItem iconName='user_group' label='Take photo' onPress={() => {}} />
-//                         <ModalMenuSeparator />
-//                         <ModalMenuItem iconName='compose' label='Choose from Library' onPress={() => {}} />
-//                     </View>
-//                 </SafeAreaView>
-
-//             </Modal>
-//         );
-//     }
-// }
-
-interface ModalProps {
-    isVisible: boolean;
-    toggleModal: () => void;
-    showModal: () => void;
-    hideModal: () => void;
-}
-
 export const CreateSpaceScreen = (props: StateProps) => {
     const [name, setName] = useState('')
     const [description, setDescription] = useState('')
-    const isValid = name !== ''
+    const [imageData, setImageData] = useState<ImageData | undefined>(undefined)
+    const isValid = name !== '' && imageData != null
     const descriptionInputRef = useRef<TextInput>(null)
-    const onDonePressed = () => props.navigation.navigate('CreateSpaceDone', { name, description })
+    const onDonePressed = () => {
+        if (imageData != null) {
+            props.navigation.navigate('CreateSpaceDone', { name, description, image: imageData })
+        }
+    }
     return (
         <View style={{flex: 1, flexDirection: 'column', height: '100%'}}>
             <ScreenHeader
@@ -102,11 +46,26 @@ export const CreateSpaceScreen = (props: StateProps) => {
                 keyboardShouldPersistTaps='handled'
             >
                 <HeaderPlaceholder/>
-                <TouchableView style={styles.coverImagePickerContainer}>
-                    <View style={styles.coverImagePickerIconContainer}>
-                        <Icon name='picture' size={48} color={Colors.LIGHTISH_GRAY} />
-                    </View>
-                    <BoldText style={styles.coverImagePickerLabel}>Add cover image</BoldText>
+                <TouchableView
+                    style={styles.coverImagePickerContainer}
+                    onPress={async () => {
+                        const imageData = await showImagePicker()
+                        if (imageData != null) {
+                            setImageData(imageData)
+                        }
+                    }}
+                >
+                    { imageData != null && isImageLocationPath(imageData.location)
+                    ?
+                        <ImageDataView source={imageData} style={{width: windowWidth, height: windowWidth }} />
+                    :
+                        <>
+                            <View style={styles.coverImagePickerIconContainer}>
+                                <Icon name='picture' size={48} color={Colors.LIGHTISH_GRAY} />
+                            </View>
+                            <BoldText style={styles.coverImagePickerLabel}>Add cover image</BoldText>
+                        </>
+                    }
                 </TouchableView>
                 <View style={styles.pageTitleContainer}>
                     <RegularText style={styles.pageTitleLabel}>Page title</RegularText>

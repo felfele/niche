@@ -1,4 +1,4 @@
-import { combineReducers, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { combineReducers, createSlice, PayloadAction, createReducer } from '@reduxjs/toolkit'
 import { Identity, defaultState, State, ContactMap, Contact, Space } from './state'
 
 const identitySlice = createSlice({
@@ -37,13 +37,16 @@ const spacesSlice = createSlice({
     reducers: {
         addSpace(state: Space[], action: PayloadAction<Space>) {
             state.push(action.payload)
+        },
+        clearSpaces(state: Space[]) {
+            state.splice(0)
         }
     }
 })
 
 export const { setIdentity, clearIdentity } = identitySlice.actions
 export const { addContact, clearContacts } = contactsSlice.actions
-export const { addSpace } = spacesSlice.actions
+export const { addSpace, clearSpaces } = spacesSlice.actions
 
 const combinedReducers = combineReducers({
     identity: identitySlice.reducer,
