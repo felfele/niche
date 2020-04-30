@@ -1,6 +1,7 @@
 import { RouteProp as NavigationRouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ImageData } from './models/ImageData'
+import { HexString } from './hex';
 
 export type RootStackNavigatorParams = {
     Home: undefined,
@@ -13,6 +14,10 @@ export type RootStackNavigatorParams = {
         image: ImageData,
     },
     Debug: undefined,
+    Spaces: undefined,
+    ViewSpace: {
+        id: HexString,
+    },
 }
 
 export type NavigationProp<T extends keyof RootStackNavigatorParams> = StackNavigationProp<

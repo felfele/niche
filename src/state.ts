@@ -20,12 +20,15 @@ export interface Work {
 export type ContactMap = {[publicKey: string]: Contact}
 
 export interface Post {
+    text: string
 }
 
 export interface Space {
     name: string
     description: string
     coverImage: ImageData
+    id: HexString
+    posts: Post[]
 }
 
 export interface State {

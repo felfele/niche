@@ -16,6 +16,7 @@ import { InitialScreen } from './ui/screens/InitialScreen'
 import { CreateSpaceScreen } from './ui/screens/create-space/CreateSpaceScreen'
 import { CreateSpaceDoneScreen } from './ui/screens/create-space/CreateSpaceDoneScreen'
 import { DebugScreen } from './ui/screens/DebugScreen'
+import { ViewSpaceScreen } from './ui/screens/ViewSpaceScreen'
 
 setCustomText(defaultTextProps);
 

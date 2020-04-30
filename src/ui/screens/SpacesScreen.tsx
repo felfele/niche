@@ -28,7 +28,7 @@ export const SpacesScreen = (props: {navigation: NavigationProp<'Home'>}) => {
                     return (
                         <GridCard
                             title={item.name}
-                            onPress={() => {}}
+                            onPress={() => props.navigation.navigate('ViewSpace', {id: item.id})}
                             size={itemDimension}
                             isSelected={false}
                             image={item.coverImage}

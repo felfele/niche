@@ -9,6 +9,8 @@ import { HeaderPlaceholder } from '../../components/Placeholder'
 import { GridCard, calculateGridCardSize } from '../../components/GridCard'
 import { useDispatch } from 'react-redux'
 import { addSpace } from '../../../reducers'
+import { generateSecureRandom } from 'react-native-securerandom'
+import { byteArrayToHex } from '../../../hex'
 
 interface StateProps {
     navigation: NavigationProp<'Home'>
@@ -18,9 +20,10 @@ interface StateProps {
 export const CreateSpaceDoneScreen = (props: StateProps) => {
     const { name, description, image } = props.route.params
     const dispatch = useDispatch()
-    const onDonePressed = () => {
-        dispatch(addSpace({name, description, coverImage: image}))
+    const onDonePressed = async () => {
         props.navigation.navigate('Home')
+        const id = byteArrayToHex(await generateSecureRandom(32))
+        dispatch(addSpace({id, name, description, coverImage: image, posts: []}))
     }
     return (
         <View style={{flex: 1, flexDirection: 'column', alignItems: 'center'}}>
