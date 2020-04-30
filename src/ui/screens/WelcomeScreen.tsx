@@ -10,6 +10,8 @@ import { byteArrayToHex, HexString } from '../../hex'
 import { Identity } from '../../state'
 import { ec } from 'elliptic'
 import { keccak256 } from 'js-sha3'
+import { ScreenHeader } from '../components/ScreenHeader'
+import { HeaderPlaceholder } from '../components/Placeholder'
 
 function publicKeyToAddress(pubKey: any) {
     const pubBytes = pubKey.encode()
@@ -60,6 +62,10 @@ export const WelcomeScreen = (props: {navigation: NavigationProp<'Welcome'>}) =>
     }
     return (
         <>
+            <ScreenHeader
+                title='WELCOME TO NICHE'
+            />
+            <HeaderPlaceholder/>
             <Text
                 style={{
                     paddingTop: 20,
