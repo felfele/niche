@@ -39,6 +39,8 @@
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>Niche uses the camera to take pictures and read QR codes</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Niche will let you choose which photos from your library to share</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NunitoSans-Regular.ttf</string>
