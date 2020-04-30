@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Text, TextInput } from 'react-native'
+import { Text, TextInput, View, Dimensions } from 'react-native'
 import { Colors } from '../../styles'
 import { useState } from 'react'
 import { NavigationProp } from '../../navigationTypes'
@@ -7,11 +7,17 @@ import { setIdentity } from '../../reducers'
 import { useDispatch } from 'react-redux'
 import { generateSecureRandom } from 'react-native-securerandom'
 import { byteArrayToHex, HexString } from '../../hex'
-import { Identity } from '../../state'
+import { Identity, defaultImage } from '../../state'
 import { ec } from 'elliptic'
 import { keccak256 } from 'js-sha3'
 import { ScreenHeader } from '../components/ScreenHeader'
 import { HeaderPlaceholder } from '../components/Placeholder'
+import { TouchableView } from '../components/TouchableView'
+import { Button } from '../components/Button'
+import { RegularText } from '../components/Text'
+import { showImagePicker } from '../../asyncImagePicker'
+import { ImageData } from '../../models/ImageData'
+import { ImageDataView } from '../components/ImageDataView'
 
 function publicKeyToAddress(pubKey: any) {
     const pubBytes = pubKey.encode()
@@ -43,54 +49,103 @@ export const generateSecureIdentity = async (generateRandom: (length: number) =>
     }
 }
 
-const createRandomIdentity = async (name: string): Promise<Identity> => {
-    const identity = await generateSecureIdentity(generateSecureRandom)
-    return {
-        name,
-        ...identity,
+const createRandomIdentity = async (name: string): Promise<PrivateIdentity> => {
+    return await generateSecureIdentity(generateSecureRandom)
+}
+
+const openImagePicker = async (onUpdatePicture: (imageData: ImageData) => void) => {
+    const imageData = await showImagePicker();
+    if (imageData != null) {
+        onUpdatePicture(imageData)
     }
 }
 
 export const WelcomeScreen = (props: {navigation: NavigationProp<'Welcome'>}) => {
-    console.debug('WelcomeScreen', {props})
+    const windowWidth = Dimensions.get('window').width
     const [name, setName] = useState('')
+    const [image, setImage] = useState(defaultImage)
     const dispatch = useDispatch()
     const onDonePressed = async () => {
-        const identity = await createRandomIdentity(name)
+        const privateIdentity = await createRandomIdentity(name)
+        const identity = {
+            ...privateIdentity,
+            name,
+            image,
+        }
         dispatch(setIdentity(identity))
         props.navigation.replace('Home')
+    }
+    const onUpdatePicture = (updatedImage: ImageData) => {
+        setImage(updatedImage)
     }
     return (
         <>
             <ScreenHeader
-                title='WELCOME TO NICHE'
+                title='CREATE ACCOUNT'
             />
             <HeaderPlaceholder/>
-            <Text
+            <TouchableView
                 style={{
-                    paddingTop: 20,
-                    paddingLeft: 10,
-                    color: Colors.GRAY,
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    alignSelf: 'center',
                 }}
-            >Enter your name:</Text>
-            <TextInput
+                onPress={async () => {
+                    await openImagePicker(onUpdatePicture);
+                }}
+            >
+                <ImageDataView
+                    source={image}
+                    style={{
+                        width: windowWidth * 0.5,
+                        height: windowWidth * 0.5,
+                        borderRadius: windowWidth * 0.5,
+                    }}
+                />
+                <Button
+                    label='CHOOSE PICTURE'
+                    onPress={async () => {
+                        await openImagePicker(onUpdatePicture);
+                    }}
+                    style={{
+                        marginVertical: 18,
+                    }}
+                />
+            </TouchableView>
+
+            <View
                 style={{
+                    padding: 18,
                     width: '100%',
+                    height: 83,
                     backgroundColor: Colors.WHITE,
-                    height: 40,
-                    marginTop: 10,
-                    paddingHorizontal: 10,
-                    fontSize: 18,
+                    borderBottomColor: Colors.BLACK + '33',
+                    borderBottomWidth: 1,
+                    marginBottom: 60,
                 }}
-                onChangeText={text => setName(text)}
-                autoFocus={true}
-                autoCapitalize='none'
-                autoCorrect={false}
-                autoCompleteType='off'
-                onSubmitEditing={onDonePressed}
-                returnKeyType='done'
-                enablesReturnKeyAutomatically={true}
-            />
+            >
+                <RegularText
+                    style={{
+                        fontSize: 12,
+                        color: Colors.GRAY,
+                    }}
+                >Your name or nickname</RegularText>
+                <TextInput
+                    placeholder='e.g. “John” or “Daddy”'
+                    style={{
+                        paddingTop: 9,
+                        fontSize: 18,
+                    }}
+                    autoFocus={true}
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    autoCompleteType='off'
+                    onSubmitEditing={onDonePressed}
+                    onChangeText={text => setName(text)}
+                    returnKeyType='done'
+                    enablesReturnKeyAutomatically={true}
+                />
+            </View>
         </>
     )
 }

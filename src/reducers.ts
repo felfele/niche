@@ -1,5 +1,6 @@
 import { combineReducers, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Identity, defaultState, State, ContactMap, Contact, Space } from './state'
+import { Identity, defaultState, State, ContactMap, Contact, Space, Post } from './state'
+import { HexString } from './hex'
 
 const identitySlice = createSlice({
     name: 'identity',
@@ -8,6 +9,9 @@ const identitySlice = createSlice({
         setIdentity(state: Identity, action: PayloadAction<Identity>) {
             state.name = action.payload.name
             state.publicKey = action.payload.publicKey
+            state.address = action.payload.address
+            state.image = action.payload.image
+            state.privateKey = action.payload.privateKey
         },
         clearIdentity(state: Identity) {
             state.name = defaultState.identity.name
@@ -38,6 +42,12 @@ const spacesSlice = createSlice({
         addSpace(state: Space[], action: PayloadAction<Space>) {
             state.push(action.payload)
         },
+        addPostToSpace(state: Space[], action: PayloadAction<{spaceId: HexString, post: Post}>) {
+            const space = state.find(s => s.id === action.payload.spaceId)
+            if (space != null) {
+                space.posts.unshift(action.payload.post)
+            }
+        },
         clearSpaces(state: Space[]) {
             state.splice(0)
         }
@@ -46,7 +56,7 @@ const spacesSlice = createSlice({
 
 export const { setIdentity, clearIdentity } = identitySlice.actions
 export const { addContact, clearContacts } = contactsSlice.actions
-export const { addSpace, clearSpaces } = spacesSlice.actions
+export const { addSpace, clearSpaces, addPostToSpace } = spacesSlice.actions
 
 export const resetState = () => ({
     type: 'RESET-STATE',

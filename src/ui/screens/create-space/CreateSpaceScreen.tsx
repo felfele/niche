@@ -33,7 +33,7 @@ export const CreateSpaceScreen = (props: StateProps) => {
     return (
         <View style={{flex: 1, flexDirection: 'column', height: '100%'}}>
             <ScreenHeader
-                title='CREATE PAGE'
+                title='CREATE SPACE'
                 navigation={props.navigation}
                 leftButton={{
                     label: <CloseIcon size={40} />,

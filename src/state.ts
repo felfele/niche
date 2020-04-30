@@ -3,8 +3,9 @@ import { ImageData } from "./models/ImageData"
 
 export interface Contact {
     name: string
-    publicKey: HexString
+    image: ImageData
     address: HexString
+    publicKey: HexString
 }
 
 export interface Identity extends Contact {
@@ -19,8 +20,19 @@ export interface Work {
 
 export type ContactMap = {[publicKey: string]: Contact}
 
+export interface Author {
+    name: string
+    image: ImageData
+    address: HexString
+}
+
 export interface Post {
+    id: HexString
     text: string
+    createdAt: number
+    images: ImageData[]
+    author: Author
+    comments: Post[]
 }
 
 export interface Space {
@@ -37,9 +49,16 @@ export interface State {
     spaces: Space[]
 }
 
+export const defaultImage: ImageData = {
+    location: {
+        path: '',
+    }
+}
+
 export const defaultState: State = {
     identity: {
         name: '',
+        image: defaultImage,
         address: '' as HexString,
         publicKey: '' as HexString,
         privateKey: '' as HexString,

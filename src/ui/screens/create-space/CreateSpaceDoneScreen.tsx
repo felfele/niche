@@ -21,9 +21,9 @@ export const CreateSpaceDoneScreen = (props: StateProps) => {
     const { name, description, image } = props.route.params
     const dispatch = useDispatch()
     const onDonePressed = async () => {
-        props.navigation.navigate('Home')
         const id = byteArrayToHex(await generateSecureRandom(32))
         dispatch(addSpace({id, name, description, coverImage: image, posts: []}))
+        props.navigation.popToTop()
     }
     return (
         <View style={{flex: 1, flexDirection: 'column', alignItems: 'center'}}>

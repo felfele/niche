@@ -1,38 +1,52 @@
 import * as React from 'react'
-import { StyleSheet, ScrollView, Linking, Dimensions, View, TextInput } from 'react-native';
+import { StyleSheet, ScrollView, Linking, Dimensions, View, TextInput } from 'react-native'
 import { ScreenHeader } from '../components/ScreenHeader'
-import { Colors, ComponentColors } from '../../styles';
+import { Colors, ComponentColors } from '../../styles'
 
-import { RowItem } from '../components/RowButton';
-import { RegularText } from '../components/Text';
-import { TabBarPlaceholder, HeaderPlaceholder } from '../components/Placeholder';
-import { NavigationProp } from '../../navigationTypes';
-import { TouchableView } from '../components/TouchableView';
+import { RowItem } from '../components/RowButton'
+import { RegularText } from '../components/Text'
+import { TabBarPlaceholder, HeaderPlaceholder } from '../components/Placeholder'
+import { NavigationProp } from '../../navigationTypes'
+import { TouchableView } from '../components/TouchableView'
 import { Button } from '../components/Button'
+import { showImagePicker } from '../../asyncImagePicker'
+import { ImageData } from '../../models/ImageData'
+import { useDispatch, useSelector } from 'react-redux'
+import { State } from '../../state'
+import { setIdentity } from '../../reducers'
+import { ImageDataView } from '../components/ImageDataView'
 
 const openImagePicker = async (onUpdatePicture: (imageData: ImageData) => void) => {
-    // const imageData = await AsyncImagePicker.showImagePicker();
-    // if (imageData != null) {
-    //     onUpdatePicture(imageData);
-    // }
-};
+    const imageData = await showImagePicker();
+    if (imageData != null) {
+        onUpdatePicture(imageData)
+    }
+}
 
 export interface StateProps {
-    navigation: NavigationProp<'Home'>;
+    navigation: NavigationProp<'Home'>
 }
 
-export interface DispatchProps {
-    onSaveToCameraRollValueChange: (value: boolean) => void;
-    onShowSquareImagesValueChange: (value: boolean) => void;
-    onShowDebugMenuValueChange: (value: boolean) => void;
-    onUpdateAuthor: (text: string) => void;
-    onUpdatePicture: (image: ImageData) => void;
-}
-
-type Props = StateProps & DispatchProps;
+type Props = StateProps
 
 export const AccountScreen = (props: Props) => {
-    const width = Dimensions.get('screen').width * 0.8;
+    const windowWidth = Dimensions.get('window').width
+    const dispatch = useDispatch()
+    const identity = useSelector((state: State) => state.identity)
+    const onUpdatePicture = (image: ImageData) => {
+        const updatedIdentity = {
+            ...identity,
+            image,
+        }
+        dispatch(setIdentity(updatedIdentity))
+    }
+    const onUpdateName = (name: string) => {
+        const updatedIdentity = {
+            ...identity,
+            name,
+        }
+        dispatch(setIdentity(updatedIdentity))
+    }
     return (
         <>
             <ScreenHeader
@@ -44,15 +58,25 @@ export const AccountScreen = (props: Props) => {
             }}>
                 <HeaderPlaceholder />
 
+
+
                 <TouchableView style={styles.imagePickerContainer}
                     onPress={async () => {
-                        await openImagePicker(props.onUpdatePicture);
+                        await openImagePicker(onUpdatePicture);
                     }}
                 >
+                    <ImageDataView
+                        source={identity.image}
+                        style={{
+                            width: windowWidth * 0.5,
+                            height: windowWidth * 0.5,
+                            borderRadius: windowWidth * 0.5,
+                        }}
+                    />
                     <Button
                         label='CHOOSE PICTURE'
                         onPress={async () => {
-                            await openImagePicker(props.onUpdatePicture);
+                            await openImagePicker(onUpdatePicture);
                         }}
                         style={styles.imagePickerButton}
                     />
@@ -61,8 +85,9 @@ export const AccountScreen = (props: Props) => {
                 <View style={styles.nameContainer}>
                     <RegularText style={styles.nameLabel}>Your name or nickname</RegularText>
                     <TextInput
-                        defaultValue={'David'}
+                        defaultValue={identity.name}
                         style={styles.nameInput}
+                        onChangeText={text => onUpdateName(text)}
                     />
                 </View>
 

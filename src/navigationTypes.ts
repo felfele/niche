@@ -2,6 +2,7 @@ import { RouteProp as NavigationRouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { ImageData } from './models/ImageData'
 import { HexString } from './hex';
+import { Post } from './state';
 
 export type RootStackNavigatorParams = {
     Home: undefined,
@@ -17,6 +18,12 @@ export type RootStackNavigatorParams = {
     Spaces: undefined,
     ViewSpace: {
         id: HexString,
+    },
+    CreatePost: {
+        spaceId: HexString,
+    },
+    ViewPost: {
+        post: Post,
     },
 }
 

@@ -30,7 +30,7 @@ const getImageDataURI = (location: ImageLocation): string => {
     return location.data
 }
 
-export const ImageDataView = (props: {source?: ImageData, style?: StyleProp<ImageStyle>}) => {
+export const ImageDataView = (props: {source?: ImageData, style?: StyleProp<ImageStyle>, children?: React.ReactNode}) => {
     const uri = props.source && getImageDataURI(props.source.location)
     const width = props.style
         ? StyleSheet.flatten(props.style).width != null
