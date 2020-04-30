@@ -6,6 +6,7 @@
   "scripts": {
     "android": "react-native run-android",
     "ios": "npm run pod-install && react-native run-ios",
+    "increment-build": "react-native-version --never-amend --increment-build && scripts/patch_version_ts.sh",
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
@@ -38,6 +39,7 @@
     "mocha": "^7.1.1",
     "prettier": "^2.0.2",
     "react-native-clean-project": "^3.3.0",
+    "react-native-version": "^4.0.0",
     "react-test-renderer": "16.11.0",
     "ts-jest": "^25.3.1",
     "typescript": "^3.8.3"
