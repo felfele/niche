@@ -77,6 +77,8 @@ export const CreateSpaceScreen = (props: StateProps) => {
                         blurOnSubmit={false}
                         onChangeText={text => setName(text)}
                         onSubmitEditing={() => descriptionInputRef.current?.focus()}
+                        autoCorrect={false}
+                        autoCompleteType='off'
                     ></TextInput>
                 </View>
                 <View style={styles.pageDescriptionContainer}>
