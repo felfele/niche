@@ -10,7 +10,7 @@ import { TouchableView } from '../components/TouchableView';
 import { Button } from '../components/Button'
 import { useDispatch } from 'react-redux';
 import { NavigationProp } from '../../navigationTypes';
-import { clearSpaces } from '../../reducers';
+import { clearSpaces, resetState } from '../../reducers';
 import { areYouSureDialog } from '../../dialogs';
 
 export const DebugScreen = (props: {navigation: NavigationProp<'Home'>}) => {
@@ -26,6 +26,16 @@ export const DebugScreen = (props: {navigation: NavigationProp<'Home'>}) => {
                 paddingTop: 18,
             }}>
                 <HeaderPlaceholder />
+
+                <RowItem
+                    title='Reset state'
+                    buttonStyle='none'
+                    onPress={async () => {
+                        if (await areYouSureDialog('Are you sure you want to reset the state?')) {
+                            dispatch(resetState())}
+                        }
+                    }
+                />
 
                 <RowItem
                     title='Delete all spaces'

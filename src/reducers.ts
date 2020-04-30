@@ -1,4 +1,4 @@
-import { combineReducers, createSlice, PayloadAction, createReducer } from '@reduxjs/toolkit'
+import { combineReducers, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Identity, defaultState, State, ContactMap, Contact, Space } from './state'
 
 const identitySlice = createSlice({
@@ -48,15 +48,22 @@ export const { setIdentity, clearIdentity } = identitySlice.actions
 export const { addContact, clearContacts } = contactsSlice.actions
 export const { addSpace, clearSpaces } = spacesSlice.actions
 
+export const resetState = () => ({
+    type: 'RESET-STATE',
+})
+
 const combinedReducers = combineReducers({
     identity: identitySlice.reducer,
     contacts: contactsSlice.reducer,
     spaces: spacesSlice.reducer,
 })
 
-const loggingReducer = (state: RootState | undefined, action: PayloadAction<State>): RootState => {
+const stateReducer = (state: RootState | undefined, action: PayloadAction<State>): RootState => {
     const startTime = Date.now()
     try {
+        if (action.type == 'RESET-STATE') {
+            return defaultState
+        }
         const newState = combinedReducers(state, action)
         if (action.type !== 'TIME-TICK') {
             const elapsed = Date.now() - startTime
@@ -71,4 +78,4 @@ const loggingReducer = (state: RootState | undefined, action: PayloadAction<Stat
 }
 
 export type RootState = ReturnType<typeof combinedReducers>
-export const rootReducer = loggingReducer
+export const rootReducer = stateReducer
