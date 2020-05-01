@@ -8,3 +8,5 @@ build_number=$(./scripts/get_build_number.sh)
 version_file="src/version.ts"
 echo "export const Version = '$version';" > $version_file
 echo "export const BuildNumber = '$build_number';" >> $version_file
+echo
+echo "Bumped build number to $build_number"
