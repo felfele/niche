@@ -1,12 +1,15 @@
 import * as React from 'react'
+import { useState } from 'react'
 import { KeyboardAvoidingView, Animated, Platform, Dimensions, TextInput, StyleSheet, View, TouchableOpacity } from 'react-native'
 import SortableList, { RowProps } from 'react-native-sortable-list'
+import { useKeyboard } from '@react-native-community/hooks'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+
+
 import { Colors } from '../../styles'
 import { ImageDataView } from '../components/ImageDataView'
 import { ImageData } from '../../models/ImageData'
 import { TouchableView, TOUCHABLE_VIEW_DEFAULT_HIT_SLOP } from '../components/TouchableView'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-import { useState } from 'react'
 import { GRID_SPACING } from '../components/GridCard'
 import { launchCamera, launchImageLibrary } from '../../asyncImagePicker'
 import { Post, State } from '../../state'
@@ -152,6 +155,7 @@ const PhotoWidget = React.memo((props: { onPressCamera: () => void, onPressInser
 
 export const CreatePostScreen = (props: {navigation: NavigationProp<'Home'>, route: RouteProp<'CreatePost'>}) => {
     const identity = useSelector((state: State) => state.identity)
+    const keyboard = useKeyboard()
     const [post, setPost] = useState<Post>({
         id: '' + Date.now() as HexString,
         text: '',
@@ -208,7 +212,13 @@ export const CreatePostScreen = (props: {navigation: NavigationProp<'Home'>, rou
                     style={styles.textInput}
                     multiline={true}
                     numberOfLines={4}
-                    onChangeText={text => { post.text = text; setPost(post)}}
+                    onChangeText={text => {
+                        const updatedPost = {
+                            ...post,
+                            text
+                        }
+                        setPost(updatedPost)
+                    }}
                     defaultValue={post.text}
                     placeholder="What's up, Doc?"
                     placeholderTextColor='gray'
@@ -233,17 +243,21 @@ export const CreatePostScreen = (props: {navigation: NavigationProp<'Home'>, rou
                     }}
                 />
                 <FloatingButton
-                    iconName='plus'
+                    iconName='share'
                     iconSize={48}
                     onPress={() => {
                         dispatch(addPostToSpace({spaceId, post}))
                         props.navigation.goBack()}
                     }
+                    enabled={post.text !== ''}
+                    extraBottom={PHOTO_WIDGET_HEIGHT + keyboard.keyboardHeight}
                 />
             </KeyboardAvoidingView>
         </>
     )
 }
+
+const PHOTO_WIDGET_HEIGHT = 50
 
 const styles = StyleSheet.create({
     container: {
@@ -285,7 +299,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         borderTopWidth: 1,
         borderTopColor: 'lightgray',
-        height: 50,
+        height: PHOTO_WIDGET_HEIGHT,
         alignItems: 'center',
         justifyContent: 'space-around',
         width: '100%',
