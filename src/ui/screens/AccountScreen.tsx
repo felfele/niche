@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { State } from '../../state'
 import { setIdentity } from '../../reducers'
 import { ImageDataView } from '../components/ImageDataView'
+import { Avatar } from '../components/Avatar'
 
 const openImagePicker = async (onUpdatePicture: (imageData: ImageData) => void) => {
     const imageData = await showImagePicker();
@@ -58,21 +59,14 @@ export const AccountScreen = (props: Props) => {
             }}>
                 <HeaderPlaceholder />
 
-
-
                 <TouchableView style={styles.imagePickerContainer}
                     onPress={async () => {
                         await openImagePicker(onUpdatePicture);
                     }}
                 >
-                    <ImageDataView
-                        source={identity.image}
-                        style={{
-                            width: windowWidth * 0.5,
-                            height: windowWidth * 0.5,
-                            borderRadius: windowWidth * 0.5,
-                            resizeMode: 'cover',
-                        }}
+                    <Avatar
+                        image={identity.image}
+                        size={windowWidth * 0.5}
                     />
                     <Button
                         label='CHOOSE PICTURE'

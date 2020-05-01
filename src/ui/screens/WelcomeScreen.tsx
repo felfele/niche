@@ -7,7 +7,7 @@ import { setIdentity } from '../../reducers'
 import { useDispatch } from 'react-redux'
 import { generateSecureRandom } from 'react-native-securerandom'
 import { byteArrayToHex, HexString } from '../../hex'
-import { Identity, defaultImage } from '../../state'
+import { defaultImage } from '../../state'
 import { ec } from 'elliptic'
 import { keccak256 } from 'js-sha3'
 import { ScreenHeader } from '../components/ScreenHeader'
@@ -17,7 +17,8 @@ import { Button } from '../components/Button'
 import { RegularText } from '../components/Text'
 import { showImagePicker } from '../../asyncImagePicker'
 import { ImageData } from '../../models/ImageData'
-import { ImageDataView } from '../components/ImageDataView'
+import InputScrollView from 'react-native-input-scroll-view'
+import { Avatar } from '../components/Avatar'
 
 function publicKeyToAddress(pubKey: any) {
     const pubBytes = pubKey.encode()
@@ -83,71 +84,76 @@ export const WelcomeScreen = (props: {navigation: NavigationProp<'Welcome'>}) =>
             <ScreenHeader
                 title='CREATE ACCOUNT'
             />
-            <HeaderPlaceholder/>
-            <TouchableView
+            <InputScrollView
                 style={{
+                    flex: 1,
                     flexDirection: 'column',
-                    alignItems: 'center',
-                    alignSelf: 'center',
-                    paddingTop: 18,
                 }}
-                onPress={async () => {
-                    await openImagePicker(onUpdatePicture);
-                }}
+                keyboardDismissMode='interactive'
+                keyboardShouldPersistTaps='handled'
             >
-                <ImageDataView
-                    source={image}
+
+                <HeaderPlaceholder/>
+                <TouchableView
                     style={{
-                        width: windowWidth * 0.5,
-                        height: windowWidth * 0.5,
-                        borderRadius: windowWidth * 0.5,
-                        resizeMode: 'cover',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        alignSelf: 'center',
+                        paddingTop: 18,
                     }}
-                />
-                <Button
-                    label='CHOOSE PICTURE'
                     onPress={async () => {
                         await openImagePicker(onUpdatePicture);
                     }}
-                    style={{
-                        marginVertical: 18,
-                    }}
-                />
-            </TouchableView>
+                >
+                    <Avatar
+                        image={image}
+                        size={windowWidth * 0.5}
+                    />
+                    <Button
+                        label='CHOOSE PICTURE'
+                        onPress={async () => {
+                            await openImagePicker(onUpdatePicture);
+                        }}
+                        style={{
+                            marginVertical: 18,
+                        }}
+                    />
+                </TouchableView>
 
-            <View
-                style={{
-                    padding: 18,
-                    width: '100%',
-                    height: 83,
-                    backgroundColor: Colors.WHITE,
-                    borderBottomColor: Colors.BLACK + '33',
-                    borderBottomWidth: 1,
-                    marginBottom: 60,
-                }}
-            >
-                <RegularText
+                <View
                     style={{
-                        fontSize: 12,
-                        color: Colors.GRAY,
+                        padding: 18,
+                        width: '100%',
+                        height: 83,
+                        backgroundColor: Colors.WHITE,
+                        borderBottomColor: Colors.BLACK + '33',
+                        borderBottomWidth: 1,
+                        marginBottom: 60,
                     }}
-                >Your name or nickname</RegularText>
-                <TextInput
-                    placeholder='e.g. “John” or “Daddy”'
-                    style={{
-                        paddingTop: 9,
-                        fontSize: 18,
-                    }}
-                    autoFocus={true}
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                    autoCompleteType='off'
-                    onSubmitEditing={onDonePressed}
-                    onChangeText={text => setName(text)}
-                    returnKeyType='done'
-                    enablesReturnKeyAutomatically={true}
-                />
-            </View>
+                >
+                    <RegularText
+                        style={{
+                            fontSize: 12,
+                            color: Colors.GRAY,
+                        }}
+                    >Your name or nickname</RegularText>
+                    <TextInput
+                        placeholder='e.g. “John” or “Daddy”'
+                        style={{
+                            paddingTop: 9,
+                            fontSize: 18,
+                        }}
+                        autoFocus={true}
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        autoCompleteType='off'
+                        onSubmitEditing={onDonePressed}
+                        onChangeText={text => setName(text)}
+                        returnKeyType='done'
+                        enablesReturnKeyAutomatically={true}
+                    />
+                </View>
+            </InputScrollView>
         </>
     )
 }

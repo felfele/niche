@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { ImageLocation, ImageLocationPath, ImageLocationURL } from '../../models/ImageData'
-import { Platform, Image, Dimensions, StyleProp, ImageStyle, StyleSheet} from 'react-native'
+import { Platform, Image, Dimensions, StyleProp, ImageStyle, StyleSheet, View} from 'react-native'
 
 import { ImageData } from '../../models/ImageData'
 
@@ -43,16 +43,22 @@ export const ImageDataView = (props: {source?: ImageData, style?: StyleProp<Imag
             : props.source?.height
         : props.source?.height;
     return (
-        <Image
-            style={[{
-                width: width,
-                height: height,
-                resizeMode: 'stretch',
-            }, props.style]}
-            source={{
-                uri,
-            }}
-        />
+        <>
+        {uri !== ''
+        ?
+            <Image
+                style={[{
+                    width: width,
+                    height: height,
+                    resizeMode: 'stretch',
+                }, props.style]}
+                source={{
+                    uri,
+                }}
+            />
+        : <View style={{width, height}}></View>
+        }
+        </>
     )
 }
 

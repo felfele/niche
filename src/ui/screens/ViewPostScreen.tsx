@@ -14,6 +14,7 @@ import { TouchableView, ZERO_HIT_SLOP } from '../components/TouchableView'
 import { ImageDataView } from '../components/ImageDataView'
 import { RegularText, BoldText, MediumText } from '../components/Text'
 import { printableElapsedTime } from '../../dateHelpers'
+import { Avatar } from '../components/Avatar'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -49,14 +50,9 @@ const PostCard = React.memo((props: {
                 }}
             >
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                    <ImageDataView
-                        source={props.post.author.image}
-                        style={{
-                            width: 30,
-                            height: 30,
-                            borderRadius: 15,
-                            resizeMode: 'cover',
-                        }}
+                    <Avatar
+                        image={props.post.author.image}
+                        size={30}
                     />
                     <MediumText style={{fontSize: 14, paddingLeft: 5,}}>{props.post.author.name}</MediumText>
                 </View>
