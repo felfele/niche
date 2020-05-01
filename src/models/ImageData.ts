@@ -18,7 +18,7 @@ export type ImageLocation =
 
 export interface ImageData {
     location: ImageLocation
-    width?: number
-    height?: number
+    width: number
+    height: number
 }
 

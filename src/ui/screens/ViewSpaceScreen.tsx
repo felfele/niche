@@ -44,8 +44,9 @@ const PostCard = React.memo((props: {
                 key={'' + index}
                 source={image}
                 style={[{
+                    marginTop: index > 0 ? 9 : 0,
                     width: windowWidth - 4 * 9,
-                    height: windowWidth - 4 * 9,
+                    height: (windowWidth * (image.height / image.width)) - 4 * 9,
                 }]}
             />
         )}

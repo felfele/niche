@@ -3,7 +3,6 @@ import { Dimensions, View } from 'react-native'
 import QRCode from 'react-native-qrcode-svg';
 import { WideButton } from './WideButton';
 import { ComponentColors } from '../../styles';
-import { shareDialog } from '../../dialogs';
 
 export const QRCodeView = (props: {onDonePress?: () => void, qrCodeValue: string}) => {
     const qrCodeSize = Dimensions.get('window').width;
@@ -24,15 +23,6 @@ export const QRCodeView = (props: {onDonePress?: () => void, qrCodeValue: string
                     backgroundColor={ComponentColors.BACKGROUND_COLOR}
                 />
             </View>
-            {__DEV__ &&
-                <WideButton
-                    label='Share'
-                    onPress={() => shareDialog('Share', props.qrCodeValue)}
-                    style={{
-                        backgroundColor: ComponentColors.DEBUG_COLOR,
-                    }}
-                />
-            }
             {props.onDonePress &&
                 <WideButton
                     label='Done'

@@ -46,7 +46,9 @@ export interface State {
 export const defaultImage: ImageData = {
     location: {
         path: '',
-    }
+    },
+    width: 0,
+    height: 0,
 }
 
 export const defaultState: State = {

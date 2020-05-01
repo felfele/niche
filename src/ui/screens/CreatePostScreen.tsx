@@ -5,7 +5,6 @@ import SortableList, { RowProps } from 'react-native-sortable-list'
 import { useKeyboard } from '@react-native-community/hooks'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 
-
 import { Colors } from '../../styles'
 import { ImageDataView } from '../components/ImageDataView'
 import { ImageData } from '../../models/ImageData'

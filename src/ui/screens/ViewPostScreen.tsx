@@ -61,12 +61,14 @@ const PostCard = React.memo((props: {
                 </View>
                 <RegularText style={{fontSize: 12, color: Colors.LIGHTISH_GRAY}}>{printableElapsedTime(props.post.createdAt) + ' ago'}</RegularText>
             </View>
-            {props.post.images.map(image =>
+            {props.post.images.map((image, index) =>
                 <ImageDataView
+                    key={'' + index}
                     source={image}
                     style={[{
+                        marginTop: index > 0 ? 9 : 0,
                         width: windowWidth,
-                        height: windowWidth,
+                        height: windowWidth * (image.height / image.width),
                     }]}
                 />
             )}
