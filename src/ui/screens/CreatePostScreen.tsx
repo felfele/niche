@@ -176,13 +176,14 @@ export const CreatePostScreen = (props: {navigation: NavigationProp<'Home'>, rou
 
     }
     const addImage = (image: ImageData) => {
+        textEditorRef.current?.focus()
         const updatedPost = {
             ...post,
             images: [...post.images, image],
         }
         setPost(updatedPost)
-        textEditorRef.current?.focus()
     }
+    const isPostingEnabled = post.text !== '' || post.images.length > 0
     console.log('CreatePostScreen', {post})
     return (
         <>
@@ -249,7 +250,7 @@ export const CreatePostScreen = (props: {navigation: NavigationProp<'Home'>, rou
                         dispatch(addPostToSpace({spaceId, post}))
                         props.navigation.goBack()}
                     }
-                    enabled={post.text !== ''}
+                    enabled={isPostingEnabled}
                     extraBottom={PHOTO_WIDGET_HEIGHT + keyboard.keyboardHeight}
                 />
             </KeyboardAvoidingView>
