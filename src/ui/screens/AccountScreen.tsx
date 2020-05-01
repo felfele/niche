@@ -71,6 +71,7 @@ export const AccountScreen = (props: Props) => {
                             width: windowWidth * 0.5,
                             height: windowWidth * 0.5,
                             borderRadius: windowWidth * 0.5,
+                            resizeMode: 'cover',
                         }}
                     />
                     <Button

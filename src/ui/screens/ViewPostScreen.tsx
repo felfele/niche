@@ -55,6 +55,7 @@ const PostCard = React.memo((props: {
                             width: 30,
                             height: 30,
                             borderRadius: 15,
+                            resizeMode: 'cover',
                         }}
                     />
                     <MediumText style={{fontSize: 14, paddingLeft: 5,}}>{props.post.author.name}</MediumText>
