@@ -39,8 +39,9 @@ const PostCard = React.memo((props: {
         onPress={props.onPress}
         hitSlop={ZERO_HIT_SLOP}
     >
-        {props.post.images.map(image =>
+        {props.post.images.map((image, index) =>
             <ImageDataView
+                key={'' + index}
                 source={image}
                 style={[{
                     width: windowWidth - 4 * 9,
@@ -85,7 +86,7 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
                             ...item,
                             comments: [
                                 {
-                                    id: '' + Date.now(),
+                                    id: '' + (Date.now() - 1),
                                     text: 'Master cleanse literally deep v poutine cliche intelligentsia salvia.',
                                     createdAt: Date.now() - 3 * HOUR,
                                     images: [],
@@ -93,7 +94,7 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
                                     comments: [],
                                 },
                                 {
-                                    id: '' + Date.now() + 1,
+                                    id: '' + Date.now(),
                                     text: '3 wolf moon neutra prism everyday carry photo booth. Heirloom green juice shaman pok pok, master cleanse polaroid tumblr.',
                                     createdAt: Date.now() - 2 * DAY,
                                     images: [],
@@ -109,7 +110,7 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
                 ListHeaderComponent={<HeaderPlaceholder extraHeight={9} />}
             />
             <FloatingButton
-                iconName='plus'
+                iconName='compose'
                 iconSize={48}
                 onPress={() => props.navigation.navigate('CreatePost', {spaceId: space.id})}
             />

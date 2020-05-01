@@ -120,7 +120,7 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
                 ListHeaderComponent={<HeaderPlaceholder/>}
             />
             <FloatingButton
-                iconName='plus'
+                iconName='chat_active'
                 iconSize={48}
                 onPress={() => props.navigation.navigate('Home')}
             />

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, StyleSheet } from 'react-native';
 
-import Icon from './CustomIcon';
+import { CustomIcon } from './CustomIcon';
 import { Colors } from '../../styles';
 import { TouchableView } from './TouchableView';
 
@@ -39,7 +39,7 @@ export const FloatingButton = (props: Props) => (
             style={[styles.floatingButton, buttonStyle(props.enabled)]}
             onPress={isEnabled(props.enabled) ? props.onPress : undefined}
         >
-            <Icon name={props.iconName} size={props.iconSize} color={iconColor(props.enabled)} />
+            <CustomIcon name={props.iconName} size={props.iconSize} color={iconColor(props.enabled)} />
         </TouchableView>
     </View>
 );

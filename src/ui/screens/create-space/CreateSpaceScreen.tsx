@@ -9,7 +9,7 @@ import { TouchableView } from '../../components/TouchableView'
 import { RegularText, BoldText } from '../../components/Text'
 import { Colors, ComponentColors } from '../../../styles'
 import { ScreenHeader } from '../../components/ScreenHeader'
-import Icon, { CloseIcon } from '../../components/CustomIcon'
+import { CustomIcon, CloseIcon } from '../../components/CustomIcon'
 import { HeaderPlaceholder } from '../../components/Placeholder'
 import { showImagePicker } from '../../../asyncImagePicker'
 import { ImageData } from '../../../models/ImageData'
@@ -61,7 +61,7 @@ export const CreateSpaceScreen = (props: StateProps) => {
                     :
                         <>
                             <View style={styles.coverImagePickerIconContainer}>
-                                <Icon name='picture' size={48} color={Colors.LIGHTISH_GRAY} />
+                                <CustomIcon name='picture' size={48} color={Colors.LIGHTISH_GRAY} />
                             </View>
                             <BoldText style={styles.coverImagePickerLabel}>Add cover image</BoldText>
                         </>

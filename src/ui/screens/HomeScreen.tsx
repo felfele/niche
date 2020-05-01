@@ -9,6 +9,7 @@ import { SpacesScreen } from './SpacesScreen'
 import { AccountScreen } from './AccountScreen'
 import { createStackNavigator } from '@react-navigation/stack'
 import { ViewSpaceScreen } from './ViewSpaceScreen'
+import { CustomIcon } from '../components/CustomIcon'
 
 const Tab = createBottomTabNavigator()
 
@@ -49,9 +50,9 @@ export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
                 component={ActivityScreen}
                 options={{
                     tabBarIcon: ({focused, color, size}) =>
-                        <MaterialCommunityIcon
-                            name={'bell-outline'}
-                            size={size}
+                        <CustomIcon
+                            name={'bell'}
+                            size={size + 12}
                             color={color}
                         />,
                 }}
@@ -61,9 +62,9 @@ export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
                 component={SpacesStack}
                 options={{
                     tabBarIcon: ({focused, color, size}) =>
-                        <MaterialCommunityIcon
-                            name={'earth'}
-                            size={size}
+                        <CustomIcon
+                            name={'windows'}
+                            size={size + 12}
                             color={color}
                         />,
                 }}
@@ -73,9 +74,9 @@ export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
                 component={AccountScreen}
                 options={{
                     tabBarIcon: ({focused, color, size}) =>
-                        <MaterialCommunityIcon
+                        <CustomIcon
                             name={'fingerprint'}
-                            size={size}
+                            size={size + 12}
                             color={color}
                         />,
                 }}
