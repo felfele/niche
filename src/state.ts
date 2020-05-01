@@ -12,12 +12,6 @@ export interface Identity extends Contact {
     privateKey: HexString
 }
 
-export interface Work {
-    description: string
-    timestamp: number
-    weight: number
-}
-
 export type ContactMap = {[publicKey: string]: Contact}
 
 export interface Author {
