@@ -89,6 +89,7 @@ export const WelcomeScreen = (props: {navigation: NavigationProp<'Welcome'>}) =>
                     flexDirection: 'column',
                     alignItems: 'center',
                     alignSelf: 'center',
+                    paddingTop: 18,
                 }}
                 onPress={async () => {
                     await openImagePicker(onUpdatePicture);
