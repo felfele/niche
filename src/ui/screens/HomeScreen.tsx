@@ -46,24 +46,24 @@ export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
             }}
         >
             <Tab.Screen
-                name="Activity"
-                component={ActivityScreen}
-                options={{
-                    tabBarIcon: ({focused, color, size}) =>
-                        <CustomIcon
-                            name={'bell'}
-                            size={size + 12}
-                            color={color}
-                        />,
-                }}
-            />
-            <Tab.Screen
                 name="Spaces"
                 component={SpacesStack}
                 options={{
                     tabBarIcon: ({focused, color, size}) =>
                         <CustomIcon
                             name={'windows'}
+                            size={size + 12}
+                            color={color}
+                        />,
+                }}
+            />
+            <Tab.Screen
+                name="Activity"
+                component={ActivityScreen}
+                options={{
+                    tabBarIcon: ({focused, color, size}) =>
+                        <CustomIcon
+                            name={'bell'}
                             size={size + 12}
                             color={color}
                         />,
