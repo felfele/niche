@@ -41,6 +41,8 @@
 	<string>Niche uses the camera to take pictures and read QR codes</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Niche will let you choose which photos from your library to share</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Niche wants to add pictures you take to your library</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>NunitoSans-Regular.ttf</string>
