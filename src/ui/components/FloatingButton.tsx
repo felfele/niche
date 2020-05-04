@@ -33,23 +33,31 @@ const extraBottomStyle = (extraBottom?: number) => extraBottom != null
     : undefined
 ;
 
+const ActionButton = (props: Props) => (
+    <TouchableView
+        style={[styles.floatingButton, buttonStyle(props.enabled)]}
+        onPress={isEnabled(props.enabled) ? props.onPress : undefined}
+    >
+        <CustomIcon name={props.iconName} size={props.iconSize} color={iconColor(props.enabled)} />
+    </TouchableView>
+)
+
 export const FloatingButton = (props: Props) => (
-    <View style={[styles.floatingButtonContainer, extraBottomStyle(props.extraBottom)]}>
-        <TouchableView
-            style={[styles.floatingButton, buttonStyle(props.enabled)]}
-            onPress={isEnabled(props.enabled) ? props.onPress : undefined}
-        >
-            <CustomIcon name={props.iconName} size={props.iconSize} color={iconColor(props.enabled)} />
-        </TouchableView>
+    <View style={[styles.buttonContainer, styles.floatingButtonContainer, extraBottomStyle(props.extraBottom)]}>
+        <ActionButton {...props} />
     </View>
-);
+)
+
+export const NonFloatingButton = (props: Props) => (
+    <View style={[styles.buttonContainer, extraBottomStyle(props.extraBottom)]}>
+        <ActionButton {...props} />
+    </View>
+)
 
 const styles = StyleSheet.create({
-    floatingButtonContainer: {
+    buttonContainer: {
         width: '100%',
         height: 60,
-        position: 'absolute',
-        bottom: DEFAULT_BOTTOM_STYLE,
         flexDirection: 'row',
         justifyContent: 'center',
         shadowColor: Colors.BLACK,
@@ -59,6 +67,10 @@ const styles = StyleSheet.create({
             width: 0,
             height: 0.5,
         },
+    },
+    floatingButtonContainer: {
+        position: 'absolute',
+        bottom: DEFAULT_BOTTOM_STYLE,
     },
     floatingButton: {
         width: 60,

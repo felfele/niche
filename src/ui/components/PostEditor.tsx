@@ -11,7 +11,7 @@ import { ImageData } from '../../models/ImageData'
 import { TouchableView, TOUCHABLE_VIEW_DEFAULT_HIT_SLOP } from '../components/TouchableView'
 import { GRID_SPACING } from '../components/GridCard'
 import { launchCamera, launchImageLibrary } from '../../asyncImagePicker'
-import { FloatingButton } from '../components/FloatingButton'
+import { NonFloatingButton } from '../components/FloatingButton'
 import { NavigationProp } from '../../navigationTypes'
 import { ScreenHeader } from '../components/ScreenHeader'
 import { HeaderPlaceholder } from '../components/Placeholder'
@@ -30,7 +30,10 @@ const ImagePreviewGrid = (props: {
     return (
         <SortableList
             style={[{flexDirection: 'column'}, { height: props.imageSize + doublePadding }]}
-            contentContainerStyle={{ padding: 5 }}
+            contentContainerStyle={{
+                padding: 5,
+            }}
+            keyboardShouldPersistTaps='always'
             horizontal={true}
             showsVerticalScrollIndicator={false}
             showsHorizontalScrollIndicator={false}
@@ -170,9 +173,6 @@ export const PostEditor = (props: {
     }
     const focusTextEditor = () => textEditorRef.current?.focus()
     const isPhotoWidgetEnabled = isEnabled(props.imagesEnabled)
-    const floatingButtonExtraBottom = isPhotoWidgetEnabled
-        ? PHOTO_WIDGET_HEIGHT + keyboard.keyboardHeight
-        : keyboard.keyboardHeight
     return (
         <>
             <ScreenHeader
@@ -203,7 +203,18 @@ export const PostEditor = (props: {
                     blurOnSubmit={false}
                     testID='PostEditor/TextInput'
                     ref={textEditorRef}
+                >
+
+                </TextInput>
+
+                <NonFloatingButton
+                    iconName='share'
+                    iconSize={48}
+                    onPress={() => props.onDonePress(text, images)}
+                    enabled={isPostingEnabled}
+                    extraBottom={-10}
                 />
+
                 {isPhotoWidgetEnabled &&
                     <PhotoWidget
                         onPressCamera={async () => {
@@ -222,18 +233,10 @@ export const PostEditor = (props: {
                         }}
                     />
                 }
-                <FloatingButton
-                    iconName='share'
-                    iconSize={48}
-                    onPress={() => props.onDonePress(text, images)}
-                    enabled={isPostingEnabled}
-                    extraBottom={floatingButtonExtraBottom}
-                />
             </KeyboardAvoidingView>
         </>
     )
 }
-
 
 const PHOTO_WIDGET_HEIGHT = 50
 
