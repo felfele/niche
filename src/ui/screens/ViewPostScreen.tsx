@@ -3,13 +3,12 @@ import { Dimensions, FlatList, View } from 'react-native'
 import { useSelector } from 'react-redux'
 
 import { NavigationProp, RouteProp } from '../..//navigationTypes'
-import { State } from 'react-native-gesture-handler'
 import { ScreenHeader } from '../components/ScreenHeader'
 import { CloseIcon } from '../components/CustomIcon'
 import { ComponentColors, Colors } from '../../styles'
 import { TabBarPlaceholder, HeaderPlaceholder } from '../components/Placeholder'
 import { FloatingButton } from '../components/FloatingButton'
-import { Post } from '../../state'
+import { Post, State } from '../../state'
 import { TouchableView, ZERO_HIT_SLOP } from '../components/TouchableView'
 import { ImageDataView } from '../components/ImageDataView'
 import { RegularText, BoldText, MediumText } from '../components/Text'
@@ -83,7 +82,15 @@ const PostCard = React.memo((props: {
             }
         </View>
         {props.index === 0 &&
-            <View style={{height: 45, padding: 9, backgroundColor: ComponentColors.BACKGROUND_COLOR}}>
+            <View
+                style={{
+                    height: 45,
+                    paddingTop: 18,
+                    paddingBottom: 8,
+                    paddingLeft: 9,
+                    backgroundColor: ComponentColors.BACKGROUND_COLOR,
+                }}
+            >
                 <RegularText>{props.post.comments.length + ' comments'}</RegularText>
             </View>
         }
@@ -91,7 +98,12 @@ const PostCard = React.memo((props: {
 ));
 
 export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route: RouteProp<'ViewPost'>}) => {
-    const post = props.route.params.post
+    const postId = props.route.params.postId
+    const spaceId = props.route.params.spaceId
+    console.log('ViewPostScreen', {postId, spaceId})
+    const post = useSelector((state: State) =>
+        state.spaces.find(space => space.id === spaceId)?.posts.find(p => p.id === postId)
+    )!
     const title = `${post.author.name.toLocaleUpperCase()}'S POST`
     const posts = [post].concat(post.comments)
     return (
@@ -121,7 +133,7 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
             <FloatingButton
                 iconName='chat_active'
                 iconSize={48}
-                onPress={() => props.navigation.navigate('Home')}
+                onPress={() => props.navigation.navigate('CreateComment', {postId: post.id, spaceId})}
             />
         </>
     )

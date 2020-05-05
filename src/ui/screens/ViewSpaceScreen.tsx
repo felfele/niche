@@ -11,7 +11,6 @@ import { State, Post } from '../../state'
 import { RegularText } from '../components/Text'
 import { TouchableView, ZERO_HIT_SLOP } from '../components/TouchableView'
 import { ImageDataView } from '../components/ImageDataView'
-import { HOUR, DAY } from '../../dateHelpers'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -68,8 +67,11 @@ const PostCard = React.memo((props: {
 export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, route: RouteProp<'ViewSpace'>}) => {
     const space = useSelector((state: State) =>
         state.spaces.find(space => space.id === props.route.params.id)
-    )!
-    const identity = useSelector((state: State) => state.identity)
+    )
+    if (space == null) {
+        return null
+    }
+    const spaceId = space.id
     return (
         <>
             <ScreenHeader
@@ -83,27 +85,10 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
                     <PostCard
                         key={item.id}
                         post={item}
-                        onPress={() => props.navigation.navigate('ViewPost', { post: {
-                            ...item,
-                            comments: [
-                                {
-                                    id: '' + (Date.now() - 1),
-                                    text: 'Master cleanse literally deep v poutine cliche intelligentsia salvia.',
-                                    createdAt: Date.now() - 3 * HOUR,
-                                    images: [],
-                                    author: identity,
-                                    comments: [],
-                                },
-                                {
-                                    id: '' + Date.now(),
-                                    text: '3 wolf moon neutra prism everyday carry photo booth. Heirloom green juice shaman pok pok, master cleanse polaroid tumblr.',
-                                    createdAt: Date.now() - 2 * DAY,
-                                    images: [],
-                                    author: identity,
-                                    comments: [],
-                                }
-                            ],
-                        }})}
+                        onPress={() => props.navigation.navigate('ViewPost', {
+                            postId: item.id,
+                            spaceId,
+                        })}
                     />
                 }
                 keyExtractor={(item: any) => item.id}

@@ -19,7 +19,7 @@ import { HeaderPlaceholder } from '../components/Placeholder'
 const ImagePreviewGrid = (props: {
     images: ImageData[],
     imageSize: number,
-    onRemoveImage: (image: ImageData) => void,
+    onRemoveImage: (index: number) => void,
     onReleaseRow?: (key: number, currentOrder: number[]) => void,
 }) => {
     if (props.images.length === 0) {
@@ -44,7 +44,7 @@ const ImagePreviewGrid = (props: {
                     data={rowProps.data}
                     active={rowProps.active}
                     imageSize={props.imageSize}
-                    onRemoveImage={props.onRemoveImage}
+                    onRemoveImage={() => props.onRemoveImage(rowProps.index!)}
                 />
             )}
             onReleaseRow={props.onReleaseRow}
@@ -60,7 +60,7 @@ interface ItemProps {
     data: ImageData;
     active: boolean;
     imageSize: number;
-    onRemoveImage: (image: ImageData) => void;
+    onRemoveImage: () => void;
 }
 
 const Item = (props: ItemProps) => {
@@ -102,22 +102,22 @@ const Item = (props: ItemProps) => {
                 style={{
                     width: notGreaterThan(props.data.width, props.imageSize),
                     height: notGreaterThan(props.data.height, props.imageSize),
+                    resizeMode: 'cover',
                 }}
-                // background={true}
             >
-                <TouchableView
-                    style={styles.delete}
-                    onPress={() => props.onRemoveImage(props.data)}
-                    hitSlop={{
-                        top: 5,
-                        left: 5,
-                        bottom: 5,
-                        right: 5,
-                    }}
-                >
-                    <Icon name={'close-circle'} size={24}/>
-                </TouchableView>
             </ImageDataView>
+            <TouchableView
+                style={styles.delete}
+                onPress={props.onRemoveImage}
+                hitSlop={{
+                    top: 5,
+                    left: 5,
+                    bottom: 5,
+                    right: 5,
+                }}
+            >
+                <Icon name={'close-circle'} size={24}/>
+            </TouchableView>
         </Animated.View>
     );
 }
@@ -153,6 +153,7 @@ const PhotoWidget = React.memo((props: { onPressCamera: () => void, onPressInser
 const isEnabled = (enabled?: boolean) => enabled !== false
 
 export const PostEditor = (props: {
+    title: string,
     text: string,
     images: ImageData[],
     imagesEnabled?: boolean,
@@ -169,14 +170,17 @@ export const PostEditor = (props: {
         const updatedImages = [...images, image]
         setImages(updatedImages)
     }
-    const onRemoveImage = () => {
+    const onRemoveImage = (index: number) => {
+        console.log('onRemoveImage', {index})
+        const updatedImages = [...images.slice(0, index), ...images.slice(index + 1)]
+        setImages(updatedImages)
     }
     const focusTextEditor = () => textEditorRef.current?.focus()
     const isPhotoWidgetEnabled = isEnabled(props.imagesEnabled)
     return (
         <>
             <ScreenHeader
-                title='CREATE POST'
+                title={props.title}
                 navigation={props.navigation}
             />
             <HeaderPlaceholder/>
@@ -257,12 +261,13 @@ const styles = StyleSheet.create({
         position: 'absolute',
         justifyContent: 'center',
         alignItems: 'center',
-        width: 24,
-        height: 24,
+        width: 23,
+        height: 23,
         borderRadius: 12,
+        borderWidth: 0,
         backgroundColor: Colors.WHITE,
-        top: 2,
-        right: 2,
+        top: 8,
+        right: 8,
     },
     item: {
         flexDirection: 'column',

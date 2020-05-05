@@ -10,6 +10,7 @@ export const CloseIcon = (props: {size: number, color?: string}) => (
     <View style={{
         width: props.size,
         height: props.size,
+        paddingLeft: -30,
     }}>
         <CustomIcon
             name='arrow1_close'

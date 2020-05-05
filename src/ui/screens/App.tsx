@@ -6,19 +6,19 @@ import { PersistGate } from 'redux-persist/integration/react'
 // @ts-ignore
 import { setCustomText } from 'react-native-global-props'
 
-import configureStore from './store'
-import { RootStackNavigatorParams } from './navigationTypes'
-import { Colors, defaultTextProps } from './styles'
+import configureStore from '../../store'
+import { RootStackNavigatorParams } from '../../navigationTypes'
+import { Colors, defaultTextProps } from '../../styles'
 
-import { HomeScreen } from './ui/screens/HomeScreen'
-import { WelcomeScreen } from './ui/screens/WelcomeScreen'
-import { InitialScreen } from './ui/screens/InitialScreen'
-import { CreateSpaceScreen } from './ui/screens/create-space/CreateSpaceScreen'
-import { CreateSpaceDoneScreen } from './ui/screens/create-space/CreateSpaceDoneScreen'
-import { DebugScreen } from './ui/screens/DebugScreen'
-import { ViewSpaceScreen } from './ui/screens/ViewSpaceScreen'
-import { CreatePostScreen } from './ui/screens/CreatePostScreen'
-import { ViewPostScreen } from './ui/screens/ViewPostScreen'
+import { HomeScreen } from './HomeScreen'
+import { WelcomeScreen } from './WelcomeScreen'
+import { InitialScreen } from './InitialScreen'
+import { CreateSpaceScreen } from './create-space/CreateSpaceScreen'
+import { CreateSpaceDoneScreen } from './create-space/CreateSpaceDoneScreen'
+import { DebugScreen } from './DebugScreen'
+import { CreatePostScreen } from './CreatePostScreen'
+import { ViewPostScreen } from './ViewPostScreen'
+import { CreateCommentScreen } from './CreateCommentScreen'
 
 setCustomText(defaultTextProps);
 
@@ -78,6 +78,10 @@ const App = () => {
                         <Stack.Screen
                             name='ViewPost'
                             component={ViewPostScreen}
+                        />
+                        <Stack.Screen
+                            name='CreateComment'
+                            component={CreateCommentScreen}
                         />
                     </Stack.Navigator>
                 </NavigationContainer>

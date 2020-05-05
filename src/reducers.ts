@@ -48,6 +48,15 @@ const spacesSlice = createSlice({
                 space.posts.unshift(action.payload.post)
             }
         },
+        addCommentToPost(state: Space[], action: PayloadAction<{spaceId: HexString, postId: HexString, post: Post}>) {
+            const space = state.find(s => s.id === action.payload.spaceId)
+            if (space != null) {
+                const post = space.posts.find(p => p.id === action.payload.postId)
+                if (post != null) {
+                    post.comments.unshift(action.payload.post)
+                }
+            }
+        },
         clearSpaces(state: Space[]) {
             state.splice(0)
         }
@@ -56,7 +65,12 @@ const spacesSlice = createSlice({
 
 export const { setIdentity, clearIdentity } = identitySlice.actions
 export const { addContact, clearContacts } = contactsSlice.actions
-export const { addSpace, clearSpaces, addPostToSpace } = spacesSlice.actions
+export const {
+    addSpace,
+    clearSpaces,
+    addPostToSpace,
+    addCommentToPost,
+} = spacesSlice.actions
 
 export const resetState = () => ({
     type: 'RESET-STATE',

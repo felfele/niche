@@ -22,8 +22,13 @@ export type RootStackNavigatorParams = {
     CreatePost: {
         spaceId: HexString,
     },
+    CreateComment: {
+        spaceId: HexString,
+        postId: HexString,
+    },
     ViewPost: {
-        post: Post,
+        spaceId: HexString,
+        postId: HexString,
     },
 }
 
