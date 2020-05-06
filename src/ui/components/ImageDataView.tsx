@@ -20,7 +20,7 @@ const getAbsolutePathFromLocalPath = (localPath: string): string => {
     }
 };
 
-const getImageDataURI = (location: ImageLocation): string => {
+export const getImageDataURI = (location: ImageLocation): string => {
     if (isImageLocationPath(location)) {
         return getAbsolutePathFromLocalPath(location.path)
     }
