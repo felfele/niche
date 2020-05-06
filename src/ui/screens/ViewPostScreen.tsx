@@ -25,7 +25,7 @@ const PostCard = React.memo((props: {
     isComment: boolean,
     post: Post,
     onPressText: () => void,
-    onPressImage: () => void,
+    onPressImage: (index: number) => void,
 }) => (
     <>
         <View
@@ -60,21 +60,21 @@ const PostCard = React.memo((props: {
                 </View>
                 <RegularText style={{fontSize: 12, color: Colors.LIGHTISH_GRAY}}>{printableElapsedTime(props.post.createdAt) + ' ago'}</RegularText>
             </View>
-            <TouchableWithoutFeedback
-                onPress={props.onPressImage}
-            >
                 {props.post.images.map((image, index) =>
-                    <ImageDataView
-                        key={'' + index}
-                        source={image}
-                        style={[{
-                            marginTop: index > 0 ? 9 : 0,
-                            width: windowWidth,
-                            height: windowWidth * (image.height / image.width),
-                        }]}
-                    />
+                    <TouchableWithoutFeedback
+                        onPress={() => props.onPressImage(index)}
+                    >
+                        <ImageDataView
+                            key={'' + index}
+                            source={image}
+                            style={[{
+                                marginTop: index > 0 ? 9 : 0,
+                                width: windowWidth,
+                                height: windowWidth * (image.height / image.width),
+                            }]}
+                        />
+                    </TouchableWithoutFeedback>
                 )}
-            </TouchableWithoutFeedback>
             {props.post.images.length > 0 && props.post.text !== '' &&
                 <View style={{paddingTop: 9}}></View>
             }
@@ -112,6 +112,7 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
     const postId = props.route.params.postId
     const spaceId = props.route.params.spaceId
     const [isImageViewer, setImageViewer] = useState(false)
+    const [imageIndex, setImageIndex] = useState(0)
     const identity = useSelector((state: State) => state.identity)
     const post = useSelector((state: State) =>
         state.spaces.find(space => space.id === spaceId)?.posts.find(p => p.id === postId)
@@ -141,6 +142,7 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
                     imageUrls={imageUrls}
                     enableSwipeDown={true}
                     onCancel={() => setImageViewer(false)}
+                    index={imageIndex}
                     renderIndicator={() => (<View></View>)}
                     saveToLocalByLongPress={false}
                 />
@@ -172,9 +174,11 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
                         isComment={index !== 0}
                         key={item.id}
                         post={item}
-                        onPressImage={() => setImageViewer(true)}
+                        onPressImage={(i: number) => {
+                            setImageIndex(i)
+                            setImageViewer(true)
+                        }}
                         onPressText={() => {
-                            console.log('ViewPostScreen/PostCard', {spaceId, postId, item})
                             if (index > 0 && item.author.address === identity.address) {
                                 props.navigation.navigate('EditComment', {spaceId, postId, commentId: item.id})
                             }
