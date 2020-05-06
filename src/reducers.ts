@@ -57,6 +57,28 @@ const spacesSlice = createSlice({
                 }
             }
         },
+        updatePost(state: Space[], action: PayloadAction<{spaceId: HexString, post: Post}>) {
+            const space = state.find(s => s.id === action.payload.spaceId)
+            if (space != null) {
+                const postIndex = space.posts.findIndex(p => p.id === action.payload.post.id)
+                if (postIndex !== -1) {
+                    space.posts.splice(postIndex, 1, action.payload.post)
+                }
+            }
+        },
+        updateComment(state: Space[], action: PayloadAction<{spaceId: HexString, postId: HexString, comment: Post}>) {
+            const post = state
+                .find(s => s.id === action.payload.spaceId)
+                ?.posts
+                .find(p => p.id === action.payload.postId)
+
+            if (post != null) {
+                const commentIndex = post.comments.findIndex(c => c.id === action.payload.comment.id)
+                if (commentIndex !== -1) {
+                    post.comments.splice(commentIndex, 1, action.payload.comment)
+                }
+            }
+        },
         clearSpaces(state: Space[]) {
             state.splice(0)
         }
@@ -70,6 +92,8 @@ export const {
     clearSpaces,
     addPostToSpace,
     addCommentToPost,
+    updatePost,
+    updateComment,
 } = spacesSlice.actions
 
 export const resetState = () => ({

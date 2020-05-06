@@ -17,6 +17,7 @@ export const CreatePostScreen = (props: {navigation: NavigationProp<'Home'>, rou
             id: '' + Date.now() as HexString,
             text,
             createdAt: Date.now(),
+            updatedAt: Date.now(),
             images,
             author: {
                 name: identity.name,

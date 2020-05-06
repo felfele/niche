@@ -18,6 +18,7 @@ export const CreateCommentScreen = (props: {navigation: NavigationProp<'Home'>, 
             id: '' + Date.now() as HexString,
             text,
             createdAt: Date.now(),
+            updatedAt: Date.now(),
             images,
             author: {
                 name: identity.name,

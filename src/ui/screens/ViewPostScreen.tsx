@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 
 import { NavigationProp, RouteProp } from '../..//navigationTypes'
 import { ScreenHeader } from '../components/ScreenHeader'
-import { CloseIcon } from '../components/CustomIcon'
+import { CloseIcon, CustomIcon } from '../components/CustomIcon'
 import { ComponentColors, Colors } from '../../styles'
 import { TabBarPlaceholder, HeaderPlaceholder } from '../components/Placeholder'
 import { FloatingButton } from '../components/FloatingButton'
@@ -19,14 +19,14 @@ const windowWidth = Dimensions.get('window').width
 
 
 const PostCard = React.memo((props: {
-    index: number,
+    isComment: boolean,
     post: Post,
     onPress: () => void,
 }) => (
     <>
-        <View
+        <TouchableView
             style={{
-                backgroundColor: props.index === 0 ? Colors.WHITE : ComponentColors.BACKGROUND_COLOR,
+                backgroundColor: props.isComment ? ComponentColors.BACKGROUND_COLOR : Colors.WHITE,
                 flexDirection: 'column',
                 width: windowWidth,
                 shadowColor: Colors.BLACK,
@@ -39,6 +39,7 @@ const PostCard = React.memo((props: {
                 marginBottom: 1,
             }}
             hitSlop={ZERO_HIT_SLOP}
+            onPress={props.onPress}
         >
             <View
                 style={{
@@ -74,14 +75,14 @@ const PostCard = React.memo((props: {
             {props.post.text !== '' &&
                 <RegularText
                     style={{
-                        fontSize: props.index === 0 ? 18 : 16,
-                        padding: props.index === 0 ? 18 : 9,
+                        fontSize: props.isComment ? 16 : 18,
+                        padding: props.isComment ? 9 : 18,
                     }}
                 >{props.post.text}
                 </RegularText>
             }
-        </View>
-        {props.index === 0 &&
+        </TouchableView>
+        {props.isComment === false &&
             <View
                 style={{
                     height: 45,
@@ -101,11 +102,18 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
     const postId = props.route.params.postId
     const spaceId = props.route.params.spaceId
     console.log('ViewPostScreen', {postId, spaceId})
+    const identity = useSelector((state: State) => state.identity)
     const post = useSelector((state: State) =>
         state.spaces.find(space => space.id === spaceId)?.posts.find(p => p.id === postId)
     )!
     const title = `${post.author.name.toLocaleUpperCase()}'S POST`
     const posts = [post].concat(post.comments)
+    const rightButton = post.author.address === identity.address
+        ? {
+            label: <CustomIcon name='settings' size={36} color={Colors.BLACK} />,
+            onPress: () => props.navigation.navigate('EditPost', {spaceId, postId})
+        }
+        : undefined
     return (
         <>
             <ScreenHeader
@@ -114,16 +122,22 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
                     label: <CloseIcon size={40} />,
                     onPress: () => props.navigation.goBack(),
                 }}
+                rightButton={rightButton}
             />
             <FlatList
                 style={{ flex: 1, backgroundColor: ComponentColors.BACKGROUND_COLOR }}
                 data={posts}
                 renderItem={({ item, index }: any) =>
                     <PostCard
-                        index={index}
+                        isComment={index !== 0}
                         key={item.id}
                         post={item}
-                        onPress={() => {}}
+                        onPress={() => {
+                            console.log('ViewPostScreen/PostCard', {spaceId, postId, item})
+                            if (index > 0 && item.author.address === identity.address) {
+                                props.navigation.navigate('EditComment', {spaceId, postId, commentId: item.id})
+                            }
+                        }}
                     />
                 }
                 keyExtractor={(item: any) => item.id}

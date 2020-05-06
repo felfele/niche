@@ -19,6 +19,8 @@ import { DebugScreen } from './DebugScreen'
 import { CreatePostScreen } from './CreatePostScreen'
 import { ViewPostScreen } from './ViewPostScreen'
 import { CreateCommentScreen } from './CreateCommentScreen'
+import { EditPostScreen } from './EditPostScreen'
+import { EditCommentScreen } from './EditCommentScreen'
 
 setCustomText(defaultTextProps);
 
@@ -82,6 +84,14 @@ const App = () => {
                         <Stack.Screen
                             name='CreateComment'
                             component={CreateCommentScreen}
+                        />
+                        <Stack.Screen
+                            name='EditPost'
+                            component={EditPostScreen}
+                        />
+                        <Stack.Screen
+                            name='EditComment'
+                            component={EditCommentScreen}
                         />
                     </Stack.Navigator>
                 </NavigationContainer>

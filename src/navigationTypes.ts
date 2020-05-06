@@ -1,8 +1,7 @@
-import { RouteProp as NavigationRouteProp } from '@react-navigation/native';
-import { StackNavigationProp } from '@react-navigation/stack';
+import { RouteProp as NavigationRouteProp } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
 import { ImageData } from './models/ImageData'
-import { HexString } from './hex';
-import { Post } from './state';
+import { HexString } from './hex'
 
 export type RootStackNavigatorParams = {
     Home: undefined,
@@ -30,6 +29,15 @@ export type RootStackNavigatorParams = {
         spaceId: HexString,
         postId: HexString,
     },
+    EditPost: {
+        spaceId: HexString,
+        postId: HexString,
+    },
+    EditComment: {
+        spaceId: HexString,
+        postId: HexString,
+        commentId: HexString,
+    }
 }
 
 export type NavigationProp<T extends keyof RootStackNavigatorParams> = StackNavigationProp<
@@ -37,4 +45,7 @@ export type NavigationProp<T extends keyof RootStackNavigatorParams> = StackNavi
     T
 >
 
-export type RouteProp<T extends keyof RootStackNavigatorParams> = NavigationRouteProp<RootStackNavigatorParams, T>;
+export type RouteProp<T extends keyof RootStackNavigatorParams> = NavigationRouteProp<
+    RootStackNavigatorParams,
+    T
+>

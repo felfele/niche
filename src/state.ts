@@ -24,6 +24,7 @@ export interface Post {
     id: HexString
     text: string
     createdAt: number
+    updatedAt: number
     images: ImageData[]
     author: Author
     comments: Post[]
