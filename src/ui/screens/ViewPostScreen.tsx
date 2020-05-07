@@ -174,7 +174,10 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
                     {
                         iconName: 'compose',
                         label: 'Edit post',
-                        onPress: () => props.navigation.navigate('EditPost', {spaceId, postId}),
+                        onPress: () => {
+                            setMenuVisible(false)
+                            props.navigation.navigate('EditPost', {spaceId, postId})
+                        }
                     },
                     {
                         iconName: 'close',
