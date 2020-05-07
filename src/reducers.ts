@@ -1,6 +1,7 @@
 import { combineReducers, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Identity, defaultState, State, ContactMap, Contact, Space, Post } from './state'
 import { HexString } from './hex'
+import { ImageData } from './models/ImageData'
 
 const identitySlice = createSlice({
     name: 'identity',
@@ -46,6 +47,14 @@ const spacesSlice = createSlice({
             const spaceIndex = state.findIndex(s => s.id === action.payload.spaceId)
             if (spaceIndex !== -1) {
                 state.splice(spaceIndex, 1)
+            }
+        },
+        updateSpace(state: Space[], action: PayloadAction<{spaceId: HexString, name: string, description: string, coverImage: ImageData}>) {
+            const space = state.find(s => s.id === action.payload.spaceId)
+            if (space != null) {
+                space.name = action.payload.name
+                space.description = action.payload.description
+                space.coverImage = action.payload.coverImage
             }
         },
         addPostToSpace(state: Space[], action: PayloadAction<{spaceId: HexString, post: Post}>) {
@@ -105,6 +114,7 @@ export const { addContact, clearContacts } = contactsSlice.actions
 export const {
     addSpace,
     removeSpace,
+    updateSpace,
     clearSpaces,
     addPostToSpace,
     removePostFromSpace,

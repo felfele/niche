@@ -86,7 +86,10 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
         label: <CustomIcon name='settings' size={36} color={Colors.BLACK} />,
         onPress: () => setMenuVisible(true),
     }
-    const navigateToCreatePost = () => props.navigation.navigate('CreatePost', {spaceId: space.id})
+    const navigateToCreatePost = () => {
+        setMenuVisible(false)
+        props.navigation.navigate('CreatePost', {spaceId: space.id})
+    }
     return (
         <>
             <ScreenHeader
@@ -117,7 +120,10 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
                     {
                         iconName: 'information',
                         label: 'About this space',
-                        onPress: () => {},
+                        onPress: () => {
+                            setMenuVisible(false)
+                            props.navigation.navigate('AboutSpace', {spaceId: space.id})
+                        },
                     },
                     {
                         iconName: 'no',

@@ -21,6 +21,7 @@ import { ViewPostScreen } from './ViewPostScreen'
 import { CreateCommentScreen } from './CreateCommentScreen'
 import { EditPostScreen } from './EditPostScreen'
 import { EditCommentScreen } from './EditCommentScreen'
+import { AboutSpaceScreen } from './AboutSpaceScreen'
 
 setCustomText(defaultTextProps);
 
@@ -92,6 +93,10 @@ const App = () => {
                         <Stack.Screen
                             name='EditComment'
                             component={EditCommentScreen}
+                        />
+                        <Stack.Screen
+                            name='AboutSpace'
+                            component={AboutSpaceScreen}
                         />
                     </Stack.Navigator>
                 </NavigationContainer>

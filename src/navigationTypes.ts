@@ -38,6 +38,9 @@ export type RootStackNavigatorParams = {
         postId: HexString,
         commentId: HexString,
     },
+    AboutSpace: {
+        spaceId: HexString,
+    },
 }
 
 export type NavigationProp<T extends keyof RootStackNavigatorParams> = StackNavigationProp<
