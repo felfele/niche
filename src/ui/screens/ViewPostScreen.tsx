@@ -67,9 +67,9 @@ const PostCard = React.memo((props: {
                 {props.post.images.map((image, index) =>
                     <TouchableWithoutFeedback
                         onPress={() => props.onPressImage(index)}
+                        key={'' + index}
                     >
                         <ImageDataView
-                            key={'' + index}
                             source={image}
                             style={[{
                                 marginTop: index > 0 ? 9 : 0,
@@ -205,7 +205,6 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
                 renderItem={({ item, index }: any) =>
                     <PostCard
                         isComment={index !== 0}
-                        key={item.id}
                         post={item}
                         onPressImage={(i: number) => {
                             setImageIndex(i)
