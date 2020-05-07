@@ -68,10 +68,7 @@ export const ModalMenu = (props: {
                             <ModalMenuItem
                                 iconName={item.iconName}
                                 label={item.label}
-                                onPress={() => {
-                                    props.onCancel()
-                                    item.onPress()
-                                }}
+                                onPress={item.onPress}
                              />
                             {index + 1 < props.items.length && <ModalMenuSeparator />}
                         </React.Fragment>

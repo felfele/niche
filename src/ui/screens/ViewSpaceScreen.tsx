@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Dimensions, FlatList, View } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 // @ts-ignore
 import PhotoGrid from 'react-native-thumbnail-grid'
 
@@ -16,6 +16,8 @@ import { getImageDataURI } from '../components/ImageDataView'
 import { ModalMenu } from '../components/ModalMenu'
 import { useState } from 'react'
 import { CustomIcon } from '../components/CustomIcon'
+import { areYouSureDialog } from '../../dialogs'
+import { removeSpace } from '../../reducers'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -79,6 +81,7 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
         return null
     }
     const spaceId = space.id
+    const dispatch = useDispatch()
     const rightButton = {
         label: <CustomIcon name='settings' size={36} color={Colors.BLACK} />,
         onPress: () => setMenuVisible(true),
@@ -119,7 +122,14 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
                     {
                         iconName: 'no',
                         label: 'Leave this space',
-                        onPress: () => {},
+                        onPress: async () => {
+                            const confirmed = await areYouSureDialog('Do you really want to leave this private space?', 'You’ll need to be invited again if you change your mind later.')
+                            if (confirmed) {
+                                props.navigation.goBack()
+                                dispatch(removeSpace({spaceId}))
+                                setMenuVisible(false)
+                            }
+                        },
                     },
                 ]}
             />

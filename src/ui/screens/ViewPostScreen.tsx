@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Dimensions, FlatList, View, Modal as ReactModal } from 'react-native'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import Modal from 'react-native-modal'
 
 import { NavigationProp, RouteProp } from '../..//navigationTypes'
@@ -19,6 +19,8 @@ import ImageViewer from 'react-native-image-zoom-viewer'
 import { useState } from 'react'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { ModalMenu } from '../components/ModalMenu'
+import { areYouSureDialog } from '../../dialogs'
+import { removePostFromSpace } from '../../reducers'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -116,10 +118,14 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
     const [isImageViewer, setImageViewer] = useState(false)
     const [imageIndex, setImageIndex] = useState(0)
     const [isMenuVisible, setMenuVisible] = useState(false)
+    const dispatch = useDispatch()
     const identity = useSelector((state: State) => state.identity)
     const post = useSelector((state: State) =>
         state.spaces.find(space => space.id === spaceId)?.posts.find(p => p.id === postId)
-    )!
+    )
+    if (post == null) {
+        return null
+    }
     const title = `${post.author.name.toLocaleUpperCase()}'S POST`
     const posts = [post].concat(post.comments)
     const rightButton = post.author.address === identity.address
@@ -173,7 +179,14 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
                     {
                         iconName: 'close',
                         label: 'Remove post',
-                        onPress: () => {},
+                        onPress: async () => {
+                            const confirmed = await areYouSureDialog('Do you really want to remove this post?', 'It will be removed from the space for everyone. There’s no undo.')
+                            if (confirmed) {
+                                props.navigation.goBack()
+                                dispatch(removePostFromSpace({spaceId, postId}))
+                                setMenuVisible(false)
+                            }
+                        },
                     },
                 ]}
             />
