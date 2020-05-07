@@ -47,3 +47,13 @@ export function printableElapsedTime(timestamp: number, now: number = Date.now()
 
     return 'few seconds';
 }
+
+export async function asyncSleep(timeoutMillis: number) {
+    return new Promise<number>((resolve, reject) => {
+        if (timeoutMillis > 0) {
+            setTimeout(() => resolve(timeoutMillis), timeoutMillis);
+        } else {
+            resolve(0)
+        }
+    });
+}

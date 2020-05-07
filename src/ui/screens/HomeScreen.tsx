@@ -37,6 +37,7 @@ const SpacesStack = () => {
 export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
     return (
         <Tab.Navigator
+            initialRouteName='Spaces'
             tabBarOptions={{
                 activeTintColor: Colors.BLACK,
                 inactiveTintColor: Colors.LIGHTISH_GRAY,
@@ -46,19 +47,7 @@ export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
             }}
         >
             <Tab.Screen
-                name="Spaces"
-                component={SpacesStack}
-                options={{
-                    tabBarIcon: ({focused, color, size}) =>
-                        <CustomIcon
-                            name={'windows'}
-                            size={size + 12}
-                            color={color}
-                        />,
-                }}
-            />
-            <Tab.Screen
-                name="Activity"
+                name='Activity'
                 component={ActivityScreen}
                 options={{
                     tabBarIcon: ({focused, color, size}) =>
@@ -70,7 +59,19 @@ export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
                 }}
             />
             <Tab.Screen
-                name="Account"
+                name='Spaces'
+                component={SpacesStack}
+                options={{
+                    tabBarIcon: ({focused, color, size}) =>
+                        <CustomIcon
+                            name={'windows'}
+                            size={size + 12}
+                            color={color}
+                        />,
+                }}
+            />
+            <Tab.Screen
+                name='Account'
                 component={AccountScreen}
                 options={{
                     tabBarIcon: ({focused, color, size}) =>

@@ -1,6 +1,7 @@
 import * as React from 'react'
-import { Dimensions, FlatList, View, Modal } from 'react-native'
+import { Dimensions, FlatList, View, Modal as ReactModal } from 'react-native'
 import { useSelector } from 'react-redux'
+import Modal from 'react-native-modal'
 
 import { NavigationProp, RouteProp } from '../..//navigationTypes'
 import { ScreenHeader } from '../components/ScreenHeader'
@@ -17,6 +18,7 @@ import { Avatar } from '../components/Avatar'
 import ImageViewer from 'react-native-image-zoom-viewer'
 import { useState } from 'react'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
+import { ModalMenu } from '../components/ModalMenu'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -113,6 +115,7 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
     const spaceId = props.route.params.spaceId
     const [isImageViewer, setImageViewer] = useState(false)
     const [imageIndex, setImageIndex] = useState(0)
+    const [isMenuVisible, setMenuVisible] = useState(false)
     const identity = useSelector((state: State) => state.identity)
     const post = useSelector((state: State) =>
         state.spaces.find(space => space.id === spaceId)?.posts.find(p => p.id === postId)
@@ -122,7 +125,8 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
     const rightButton = post.author.address === identity.address
         ? {
             label: <CustomIcon name='settings' size={36} color={Colors.BLACK} />,
-            onPress: () => props.navigation.navigate('EditPost', {spaceId, postId})
+            // onPress: () => props.navigation.navigate('EditPost', {spaceId, postId})
+            onPress: () => setMenuVisible(true),
         }
         : undefined
     const imageUrls = post.images.map(image => ({
@@ -130,10 +134,9 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
         width: image.width,
         height: image.height,
     }))
-
     return (
         <>
-            <Modal
+            <ReactModal
                 visible={isImageViewer}
                 transparent={true}
                 animationType='fade'
@@ -156,7 +159,24 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
                 >
                     <CloseIcon size={48} color={Colors.WHITE}/>
                 </TouchableView>
-            </Modal>
+            </ReactModal>
+
+            <ModalMenu
+                visible={isMenuVisible}
+                onCancel={() => setMenuVisible(false)}
+                items={[
+                    {
+                        iconName: 'compose',
+                        label: 'Edit post',
+                        onPress: () => props.navigation.navigate('EditPost', {spaceId, postId}),
+                    },
+                    {
+                        iconName: 'close',
+                        label: 'Remove post',
+                        onPress: () => {},
+                    },
+                ]}
+            />
 
             <ScreenHeader
                 title={title}

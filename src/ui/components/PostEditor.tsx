@@ -26,7 +26,6 @@ const ImagePreviewGrid = (props: {
         return null;
     }
     const doublePadding = 10
-    console.log('ImagePreviewGrid', {images: props.images})
     return (
         <SortableList
             style={[{flexDirection: 'column'}, { height: props.imageSize + doublePadding }]}

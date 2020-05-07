@@ -13,6 +13,9 @@ import { State, Post } from '../../state'
 import { RegularText } from '../components/Text'
 import { TouchableView, ZERO_HIT_SLOP } from '../components/TouchableView'
 import { getImageDataURI } from '../components/ImageDataView'
+import { ModalMenu } from '../components/ModalMenu'
+import { useState } from 'react'
+import { CustomIcon } from '../components/CustomIcon'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -68,6 +71,7 @@ const PostCard = React.memo((props: {
 ));
 
 export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, route: RouteProp<'ViewSpace'>}) => {
+    const [isMenuVisible, setMenuVisible] = useState(false)
     const space = useSelector((state: State) =>
         state.spaces.find(space => space.id === props.route.params.id)
     )
@@ -75,12 +79,51 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
         return null
     }
     const spaceId = space.id
+    const rightButton = {
+        label: <CustomIcon name='settings' size={36} color={Colors.BLACK} />,
+        onPress: () => setMenuVisible(true),
+    }
+    const navigateToCreatePost = () => props.navigation.navigate('CreatePost', {spaceId: space.id})
     return (
         <>
             <ScreenHeader
                 title={space.name}
                 navigation={props.navigation}
+                rightButton={rightButton}
             />
+
+            <ModalMenu
+                visible={isMenuVisible}
+                onCancel={() => setMenuVisible(false)}
+                items={[
+                    {
+                        iconName: 'compose',
+                        label: 'Create post',
+                        onPress: navigateToCreatePost,
+                    },
+                    {
+                        iconName: 'share',
+                        label: 'Invite people',
+                        onPress: () => {},
+                    },
+                    {
+                        iconName: 'user_group',
+                        label: 'View members list',
+                        onPress: () => {},
+                    },
+                    {
+                        iconName: 'information',
+                        label: 'About this space',
+                        onPress: () => {},
+                    },
+                    {
+                        iconName: 'no',
+                        label: 'Leave this space',
+                        onPress: () => {},
+                    },
+                ]}
+            />
+
             <FlatList
                 style={{ flex: 1, backgroundColor: ComponentColors.BACKGROUND_COLOR }}
                 data={space.posts}
@@ -101,7 +144,7 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
             <FloatingButton
                 iconName='compose'
                 iconSize={48}
-                onPress={() => props.navigation.navigate('CreatePost', {spaceId: space.id})}
+                onPress={navigateToCreatePost}
             />
         </>
     )
