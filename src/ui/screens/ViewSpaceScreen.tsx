@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { Dimensions, FlatList, View } from 'react-native'
 import { useSelector } from 'react-redux'
+// @ts-ignore
+import PhotoGrid from 'react-native-thumbnail-grid'
 
 import { NavigationProp, RouteProp } from '../../navigationTypes'
 import { ScreenHeader } from '../components/ScreenHeader'
@@ -10,7 +12,7 @@ import { FloatingButton } from '../components/FloatingButton'
 import { State, Post } from '../../state'
 import { RegularText } from '../components/Text'
 import { TouchableView, ZERO_HIT_SLOP } from '../components/TouchableView'
-import { ImageDataView } from '../components/ImageDataView'
+import { getImageDataURI } from '../components/ImageDataView'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -38,17 +40,18 @@ const PostCard = React.memo((props: {
         onPress={props.onPress}
         hitSlop={ZERO_HIT_SLOP}
     >
-        {props.post.images.map((image, index) =>
-            <ImageDataView
-                key={'' + index}
-                source={image}
-                style={[{
-                    marginTop: index > 0 ? 9 : 0,
-                    width: windowWidth - 4 * 9,
-                    height: (windowWidth * (image.height / image.width)) - 4 * 9,
-                }]}
-            />
-        )}
+        <PhotoGrid
+            source={props.post.images.map(image => getImageDataURI(image.location))}
+            width={windowWidth - 4 * 9}
+            onPressImage={props.onPress}
+            imageStyle={{
+                borderWidth: 3,
+            }}
+            textStyles={{
+                fontSize: 18,
+                fontWeight: 'bold',
+            }}
+        />
         {props.post.images.length > 0 && props.post.text !== '' &&
             <View style={{paddingTop: 9}}></View>
         }
