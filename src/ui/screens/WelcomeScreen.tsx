@@ -19,6 +19,7 @@ import { showImagePicker } from '../../asyncImagePicker'
 import { ImageData } from '../../models/ImageData'
 import InputScrollView from 'react-native-input-scroll-view'
 import { Avatar } from '../components/Avatar'
+import { getImageDataURI } from '../components/ImageDataView'
 
 function publicKeyToAddress(pubKey: any) {
     const pubBytes = pubKey.encode()
@@ -67,6 +68,9 @@ export const WelcomeScreen = (props: {navigation: NavigationProp<'Welcome'>}) =>
     const [image, setImage] = useState(defaultImage)
     const dispatch = useDispatch()
     const onDonePressed = async () => {
+        if (!isDone) {
+            return
+        }
         const privateIdentity = await createRandomIdentity(name)
         const identity = {
             ...privateIdentity,
@@ -76,13 +80,20 @@ export const WelcomeScreen = (props: {navigation: NavigationProp<'Welcome'>}) =>
         dispatch(setIdentity(identity))
         props.navigation.replace('Home')
     }
+    const isDone = name !== '' && getImageDataURI(image.location) !== ''
+    console.log('WelcomeScreen', {isDone, name, image})
     const onUpdatePicture = (updatedImage: ImageData) => {
         setImage(updatedImage)
     }
     return (
         <>
             <ScreenHeader
-                title='CREATE ACCOUNT'
+                title='Create account'
+                rightButton={{
+                    label: 'Done',
+                    onPress: onDonePressed,
+                    disabled: !isDone,
+                }}
             />
             <InputScrollView
                 style={{
@@ -110,7 +121,7 @@ export const WelcomeScreen = (props: {navigation: NavigationProp<'Welcome'>}) =>
                         size={windowWidth * 0.5}
                     />
                     <Button
-                        label='CHOOSE PICTURE'
+                        label='ADD PHOTO'
                         onPress={async () => {
                             await openImagePicker(onUpdatePicture);
                         }}
@@ -149,7 +160,7 @@ export const WelcomeScreen = (props: {navigation: NavigationProp<'Welcome'>}) =>
                         autoCompleteType='off'
                         onSubmitEditing={onDonePressed}
                         onChangeText={text => setName(text)}
-                        returnKeyType='done'
+                        returnKeyType={isDone ? 'done' : 'default'}
                         enablesReturnKeyAutomatically={true}
                     />
                 </View>

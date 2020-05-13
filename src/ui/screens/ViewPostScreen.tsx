@@ -126,7 +126,7 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
     if (post == null) {
         return null
     }
-    const title = `${post.author.name.toLocaleUpperCase()}'S POST`
+    const title = `${post.author.name}'s post`
     const posts = [post].concat(post.comments)
     const rightButton = post.author.address === identity.address
         ? {

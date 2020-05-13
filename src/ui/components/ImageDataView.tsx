@@ -13,10 +13,13 @@ const isImageLocationURI = (location: ImageLocation): location is ImageLocationU
 const RNFS = require('react-native-fs');
 
 const getAbsolutePathFromLocalPath = (localPath: string): string => {
+    if (localPath === '') {
+        return localPath
+    }
     if (Platform.OS === 'ios') {
-        return `file://${RNFS.DocumentDirectoryPath}/${localPath}`;
+        return `file://${RNFS.DocumentDirectoryPath}/${localPath}`
     } else {
-        return localPath;
+        return localPath
     }
 };
 
@@ -56,7 +59,13 @@ export const ImageDataView = (props: {source?: ImageData, style?: StyleProp<Imag
                     uri,
                 }}
             />
-        : <View style={{width, height}}></View>
+        : <View
+            style={[{
+                    width,
+                    height,
+                }, props.style]
+            }
+            ></View>
         }
         </>
     )

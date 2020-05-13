@@ -9,7 +9,7 @@ export const ActivityScreen = (props: {navigation: NavigationProp<'Home'>}) => {
     return (
         <>
             <ScreenHeader
-                title='ACTIVITY'
+                title='Activity'
             />
             <ScrollView style={{
                 backgroundColor: ComponentColors.BACKGROUND_COLOR,

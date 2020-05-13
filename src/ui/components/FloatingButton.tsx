@@ -4,6 +4,7 @@ import { View, StyleSheet } from 'react-native';
 import { CustomIcon } from './CustomIcon';
 import { Colors } from '../../styles';
 import { TouchableView } from './TouchableView';
+import { useSafeArea } from 'react-native-safe-area-context';
 
 interface Props {
     onPress: () => void;
@@ -28,7 +29,7 @@ const iconColor = (enabled?: boolean) => isEnabled(enabled)
 const DEFAULT_BOTTOM_STYLE = 20;
 const extraBottomStyle = (extraBottom?: number) => extraBottom != null
     ? {
-        bottom: extraBottom + DEFAULT_BOTTOM_STYLE,
+        bottom: extraBottom + useSafeArea().bottom,
     }
     : undefined
 ;

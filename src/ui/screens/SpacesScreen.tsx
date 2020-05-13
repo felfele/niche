@@ -16,7 +16,7 @@ export const SpacesScreen = (props: {navigation: NavigationProp<'Home'>}) => {
     return (
         <>
             <ScreenHeader
-                title='SPACES'
+                title='Spaces'
             />
             <FlatGrid
                 style={{ flex: 1, backgroundColor: ComponentColors.BACKGROUND_COLOR }}

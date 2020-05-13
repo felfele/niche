@@ -28,10 +28,14 @@ export const CreateSpaceDoneScreen = (props: StateProps) => {
     return (
         <View style={{flex: 1, flexDirection: 'column', alignItems: 'center'}}>
             <ScreenHeader
-                title='DONE'
+                title='Create Space'
                 navigation={props.navigation}
+                rightButton={{
+                    label: 'Done',
+                    onPress: onDonePressed,
+                }}
             />
-            <HeaderPlaceholder extraHeight={25} />
+            <HeaderPlaceholder/>
             <BoldText style={{
                 fontSize: 18,
                 marginTop: 18,
@@ -52,7 +56,7 @@ export const CreateSpaceDoneScreen = (props: StateProps) => {
                 image={image}
             />
             <FloatingButton
-                iconName='arrow2_right3'
+                iconName='check'
                 iconSize={48}
                 onPress={onDonePressed}
             />

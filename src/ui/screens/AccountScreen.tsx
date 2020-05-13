@@ -51,7 +51,7 @@ export const AccountScreen = (props: Props) => {
     return (
         <>
             <ScreenHeader
-                title='ACCOUNT'
+                title='Account'
             />
             <ScrollView style={{
                 backgroundColor: ComponentColors.BACKGROUND_COLOR,

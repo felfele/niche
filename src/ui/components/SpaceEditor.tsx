@@ -22,7 +22,7 @@ interface StateProps {
     description: string
     coverImage?: ImageData
     editable?: boolean
-    onDonePressed: (title: string, description: string, image: ImageData) => void
+    onDonePressed?: (title: string, description: string, image: ImageData) => void
 }
 
 const isEditable = (editable?: boolean) => editable !== false
@@ -34,7 +34,7 @@ export const SpaceEditor = (props: StateProps) => {
     const isValid = name !== '' && imageData != null
     const descriptionInputRef = useRef<TextInput>(null)
     const onDonePressed = () => {
-        if (imageData != null) {
+        if (imageData != null && props.onDonePressed != null) {
             props.onDonePressed(name, description, imageData)
         }
     }
@@ -47,6 +47,14 @@ export const SpaceEditor = (props: StateProps) => {
                     label: <CloseIcon size={40} />,
                     onPress: () => props.navigation.goBack(),
                 }}
+                rightButton={props.onDonePressed != null
+                    ? {
+                        label: 'Next',
+                        onPress: onDonePressed,
+                        disabled: !isValid,
+                    }
+                    : undefined
+                }
             />
             <InputScrollView
                 style={styles.scrollContainer}
@@ -103,19 +111,21 @@ export const SpaceEditor = (props: StateProps) => {
                         placeholder='What is this page about?'
                         multiline={true}
                         numberOfLines={4}
-                        returnKeyType='done'
+                        returnKeyType='next'
                         blurOnSubmit={true}
                         onChangeText={text => setDescription(text)}
                         ref={descriptionInputRef}
                     ></TextInput>
                 </View>
+            </InputScrollView>
+            {isValid && props.onDonePressed != null &&
                 <FloatingButton
                     iconName='arrow2_right3'
                     iconSize={48}
                     onPress={onDonePressed}
                     enabled={isValid}
                 />
-            </InputScrollView>
+            }
         </View>
     )
 }

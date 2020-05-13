@@ -31,7 +31,7 @@ export const CreatePostScreen = (props: {navigation: NavigationProp<'Home'>, rou
     }
     return (
         <PostEditor
-            title='CREATE POST'
+            title='Create post'
             text=''
             images={[]}
             navigation={props.navigation}

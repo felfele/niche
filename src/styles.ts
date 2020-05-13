@@ -2,8 +2,10 @@ export const Colors = {
     WHITE: 'white',
     GRAY: 'gray',
     BLACK: '#111111',
-    LIGHTISH_GRAY: '#999999',
+    BLUE: '#0A84FF',
     BROWNISH_GRAY: '#696969',
+    LIGHTISH_GRAY: '#999999',
+    PINKISH_GRAY: '#BBBBBB',
     LIGHT_GRAY: '#DDDDDD',
     LIGHTER_GRAY: '#EEEEEE',
     VERY_LIGHT_GRAY: '#F8F8F8',
@@ -19,6 +21,7 @@ export const ComponentColors = {
     NAVIGATION_BUTTON_COLOR: Colors.BLACK,
     HEADER_COLOR: Colors.VERY_LIGHT_GRAY,
     HINT_TEXT_COLOR: Colors.BROWNISH_GRAY,
+    ACTIVE_BUTTON_COLOR: Colors.BLUE,
 }
 
 export const defaultBoldFont = 'NunitoSans-Bold';

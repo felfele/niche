@@ -1,20 +1,23 @@
 import * as React from 'react'
 import { useState } from 'react'
-import { KeyboardAvoidingView, Animated, Platform, Dimensions, TextInput, StyleSheet, View, TouchableOpacity } from 'react-native'
+import { KeyboardAvoidingView, Animated, Platform, Dimensions, TextInput, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native'
 import SortableList, { RowProps } from 'react-native-sortable-list'
 import { useKeyboard } from '@react-native-community/hooks'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
+// @ts-ignore
+import PhotoGrid from 'react-native-thumbnail-grid'
 
 import { Colors } from '../../styles'
-import { ImageDataView } from '../components/ImageDataView'
+import { ImageDataView, getImageDataURI } from '../components/ImageDataView'
 import { ImageData } from '../../models/ImageData'
 import { TouchableView, TOUCHABLE_VIEW_DEFAULT_HIT_SLOP } from '../components/TouchableView'
 import { GRID_SPACING } from '../components/GridCard'
 import { launchCamera, launchImageLibrary } from '../../asyncImagePicker'
-import { NonFloatingButton } from '../components/FloatingButton'
+import { NonFloatingButton, FloatingButton } from '../components/FloatingButton'
 import { NavigationProp } from '../../navigationTypes'
 import { ScreenHeader } from '../components/ScreenHeader'
 import { HeaderPlaceholder } from '../components/Placeholder'
+import InputScrollView from 'react-native-input-scroll-view'
 
 const ImagePreviewGrid = (props: {
     images: ImageData[],
@@ -181,6 +184,11 @@ export const PostEditor = (props: {
             <ScreenHeader
                 title={props.title}
                 navigation={props.navigation}
+                rightButton={{
+                    label: 'Post',
+                    onPress: () => props.onDonePress(text, images),
+                    disabled: !isPostingEnabled,
+                }}
             />
             <HeaderPlaceholder/>
             <KeyboardAvoidingView
@@ -188,36 +196,44 @@ export const PostEditor = (props: {
                 behavior='padding'
                 style={styles.container}
             >
-                <ImagePreviewGrid
-                    images={images}
-                    imageSize={Math.floor((windowWidth - GRID_SPACING * 4) / 3)}
-                    onRemoveImage={onRemoveImage}
-                />
-                <TextInput
-                    style={styles.textInput}
-                    multiline={true}
-                    numberOfLines={4}
-                    onChangeText={value => setText(value)}
-                    defaultValue={text}
-                    placeholder="What's up, Doc?"
-                    placeholderTextColor='gray'
-                    underlineColorAndroid='transparent'
-                    autoFocus={true}
-                    blurOnSubmit={false}
-                    testID='PostEditor/TextInput'
-                    ref={textEditorRef}
-                >
+                <ScrollView>
 
-                </TextInput>
+                    <PhotoGrid
+                        source={images.map(image => getImageDataURI(image.location))}
+                        width={windowWidth}
+                        // onPressImage={props.onPress}
+                        style={{
+                            paddingHorizontal: 9,
+                        }}
+                        imageStyle={{
+                            borderWidth: 3,
+                        }}
+                        textStyles={{
+                            fontSize: 18,
+                            fontWeight: 'bold',
+                        }}
+                        onPressImage={() => {}}
+                    />
 
-                <NonFloatingButton
-                    iconName='share'
-                    iconSize={48}
-                    onPress={() => props.onDonePress(text, images)}
-                    enabled={isPostingEnabled}
-                    extraBottom={-10}
-                />
+                    <TextInput
+                        style={styles.textInput}
+                        multiline={true}
+                        numberOfLines={4}
+                        onChangeText={value => setText(value)}
+                        defaultValue={text}
+                        placeholder="What's up, Doc?"
+                        placeholderTextColor='gray'
+                        underlineColorAndroid='transparent'
+                        autoFocus={true}
+                        blurOnSubmit={false}
+                        testID='PostEditor/TextInput'
+                        ref={textEditorRef}
+                        scrollEnabled={false}
+                    >
 
+                    </TextInput>
+
+                </ScrollView>
                 {isPhotoWidgetEnabled &&
                     <PhotoWidget
                         onPressCamera={async () => {
@@ -225,18 +241,23 @@ export const PostEditor = (props: {
                             if (imageData != null) {
                                 onAddImage(imageData)
                             }
-                            focusTextEditor()
                         }}
                         onPressInsert={async () => {
                             const imageData = await launchImageLibrary();
                             if (imageData != null) {
                                 onAddImage(imageData)
                             }
-                            focusTextEditor()
                         }}
                     />
                 }
             </KeyboardAvoidingView>
+            <FloatingButton
+                iconName='share'
+                iconSize={48}
+                onPress={() => props.onDonePress(text, images)}
+                enabled={isPostingEnabled}
+                extraBottom={50}
+            />
         </>
     )
 }

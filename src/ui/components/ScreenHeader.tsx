@@ -45,13 +45,15 @@ export const ScreenHeader = (props: Props) => {
                 style={styles.leftContainer}
                 testID={(props.leftButton && props.leftButton.testID) || 'NavigationHeader/LeftButton'}
             >
-                <ButtonLabel label={
+                <ButtonLabel
+                    label={
                         props.leftButton != null
                             ? props.leftButton.label
                             : props.navigation != null
                                 ? HeaderDefaultLeftButtonIcon
                                 : undefined
                     }
+                    disabled={props.leftButton?.disabled}
                 />
             </TouchableView>
             <TouchableView
@@ -74,6 +76,7 @@ export const ScreenHeader = (props: Props) => {
                         onPress={props.rightButton.onPress}
                         label={props.rightButton.label}
                         testID={props.rightButton.testID || 'NavigationHeader/RightButton'}
+                        disabled={props.rightButton.disabled}
                     />
                 }
             </View>
@@ -81,16 +84,25 @@ export const ScreenHeader = (props: Props) => {
     )
 }
 
-const ButtonLabel = (props: { label?: string | React.ReactNode }) => {
+const buttonLabelStyle = (disabled?: boolean) => disabled === true
+    ? styles.headerButtonTextDisabled
+    : undefined
+
+const ButtonLabel = (props: { label?: string | React.ReactNode, disabled?: boolean }) => {
     return typeof props.label === 'string'
-        ? <Text style={styles.headerButtonText}>
+        ? <Text
+            style={{
+            ...styles.headerButtonText,
+            ...buttonLabelStyle(props.disabled)
+            }}
+        >
                 {props.label}
             </Text>
         : <View>{props.label}</View>
     ;
 };
 
-const RightButton = (props: { onPress?: () => void, label?: string | React.ReactNode, testID?: string }) => {
+const RightButton = (props: ButtonProps) => {
     return (
         <TouchableView
             onPress={props.onPress}
@@ -98,7 +110,7 @@ const RightButton = (props: { onPress?: () => void, label?: string | React.React
             style={styles.rightButtonContainer}
             hitSlop={{...TOUCHABLE_VIEW_DEFAULT_HIT_SLOP, left: 10}}
         >
-            <ButtonLabel label={props.label} />
+            <ButtonLabel label={props.label} disabled={props.disabled} />
         </TouchableView>
     );
 };
@@ -127,9 +139,12 @@ const styles = StyleSheet.create({
         },
     },
     headerButtonText: {
-        fontFamily: 'NunitoSans-Regular',
-        color: Colors.WHITE,
-        fontSize: 14,
+        fontFamily: 'NunitoSans-Bold',
+        color: ComponentColors.ACTIVE_BUTTON_COLOR,
+        fontSize: 16,
+    },
+    headerButtonTextDisabled: {
+        color: Colors.LIGHTISH_GRAY,
     },
     leftContainer: {
         flex: 1,
@@ -149,7 +164,7 @@ const styles = StyleSheet.create({
     },
     titleText: {
         fontFamily: 'NunitoSans-Bold',
-        fontSize: 14,
+        fontSize: 16,
         color: ComponentColors.NAVIGATION_BUTTON_COLOR,
         textAlign: 'center',
     },
