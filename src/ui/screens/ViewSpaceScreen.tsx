@@ -59,7 +59,6 @@ const PhotoGridWithViewer = (props: {
                 width={windowWidth - 4 * 9}
                 onPressImage={(event: any, uri: string) => {
                     const imageIndex = props.post.images.findIndex(image => getImageDataURI(image.location) === uri)
-                    console.log('PhotoGridWithViewer', {imageIndex, uri, props})
                     if (imageIndex !== -1) {
                         setIndex(imageIndex)
                         setImageViewer(true)
