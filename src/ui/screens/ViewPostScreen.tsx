@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { Dimensions, FlatList, View, Modal as ReactModal } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import Modal from 'react-native-modal'
+import ImageViewer from 'react-native-image-zoom-viewer'
 
 import { NavigationProp, RouteProp } from '../..//navigationTypes'
 import { ScreenHeader } from '../components/ScreenHeader'
@@ -15,12 +15,12 @@ import { ImageDataView, getImageDataURI } from '../components/ImageDataView'
 import { RegularText, BoldText, MediumText } from '../components/Text'
 import { printableElapsedTime } from '../../dateHelpers'
 import { Avatar } from '../components/Avatar'
-import ImageViewer from 'react-native-image-zoom-viewer'
 import { useState } from 'react'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler'
 import { ModalMenu } from '../components/ModalMenu'
 import { areYouSureDialog } from '../../dialogs'
 import { removePostFromSpace } from '../../reducers'
+import { FullscreenImageViewer } from '../components/FullscreenImageViewer'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -135,14 +135,10 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
             onPress: () => setMenuVisible(true),
         }
         : undefined
-    const imageUrls = post.images.map(image => ({
-        url: getImageDataURI(image.location),
-        width: image.width,
-        height: image.height,
-    }))
+    const navigateToCreateComment = () => props.navigation.navigate('CreateComment', {postId: post.id, spaceId})
     return (
         <>
-            <ReactModal
+            {/* <ReactModal
                 visible={isImageViewer}
                 transparent={true}
                 animationType='fade'
@@ -165,12 +161,37 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
                 >
                     <CloseIcon size={48} color={Colors.WHITE}/>
                 </TouchableView>
-            </ReactModal>
+            </ReactModal> */}
+
+            <FullscreenImageViewer
+                images={post.images}
+                index={imageIndex}
+                visible={isImageViewer}
+                onCancel={() => setImageViewer(false)}
+                menuItems={[
+                    {
+                        label: 'View post',
+                        onPress: () => setImageViewer(false),
+                    },
+                    {
+                        label: 'Add comment',
+                        onPress: () => {
+                            setImageViewer(false)
+                            navigateToCreateComment()
+                        }
+                    },
+                ]}
+            />
 
             <ModalMenu
                 visible={isMenuVisible}
                 onCancel={() => setMenuVisible(false)}
                 items={[
+                    {
+                        iconName: 'chat_active',
+                        label: 'Add comment',
+                        onPress: navigateToCreateComment,
+                    },
                     {
                         iconName: 'compose',
                         label: 'Edit post',
@@ -227,7 +248,7 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
             <FloatingButton
                 iconName='chat_active'
                 iconSize={48}
-                onPress={() => props.navigation.navigate('CreateComment', {postId: post.id, spaceId})}
+                onPress={navigateToCreateComment}
             />
         </>
     )

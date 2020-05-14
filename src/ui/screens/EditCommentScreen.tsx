@@ -31,7 +31,7 @@ export const EditCommentScreen = (props: {navigation: NavigationProp<'Home'>, ro
     }
     return (
         <PostEditor
-            title='EDIT COMMENT'
+            title='Edit comment'
             text={comment.text}
             images={[]}
             imagesEnabled={false}
