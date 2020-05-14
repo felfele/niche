@@ -256,7 +256,7 @@ export const PostEditor = (props: {
                 iconSize={48}
                 onPress={() => props.onDonePress(text, images)}
                 enabled={isPostingEnabled}
-                extraBottom={50}
+                extraBottom={PHOTO_WIDGET_HEIGHT}
             />
         </>
     )

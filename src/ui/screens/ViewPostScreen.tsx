@@ -1,7 +1,6 @@
 import * as React from 'react'
-import { Dimensions, FlatList, View, Modal as ReactModal } from 'react-native'
+import { Dimensions, FlatList, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import ImageViewer from 'react-native-image-zoom-viewer'
 
 import { NavigationProp, RouteProp } from '../..//navigationTypes'
 import { ScreenHeader } from '../components/ScreenHeader'
@@ -10,9 +9,8 @@ import { ComponentColors, Colors } from '../../styles'
 import { TabBarPlaceholder, HeaderPlaceholder } from '../components/Placeholder'
 import { FloatingButton } from '../components/FloatingButton'
 import { Post, State } from '../../state'
-import { TouchableView, ZERO_HIT_SLOP } from '../components/TouchableView'
-import { ImageDataView, getImageDataURI } from '../components/ImageDataView'
-import { RegularText, BoldText, MediumText } from '../components/Text'
+import { ImageDataView } from '../components/ImageDataView'
+import { RegularText, MediumText } from '../components/Text'
 import { printableElapsedTime } from '../../dateHelpers'
 import { Avatar } from '../components/Avatar'
 import { useState } from 'react'
@@ -23,7 +21,6 @@ import { removePostFromSpace } from '../../reducers'
 import { FullscreenImageViewer } from '../components/FullscreenImageViewer'
 
 const windowWidth = Dimensions.get('window').width
-
 
 const PostCard = React.memo((props: {
     isComment: boolean,
@@ -138,31 +135,6 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
     const navigateToCreateComment = () => props.navigation.navigate('CreateComment', {postId: post.id, spaceId})
     return (
         <>
-            {/* <ReactModal
-                visible={isImageViewer}
-                transparent={true}
-                animationType='fade'
-            >
-                <ImageViewer
-                    imageUrls={imageUrls}
-                    enableSwipeDown={true}
-                    onCancel={() => setImageViewer(false)}
-                    index={imageIndex}
-                    renderIndicator={() => (<View></View>)}
-                    saveToLocalByLongPress={false}
-                />
-                <TouchableView
-                    onPress={() => setImageViewer(false)}
-                    style={{
-                        position: 'absolute',
-                        left: 0,
-                        top: 0,
-                    }}
-                >
-                    <CloseIcon size={48} color={Colors.WHITE}/>
-                </TouchableView>
-            </ReactModal> */}
-
             <FullscreenImageViewer
                 images={post.images}
                 index={imageIndex}

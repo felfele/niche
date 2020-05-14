@@ -18,12 +18,69 @@ import { useState } from 'react'
 import { CustomIcon } from '../components/CustomIcon'
 import { areYouSureDialog } from '../../dialogs'
 import { removeSpace } from '../../reducers'
+import { FullscreenImageViewer } from '../components/FullscreenImageViewer'
 
 const windowWidth = Dimensions.get('window').width
 
+const PhotoGridWithViewer = (props: {
+    post: Post,
+    onViewPost: () => void,
+    onAddComment: () => void,
+}) => {
+    const [index, setIndex] = useState(0)
+    const [isImageViewer, setImageViewer] = useState(false)
+    return (
+        <>
+            <FullscreenImageViewer
+                images={props.post.images}
+                index={index}
+                visible={isImageViewer}
+                onCancel={() => setImageViewer(false)}
+                menuItems={[
+                    {
+                        label: 'View post',
+                        onPress: () => {
+                            setImageViewer(false)
+                            props.onViewPost()
+                        },
+                    },
+                    {
+                        label: 'Add comment',
+                        onPress: () => {
+                            setImageViewer(false)
+                            props.onAddComment()
+                        },
+                    },
+                ]}
+            />
+
+            <PhotoGrid
+                source={props.post.images.map(image => getImageDataURI(image.location))}
+                width={windowWidth - 4 * 9}
+                onPressImage={(event: any, uri: string) => {
+                    const imageIndex = props.post.images.findIndex(image => getImageDataURI(image.location) === uri)
+                    console.log('PhotoGridWithViewer', {imageIndex, uri, props})
+                    if (imageIndex !== -1) {
+                        setIndex(imageIndex)
+                        setImageViewer(true)
+                    }
+                }}
+                imageStyle={{
+                    borderWidth: 3,
+                }}
+                textStyles={{
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                }}
+            />
+        </>
+    )
+}
+
 const PostCard = React.memo((props: {
     post: Post,
-    onPress: () => void,
+    onViewPost: () => void,
+    onAddComment: () => void,
 }) => (
     <TouchableView
         style={{
@@ -42,20 +99,13 @@ const PostCard = React.memo((props: {
             flexDirection: 'column',
             width: windowWidth - 18,
         }}
-        onPress={props.onPress}
+        onPress={props.onViewPost}
         hitSlop={ZERO_HIT_SLOP}
     >
-        <PhotoGrid
-            source={props.post.images.map(image => getImageDataURI(image.location))}
-            width={windowWidth - 4 * 9}
-            onPressImage={props.onPress}
-            imageStyle={{
-                borderWidth: 3,
-            }}
-            textStyles={{
-                fontSize: 18,
-                fontWeight: 'bold',
-            }}
+        <PhotoGridWithViewer
+            post={props.post}
+            onViewPost={props.onViewPost}
+            onAddComment={props.onAddComment}
         />
         {props.post.images.length > 0 && props.post.text !== '' &&
             <View style={{paddingTop: 9}}></View>
@@ -70,7 +120,7 @@ const PostCard = React.memo((props: {
             </RegularText>
         }
     </TouchableView>
-));
+))
 
 export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, route: RouteProp<'ViewSpace'>}) => {
     const [isMenuVisible, setMenuVisible] = useState(false)
@@ -147,7 +197,11 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
                     <PostCard
                         key={item.id}
                         post={item}
-                        onPress={() => props.navigation.navigate('ViewPost', {
+                        onViewPost={() => props.navigation.navigate('ViewPost', {
+                            postId: item.id,
+                            spaceId,
+                        })}
+                        onAddComment={() => props.navigation.navigate('CreateComment', {
                             postId: item.id,
                             spaceId,
                         })}
