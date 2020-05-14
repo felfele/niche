@@ -132,7 +132,7 @@ android {
         applicationId "org.felfele.niche"
         minSdkVersion 21
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 9
+        versionCode 10
         versionName "1.0"
         missingDimensionStrategy 'react-native-camera', 'general'
     }
