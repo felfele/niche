@@ -1,128 +1,20 @@
 import * as React from 'react'
 import { useState } from 'react'
-import { KeyboardAvoidingView, Animated, Platform, Dimensions, TextInput, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native'
-import SortableList, { RowProps } from 'react-native-sortable-list'
-import { useKeyboard } from '@react-native-community/hooks'
+import { KeyboardAvoidingView, Platform, Dimensions, TextInput, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 // @ts-ignore
 import PhotoGrid from 'react-native-thumbnail-grid'
 
 import { Colors } from '../../styles'
-import { ImageDataView, getImageDataURI } from '../components/ImageDataView'
+import { getImageDataURI } from '../components/ImageDataView'
 import { ImageData } from '../../models/ImageData'
-import { TouchableView, TOUCHABLE_VIEW_DEFAULT_HIT_SLOP } from '../components/TouchableView'
-import { GRID_SPACING } from '../components/GridCard'
+import { TOUCHABLE_VIEW_DEFAULT_HIT_SLOP } from '../components/TouchableView'
 import { launchCamera, launchImageLibrary } from '../../asyncImagePicker'
-import { NonFloatingButton, FloatingButton } from '../components/FloatingButton'
+import { FloatingButton } from '../components/FloatingButton'
 import { NavigationProp } from '../../navigationTypes'
 import { ScreenHeader } from '../components/ScreenHeader'
 import { HeaderPlaceholder } from '../components/Placeholder'
-import InputScrollView from 'react-native-input-scroll-view'
-
-const ImagePreviewGrid = (props: {
-    images: ImageData[],
-    imageSize: number,
-    onRemoveImage: (index: number) => void,
-    onReleaseRow?: (key: number, currentOrder: number[]) => void,
-}) => {
-    if (props.images.length === 0) {
-        return null;
-    }
-    const doublePadding = 10
-    return (
-        <SortableList
-            style={[{flexDirection: 'column'}, { height: props.imageSize + doublePadding }]}
-            contentContainerStyle={{
-                padding: 5,
-            }}
-            keyboardShouldPersistTaps='always'
-            horizontal={true}
-            showsVerticalScrollIndicator={false}
-            showsHorizontalScrollIndicator={false}
-            scrollEnabled={false}
-            data={props.images}
-            renderRow={(rowProps: RowProps) => (
-                <Item
-                    data={rowProps.data}
-                    active={rowProps.active}
-                    imageSize={props.imageSize}
-                    onRemoveImage={() => props.onRemoveImage(rowProps.index!)}
-                />
-            )}
-            onReleaseRow={props.onReleaseRow}
-        />
-    );
-}
-
-function notGreaterThan(value: number | undefined, maxValue: number) {
-    return value != null && value > maxValue ? maxValue : value;
-}
-
-interface ItemProps {
-    data: ImageData;
-    active: boolean;
-    imageSize: number;
-    onRemoveImage: () => void;
-}
-
-const Item = (props: ItemProps) => {
-    const active = new Animated.Value(0);
-    const itemStyle = {
-        ...Platform.select({
-            ios: {
-                transform: [{
-                    scale: active.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [1, 1.1],
-                    }),
-                }],
-            },
-            android: {
-                transform: [{
-                    scale: active.interpolate({
-                        inputRange: [0, 1],
-                        outputRange: [1, 1.07],
-                    }),
-                }],
-                elevation: active.interpolate({
-                    inputRange: [0, 1],
-                    outputRange: [2, 6],
-                }),
-            },
-        }),
-    };
-
-    return (
-        <Animated.View
-            style={[
-                styles.item,
-                itemStyle,
-            ]}
-        >
-            <ImageDataView
-                source={props.data}
-                style={{
-                    width: notGreaterThan(props.data.width, props.imageSize),
-                    height: notGreaterThan(props.data.height, props.imageSize),
-                    resizeMode: 'cover',
-                }}
-            >
-            </ImageDataView>
-            <TouchableView
-                style={styles.delete}
-                onPress={props.onRemoveImage}
-                hitSlop={{
-                    top: 5,
-                    left: 5,
-                    bottom: 5,
-                    right: 5,
-                }}
-            >
-                <Icon name={'close-circle'} size={24}/>
-            </TouchableView>
-        </Animated.View>
-    );
-}
+import { CloseIcon } from './CustomIcon'
 
 const PhotoWidget = React.memo((props: { onPressCamera: () => void, onPressInsert: () => void }) => {
     return (
@@ -166,24 +58,21 @@ export const PostEditor = (props: {
     const [images, setImages] = useState(props.images)
     const windowWidth = Dimensions.get('window').width
     const textEditorRef = React.useRef<TextInput>(null)
-    const keyboard = useKeyboard()
     const isPostingEnabled = text !== '' || images.length > 0
     const onAddImage = (image: ImageData) => {
         const updatedImages = [...images, image]
         setImages(updatedImages)
     }
-    const onRemoveImage = (index: number) => {
-        console.log('onRemoveImage', {index})
-        const updatedImages = [...images.slice(0, index), ...images.slice(index + 1)]
-        setImages(updatedImages)
-    }
-    const focusTextEditor = () => textEditorRef.current?.focus()
     const isPhotoWidgetEnabled = isEnabled(props.imagesEnabled)
     return (
         <>
             <ScreenHeader
                 title={props.title}
                 navigation={props.navigation}
+                leftButton={{
+                    label: <CloseIcon size={40} />,
+                    onPress: () => props.navigation.goBack(),
+                }}
                 rightButton={{
                     label: 'Post',
                     onPress: () => props.onDonePress(text, images),
@@ -201,7 +90,6 @@ export const PostEditor = (props: {
                     <PhotoGrid
                         source={images.map(image => getImageDataURI(image.location))}
                         width={windowWidth}
-                        // onPressImage={props.onPress}
                         style={{
                             paddingHorizontal: 9,
                         }}
@@ -229,9 +117,7 @@ export const PostEditor = (props: {
                         testID='PostEditor/TextInput'
                         ref={textEditorRef}
                         scrollEnabled={false}
-                    >
-
-                    </TextInput>
+                    />
 
                 </ScrollView>
                 {isPhotoWidgetEnabled &&
@@ -300,6 +186,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         margin: 10,
         textAlignVertical: 'top',
+        paddingBottom: PHOTO_WIDGET_HEIGHT + 20,
     },
     photoWidget: {
         flexDirection: 'row',
