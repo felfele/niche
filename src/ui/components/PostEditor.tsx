@@ -137,13 +137,14 @@ export const PostEditor = (props: {
                     />
                 }
             </KeyboardAvoidingView>
-            <FloatingButton
-                iconName='share'
-                iconSize={48}
-                onPress={() => props.onDonePress(text, images)}
-                enabled={isPostingEnabled}
-                extraBottom={PHOTO_WIDGET_HEIGHT}
-            />
+            {isPostingEnabled &&
+                <FloatingButton
+                    iconName='share'
+                    iconSize={48}
+                    onPress={() => props.onDonePress(text, images)}
+                    extraBottom={PHOTO_WIDGET_HEIGHT}
+                />
+            }
         </>
     )
 }
