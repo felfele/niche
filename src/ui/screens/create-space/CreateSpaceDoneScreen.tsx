@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { View } from 'react-native'
 
-import { FloatingButton } from '../../components/FloatingButton'
+import { FullscreenFloatingButton } from '../../components/FloatingButton'
 import { NavigationProp, RouteProp } from '../../../navigationTypes'
 import { RegularText, BoldText } from '../../components/Text'
 import { ScreenHeader } from '../../components/ScreenHeader'
@@ -58,7 +58,7 @@ export const CreateSpaceDoneScreen = (props: StateProps) => {
                 size={calculateGridCardSize()}
                 image={image}
             />
-            <FloatingButton
+            <FullscreenFloatingButton
                 iconName='check'
                 iconSize={48}
                 onPress={onDonePressed}

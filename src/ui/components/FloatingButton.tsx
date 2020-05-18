@@ -5,6 +5,7 @@ import { CustomIcon } from './CustomIcon';
 import { Colors } from '../../styles';
 import { TouchableView } from './TouchableView';
 import { useSafeArea } from 'react-native-safe-area-context';
+import SafeAreaView from 'react-native-safe-area-view'
 
 interface Props {
     onPress: () => void;
@@ -26,10 +27,10 @@ const iconColor = (enabled?: boolean) => isEnabled(enabled)
     : Colors.BLACK + '4D'
 ;
 
-const DEFAULT_BOTTOM_STYLE = 20;
+const DEFAULT_BOTTOM_STYLE = 16;
 const extraBottomStyle = (extraBottom?: number) => extraBottom != null
     ? {
-        bottom: extraBottom + useSafeArea().bottom,
+        bottom: extraBottom + DEFAULT_BOTTOM_STYLE,
     }
     : undefined
 ;
@@ -41,6 +42,16 @@ const ActionButton = (props: Props) => (
     >
         <CustomIcon name={props.iconName} size={props.iconSize} color={iconColor(props.enabled)} />
     </TouchableView>
+)
+
+export const FullscreenFloatingButton = (props: Props) => (
+    <SafeAreaView
+        forceInset={{bottom: 'always'}}
+        style={[styles.buttonContainer, styles.floatingButtonContainer, extraBottomStyle(props.extraBottom)]}
+        pointerEvents='box-none'
+    >
+        <ActionButton {...props} />
+    </SafeAreaView>
 )
 
 export const FloatingButton = (props: Props) => (

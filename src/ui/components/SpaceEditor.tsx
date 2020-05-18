@@ -1,9 +1,9 @@
 import * as React from 'react'
 import { useState, useRef } from 'react'
-import { StyleSheet, Image, View, TextInput, Dimensions, Platform } from 'react-native'
+import { StyleSheet, View, TextInput, Dimensions } from 'react-native'
 import InputScrollView from 'react-native-input-scroll-view'
 
-import { FloatingButton } from './FloatingButton'
+import { FullscreenFloatingButton } from './FloatingButton'
 import { NavigationProp } from '../../navigationTypes'
 import { TouchableView } from './TouchableView'
 import { RegularText, BoldText } from './Text'
@@ -131,7 +131,7 @@ export const SpaceEditor = (props: StateProps) => {
                 </View>
             </InputScrollView>
             {isValid && props.onDonePressed != null &&
-                <FloatingButton
+                <FullscreenFloatingButton
                     iconName={floatingButtonIconName}
                     iconSize={48}
                     onPress={onDonePressed}
@@ -143,7 +143,6 @@ export const SpaceEditor = (props: StateProps) => {
 }
 
 const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
     container: {

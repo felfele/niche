@@ -10,15 +10,21 @@ import { getImageDataURI } from '../components/ImageDataView'
 import { ImageData } from '../../models/ImageData'
 import { TOUCHABLE_VIEW_DEFAULT_HIT_SLOP } from '../components/TouchableView'
 import { launchCamera, launchImageLibrary } from '../../asyncImagePicker'
-import { FloatingButton } from '../components/FloatingButton'
+import { FloatingButton, FullscreenFloatingButton } from '../components/FloatingButton'
 import { NavigationProp } from '../../navigationTypes'
 import { ScreenHeader } from '../components/ScreenHeader'
 import { HeaderPlaceholder } from '../components/Placeholder'
 import { CloseIcon } from './CustomIcon'
+import { useSafeArea } from 'react-native-safe-area-view'
 
 const PhotoWidget = (props: { onPressCamera: () => void, onPressInsert: () => void }) => {
+    const paddingBottom = useSafeArea().bottom
     return (
-        <View style={styles.photoWidget}
+        <View style={{
+            ...styles.photoWidget,
+            height: paddingBottom + PHOTO_WIDGET_HEIGHT,
+            paddingBottom,
+        }}
         >
             <TouchableOpacity
                 onPress={props.onPressCamera}
@@ -144,7 +150,7 @@ export const PostEditor = (props: {
                 }
             </KeyboardAvoidingView>
             {isPostingEnabled &&
-                <FloatingButton
+                <FullscreenFloatingButton
                     iconName='share'
                     iconSize={48}
                     onPress={() => props.onDonePress(text, images)}

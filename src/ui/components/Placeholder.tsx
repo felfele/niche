@@ -8,7 +8,7 @@ export const TabBarPlaceholder = (props: { color?: string }) => {
     return (
         <View
             style={{
-                height: TAB_BAR_HEIGHT + insets.bottom,
+                height: TAB_BAR_HEIGHT + insets.bottom + 16,
                 backgroundColor: props.color ? props.color : ComponentColors.BACKGROUND_COLOR,
             }}
         />

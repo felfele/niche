@@ -7,7 +7,7 @@ import { ScreenHeader } from '../components/ScreenHeader'
 import { CloseIcon, CustomIcon } from '../components/CustomIcon'
 import { ComponentColors, Colors } from '../../styles'
 import { TabBarPlaceholder, HeaderPlaceholder } from '../components/Placeholder'
-import { FloatingButton } from '../components/FloatingButton'
+import { FullscreenFloatingButton } from '../components/FloatingButton'
 import { Post, State } from '../../state'
 import { ImageDataView } from '../components/ImageDataView'
 import { RegularText, MediumText } from '../components/Text'
@@ -217,7 +217,7 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
                 ListFooterComponent={<TabBarPlaceholder color={ComponentColors.BACKGROUND_COLOR}/>}
                 ListHeaderComponent={<HeaderPlaceholder/>}
             />
-            <FloatingButton
+            <FullscreenFloatingButton
                 iconName='chat_active'
                 iconSize={48}
                 onPress={navigateToCreateComment}
