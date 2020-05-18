@@ -13,15 +13,13 @@ import { Colors, defaultTextProps } from '../../styles'
 import { HomeScreen } from './HomeScreen'
 import { WelcomeScreen } from './WelcomeScreen'
 import { InitialScreen } from './InitialScreen'
-import { CreateSpaceScreen } from './create-space/CreateSpaceScreen'
-import { CreateSpaceDoneScreen } from './create-space/CreateSpaceDoneScreen'
-import { DebugScreen } from './DebugScreen'
 import { CreatePostScreen } from './CreatePostScreen'
 import { ViewPostScreen } from './ViewPostScreen'
 import { CreateCommentScreen } from './CreateCommentScreen'
 import { EditPostScreen } from './EditPostScreen'
 import { EditCommentScreen } from './EditCommentScreen'
 import { AboutSpaceScreen } from './AboutSpaceScreen'
+import { CreateSpaceNavigator } from './create-space/CreateSpaceNavigator'
 
 setCustomText(defaultTextProps);
 
@@ -43,6 +41,7 @@ const App = () => {
                             },
                             headerShown: false,
                         }}
+                        mode='modal'
                     >
                         <Stack.Screen
                             name='Init'
@@ -64,15 +63,7 @@ const App = () => {
                         />
                         <Stack.Screen
                             name='CreateSpace'
-                            component={CreateSpaceScreen}
-                        />
-                        <Stack.Screen
-                            name='CreateSpaceDone'
-                            component={CreateSpaceDoneScreen}
-                        />
-                        <Stack.Screen
-                            name='Debug'
-                            component={DebugScreen}
+                            component={CreateSpaceNavigator}
                         />
                         <Stack.Screen
                             name='CreatePost'

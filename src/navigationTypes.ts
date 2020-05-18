@@ -15,6 +15,7 @@ export type RootStackNavigatorParams = {
     },
     Debug: undefined,
     Spaces: undefined,
+    Account: undefined,
     ViewSpace: {
         id: HexString,
     },

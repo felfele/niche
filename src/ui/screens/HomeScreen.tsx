@@ -1,6 +1,5 @@
 import * as React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import MaterialCommunityIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 import { NavigationProp, RootStackNavigatorParams } from '../../navigationTypes'
 import { Colors, ComponentColors } from '../../styles'
@@ -10,10 +9,11 @@ import { AccountScreen } from './AccountScreen'
 import { createStackNavigator } from '@react-navigation/stack'
 import { ViewSpaceScreen } from './ViewSpaceScreen'
 import { CustomIcon } from '../components/CustomIcon'
+import { DebugScreen } from './DebugScreen'
 
 const Tab = createBottomTabNavigator()
 
-const SpacesStack = () => {
+const SpacesStackNavigator = () => {
     const Stack = createStackNavigator<RootStackNavigatorParams>()
     return (
         <Stack.Navigator
@@ -32,6 +32,28 @@ const SpacesStack = () => {
             />
         </Stack.Navigator>
     )
+}
+
+const AccountStackNavigator = () => {
+    const Stack = createStackNavigator<RootStackNavigatorParams>()
+    return (
+        <Stack.Navigator
+            initialRouteName='Account'
+            screenOptions={{
+                headerShown: false,
+            }}
+        >
+            <Stack.Screen
+                name='Account'
+                component={AccountScreen}
+            />
+            <Stack.Screen
+                name='Debug'
+                component={DebugScreen}
+            />
+        </Stack.Navigator>
+    )
+
 }
 
 export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
@@ -60,7 +82,7 @@ export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
             />
             <Tab.Screen
                 name='Spaces'
-                component={SpacesStack}
+                component={SpacesStackNavigator}
                 options={{
                     tabBarIcon: ({focused, color, size}) =>
                         <CustomIcon
@@ -72,7 +94,7 @@ export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
             />
             <Tab.Screen
                 name='Account'
-                component={AccountScreen}
+                component={AccountStackNavigator}
                 options={{
                     tabBarIcon: ({focused, color, size}) =>
                         <CustomIcon
