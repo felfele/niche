@@ -34,7 +34,7 @@ export const SpaceEditor = (props: StateProps) => {
     const isValid = name !== '' && imageData != null
     const descriptionInputRef = useRef<TextInput>(null)
     const onDonePressed = () => {
-        if (imageData != null && props.onDonePressed != null) {
+        if (imageData != null && props.onDonePressed != null && isValid) {
             props.onDonePressed(name, description, imageData)
         }
     }
@@ -49,7 +49,7 @@ export const SpaceEditor = (props: StateProps) => {
                 }}
                 rightButton={props.onDonePressed != null
                     ? {
-                        label: 'Next',
+                        label: 'Done',
                         onPress: onDonePressed,
                         disabled: !isValid,
                     }
@@ -76,7 +76,14 @@ export const SpaceEditor = (props: StateProps) => {
                 >
                     { imageData != null && isImageLocationPath(imageData.location)
                     ?
-                        <ImageDataView source={imageData} style={{width: windowWidth, height: windowWidth }} />
+                        <ImageDataView
+                            source={imageData}
+                            style={{
+                                width: windowWidth,
+                                height: windowWidth,
+                                resizeMode: 'cover',
+                            }}
+                        />
                     :
                         <>
                             <View style={styles.coverImagePickerIconContainer}>
@@ -111,9 +118,10 @@ export const SpaceEditor = (props: StateProps) => {
                         placeholder='What is this page about?'
                         multiline={true}
                         numberOfLines={4}
-                        returnKeyType='next'
+                        returnKeyType='done'
                         blurOnSubmit={true}
                         onChangeText={text => setDescription(text)}
+                        onSubmitEditing={onDonePressed}
                         ref={descriptionInputRef}
                     ></TextInput>
                 </View>
