@@ -121,7 +121,9 @@ export const PostEditor = (props: {
                         testID='PostEditor/TextInput'
                         ref={textEditorRef}
                         scrollEnabled={false}
-                    />
+                    >
+                    </TextInput>
+                    <View style={{height: PHOTO_WIDGET_HEIGHT}}></View>
 
                 </ScrollView>
                 {isPhotoWidgetEnabled &&
@@ -191,7 +193,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         margin: 10,
         textAlignVertical: 'top',
-        paddingBottom: PHOTO_WIDGET_HEIGHT + 20,
+        paddingBottom: PHOTO_WIDGET_HEIGHT * 2,
     },
     photoWidget: {
         flexDirection: 'row',

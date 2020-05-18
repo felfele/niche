@@ -40,6 +40,7 @@ const App = () => {
                                 fontSize: 14,
                             },
                             headerShown: false,
+                            gestureEnabled: false,
                         }}
                         mode='modal'
                     >

@@ -44,7 +44,10 @@ const ActionButton = (props: Props) => (
 )
 
 export const FloatingButton = (props: Props) => (
-    <View style={[styles.buttonContainer, styles.floatingButtonContainer, extraBottomStyle(props.extraBottom)]}>
+    <View
+        style={[styles.buttonContainer, styles.floatingButtonContainer, extraBottomStyle(props.extraBottom)]}
+        pointerEvents='box-none'
+    >
         <ActionButton {...props} />
     </View>
 )
