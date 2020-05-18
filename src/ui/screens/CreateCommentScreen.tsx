@@ -33,6 +33,7 @@ export const CreateCommentScreen = (props: {navigation: NavigationProp<'Home'>, 
     return (
         <PostEditor
             title='Add comment'
+            mode='create'
             text=''
             imagesEnabled={false}
             images={[]}

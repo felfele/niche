@@ -83,6 +83,7 @@ export const AccountScreen = (props: Props) => {
                         defaultValue={identity.name}
                         style={styles.nameInput}
                         onChangeText={text => onUpdateName(text)}
+                        returnKeyType='done'
                     />
                 </View>
 

@@ -30,6 +30,7 @@ export const EditPostScreen = (props: {navigation: NavigationProp<'Home'>, route
     return (
         <PostEditor
             title='Edit post'
+            mode='update'
             text={post.text}
             images={post.images}
             navigation={props.navigation}

@@ -33,6 +33,7 @@ export const CreatePostScreen = (props: {navigation: NavigationProp<'Home'>, rou
         <PostEditor
             title='Create post'
             text=''
+            mode='create'
             images={[]}
             navigation={props.navigation}
             onDonePress={onDonePress}

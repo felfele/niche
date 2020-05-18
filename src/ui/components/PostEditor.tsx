@@ -49,6 +49,7 @@ const isEnabled = (enabled?: boolean) => enabled !== false
 export const PostEditor = (props: {
     title: string,
     text: string,
+    mode: 'create' | 'update',
     images: ImageData[],
     imagesEnabled?: boolean,
     navigation: NavigationProp<'Home'>,
@@ -64,6 +65,9 @@ export const PostEditor = (props: {
         setImages(updatedImages)
     }
     const isPhotoWidgetEnabled = isEnabled(props.imagesEnabled)
+    const rightButtonLabel = props.mode === 'create'
+        ? 'Post'
+        : 'Edit'
     return (
         <>
             <ScreenHeader
@@ -74,7 +78,7 @@ export const PostEditor = (props: {
                     onPress: () => props.navigation.goBack(),
                 }}
                 rightButton={{
-                    label: 'Post',
+                    label: rightButtonLabel,
                     onPress: () => props.onDonePress(text, images),
                     disabled: !isPostingEnabled,
                 }}
