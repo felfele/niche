@@ -15,6 +15,7 @@ export const CreateSpaceScreen = (props: StateProps) => {
     return (
         <SpaceEditor
             title='Create space'
+            mode='create'
             navigation={props.navigation}
             name=''
             description=''

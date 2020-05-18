@@ -30,6 +30,7 @@ export const AboutSpaceScreen = (props: StateProps) => {
     return (
         <SpaceEditor
             title='About'
+            mode='update'
             editable={props.editable}
             navigation={props.navigation}
             name={space.name}

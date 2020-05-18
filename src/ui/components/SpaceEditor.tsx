@@ -17,6 +17,7 @@ import { ImageDataView, isImageLocationPath } from './ImageDataView'
 
 interface StateProps {
     navigation: NavigationProp<'Home'>
+    mode: 'create' | 'update'
     title: string
     name: string
     description: string
@@ -38,6 +39,9 @@ export const SpaceEditor = (props: StateProps) => {
             props.onDonePressed(name, description, imageData)
         }
     }
+    const floatingButtonIconName = props.mode === 'create'
+        ? 'arrow2_right3'
+        : 'check'
     return (
         <View style={{flex: 1, flexDirection: 'column', height: '100%'}}>
             <ScreenHeader
@@ -128,7 +132,7 @@ export const SpaceEditor = (props: StateProps) => {
             </InputScrollView>
             {isValid && props.onDonePressed != null &&
                 <FloatingButton
-                    iconName='arrow2_right3'
+                    iconName={floatingButtonIconName}
                     iconSize={48}
                     onPress={onDonePressed}
                     enabled={isValid}
