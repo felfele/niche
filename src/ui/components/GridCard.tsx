@@ -37,6 +37,7 @@ export const GridCard = React.memo((props: Props) => (
         <ImageDataView
             source={props.image}
             style={[{
+                resizeMode: 'cover',
                 width: props.size,
                 height: props.size,
             }, props.imageStyle]}
