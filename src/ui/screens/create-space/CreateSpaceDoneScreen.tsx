@@ -54,6 +54,9 @@ export const CreateSpaceDoneScreen = (props: StateProps) => {
                 isSelected={false}
                 size={calculateGridCardSize()}
                 image={image}
+                imageStyle={{
+                    resizeMode: 'cover',
+                }}
             />
             <FloatingButton
                 iconName='check'
