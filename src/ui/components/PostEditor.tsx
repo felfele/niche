@@ -16,7 +16,7 @@ import { ScreenHeader } from '../components/ScreenHeader'
 import { HeaderPlaceholder } from '../components/Placeholder'
 import { CloseIcon } from './CustomIcon'
 
-const PhotoWidget = React.memo((props: { onPressCamera: () => void, onPressInsert: () => void }) => {
+const PhotoWidget = (props: { onPressCamera: () => void, onPressInsert: () => void }) => {
     return (
         <View style={styles.photoWidget}
         >
@@ -41,8 +41,8 @@ const PhotoWidget = React.memo((props: { onPressCamera: () => void, onPressInser
                 />
             </TouchableOpacity>
         </View>
-    );
-});
+    )
+}
 
 const isEnabled = (enabled?: boolean) => enabled !== false
 
