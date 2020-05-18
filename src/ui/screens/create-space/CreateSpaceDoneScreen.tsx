@@ -23,7 +23,10 @@ export const CreateSpaceDoneScreen = (props: StateProps) => {
     const onDonePressed = async () => {
         const id = byteArrayToHex(await generateSecureRandom(32))
         dispatch(addSpace({id, name, description, coverImage: image, posts: []}))
-        props.navigation.popToTop()
+        // Not nice, but this is what's recommended by the documentation
+        // in case you want to go back to the parent navigator:
+        // https://reactnavigation.org/docs/navigation-prop/#dangerouslygetparent
+        props.navigation.dangerouslyGetParent()?.goBack()
     }
     return (
         <View style={{flex: 1, flexDirection: 'column', alignItems: 'center'}}>
