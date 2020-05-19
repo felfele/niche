@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Modal as ReactModal, View, Text } from 'react-native'
+import { Modal as ReactModal, View, Text, StatusBar, Platform } from 'react-native'
 import ImageViewer from 'react-native-image-zoom-viewer'
 
 import { ImageData } from '../../models/ImageData'
@@ -80,9 +80,14 @@ export const FullscreenImageViewer = (props: {
     return (
         <ReactModal
             visible={props.visible}
-            transparent={true}
+            transparent={Platform.OS === 'ios' ? true : false}
             animationType='fade'
         >
+            <StatusBar
+                hidden={Platform.OS === 'ios' ? true : false}
+                backgroundColor={Colors.BLACK}
+                animated={true}
+            />
             <ImageViewer
                 imageUrls={imageUrls}
                 enableSwipeDown={true}

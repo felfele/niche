@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { View, StyleSheet, StyleProp, ViewStyle, Text, Platform } from 'react-native'
+import { View, StyleSheet, StyleProp, ViewStyle, Text, Platform, StatusBar } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { SafeAreaView, useSafeArea } from 'react-native-safe-area-context';
 
@@ -35,6 +35,11 @@ export const ScreenHeader = (props: Props) => {
     const insets = useSafeArea()
     return (
         <SafeAreaView style={[styles.headerContainer, { paddingTop: insets.top, height: NAVIGATION_BAR_HEIGHT + insets.top }, props.style]}>
+            <StatusBar
+                backgroundColor={ComponentColors.HEADER_COLOR}
+                barStyle='dark-content'
+                translucent={true}
+            />
             <TouchableView onPress={
                     props.leftButton != null
                         ? props.leftButton.onPress
