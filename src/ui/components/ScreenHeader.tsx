@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { View, StyleSheet, StyleProp, ViewStyle, Text } from 'react-native'
+import { View, StyleSheet, StyleProp, ViewStyle, Text, Platform } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { SafeAreaView, useSafeArea } from 'react-native-safe-area-context';
 
@@ -115,6 +115,9 @@ const RightButton = (props: ButtonProps) => {
     );
 };
 
+const androidHeaderContainer = {
+}
+
 const styles = StyleSheet.create({
     headerContainer: {
         width: '100%',
@@ -137,6 +140,7 @@ const styles = StyleSheet.create({
             width: 0,
             height: 0.5,
         },
+        elevation: 1,
     },
     headerButtonText: {
         fontFamily: 'NunitoSans-Bold',

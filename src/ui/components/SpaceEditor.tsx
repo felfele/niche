@@ -135,7 +135,6 @@ export const SpaceEditor = (props: StateProps) => {
                     iconName={floatingButtonIconName}
                     iconSize={48}
                     onPress={onDonePressed}
-                    enabled={isValid}
                 />
             }
         </View>

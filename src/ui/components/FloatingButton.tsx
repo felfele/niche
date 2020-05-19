@@ -4,28 +4,14 @@ import { View, StyleSheet } from 'react-native';
 import { CustomIcon } from './CustomIcon';
 import { Colors } from '../../styles';
 import { TouchableView } from './TouchableView';
-import { useSafeArea } from 'react-native-safe-area-context';
 import SafeAreaView from 'react-native-safe-area-view'
 
 interface Props {
     onPress: () => void;
     iconName: string;
     iconSize: number;
-    enabled?: boolean;
     extraBottom?: number;
 }
-
-const isEnabled = (enabled?: boolean) => enabled == null || enabled === true;
-
-const buttonStyle = (enabled?: boolean) => isEnabled(enabled)
-    ? styles.floatingButtonEnabled
-    : styles.floatingButtonDisabled
-;
-
-const iconColor = (enabled?: boolean) => isEnabled(enabled)
-    ? Colors.BLACK
-    : Colors.BLACK + '4D'
-;
 
 const DEFAULT_BOTTOM_STYLE = 16;
 const extraBottomStyle = (extraBottom?: number) => extraBottom != null
@@ -37,10 +23,10 @@ const extraBottomStyle = (extraBottom?: number) => extraBottom != null
 
 const ActionButton = (props: Props) => (
     <TouchableView
-        style={[styles.floatingButton, buttonStyle(props.enabled)]}
-        onPress={isEnabled(props.enabled) ? props.onPress : undefined}
+        style={styles.floatingButton}
+        onPress={props.onPress}
     >
-        <CustomIcon name={props.iconName} size={props.iconSize} color={iconColor(props.enabled)} />
+        <CustomIcon name={props.iconName} size={props.iconSize} color={Colors.BLACK} />
     </TouchableView>
 )
 
@@ -75,13 +61,6 @@ const styles = StyleSheet.create({
         height: 60,
         flexDirection: 'row',
         justifyContent: 'center',
-        shadowColor: Colors.BLACK,
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-        shadowOffset: {
-            width: 0,
-            height: 0.5,
-        },
     },
     floatingButtonContainer: {
         position: 'absolute',
@@ -94,14 +73,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    floatingButtonEnabled: {
         backgroundColor: Colors.WHITE,
-    },
-    floatingButtonDisabled: {
-        backgroundColor: Colors.VERY_LIGHT_GRAY,
-        borderWidth: 1,
-        borderStyle: 'dashed',
-        borderColor: Colors.BLACK + '33',
+        shadowColor: Colors.BLACK,
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+        shadowOffset: {
+            width: 0,
+            height: 0.5,
+        },
+        elevation: 1,
     },
 });

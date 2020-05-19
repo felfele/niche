@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
             width: 0,
             height: 0.5,
         },
+        elevation: 0.5,
     },
     feedCardOverlay: {
         position: 'absolute',

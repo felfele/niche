@@ -41,6 +41,7 @@ const PostCard = React.memo((props: {
                     width: 0,
                     height: 0.5,
                 },
+                elevation: 0.5,
                 marginBottom: 1,
             }}
         >
