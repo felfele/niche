@@ -14,6 +14,7 @@ import { HeaderPlaceholder } from './Placeholder'
 import { showImagePicker } from '../../asyncImagePicker'
 import { ImageData } from '../../models/ImageData'
 import { ImageDataView, isImageLocationPath } from './ImageDataView'
+import { useKeyboard } from '@react-native-community/hooks'
 
 interface StateProps {
     navigation: NavigationProp<'Home'>
@@ -34,6 +35,7 @@ export const SpaceEditor = (props: StateProps) => {
     const [imageData, setImageData] = useState<ImageData | undefined>(props.coverImage)
     const isValid = name !== '' && imageData != null
     const descriptionInputRef = useRef<TextInput>(null)
+    const keyboard = useKeyboard()
     const onDonePressed = () => {
         if (imageData != null && props.onDonePressed != null && isValid) {
             props.onDonePressed(name, description, imageData)
@@ -130,7 +132,7 @@ export const SpaceEditor = (props: StateProps) => {
                     ></TextInput>
                 </View>
             </InputScrollView>
-            {isValid && props.onDonePressed != null &&
+            {isValid && props.onDonePressed != null && !keyboard.keyboardShown &&
                 <FullscreenFloatingButton
                     iconName={floatingButtonIconName}
                     onPress={onDonePressed}
