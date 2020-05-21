@@ -6,6 +6,7 @@ import { SafeAreaView, useSafeArea } from 'react-native-safe-area-context';
 import { Colors, ComponentColors, NAVIGATION_BAR_HEIGHT } from '../../styles'
 import { TouchableView, TOUCHABLE_VIEW_DEFAULT_HIT_SLOP } from './TouchableView'
 import { NavigationProp } from '../../navigationTypes';
+import { CustomIcon } from './CustomIcon';
 
 export interface ButtonProps {
     label: string | React.ReactNode;
@@ -29,7 +30,7 @@ export type Props = HeaderProps;
 
 const BUTTON_COLOR = ComponentColors.NAVIGATION_BUTTON_COLOR;
 
-export const HeaderDefaultLeftButtonIcon = <Icon name={'arrow-left'} color={BUTTON_COLOR} size={24} />;
+export const HeaderDefaultLeftButtonIcon = <CustomIcon name={'left-arrow1'} color={BUTTON_COLOR} size={32} />;
 
 export const ScreenHeader = (props: Props) => {
     const insets = useSafeArea()

@@ -128,7 +128,7 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
     const posts = [post].concat(post.comments)
     const rightButton = post.author.address === identity.address
         ? {
-            label: <CustomIcon name='settings' size={36} color={Colors.BLACK} />,
+            label: <CustomIcon name='cog' size={36} color={Colors.BLACK} />,
             // onPress: () => props.navigation.navigate('EditPost', {spaceId, postId})
             onPress: () => setMenuVisible(true),
         }
@@ -161,12 +161,14 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
                 onCancel={() => setMenuVisible(false)}
                 items={[
                     {
-                        iconName: 'chat_active',
+                        iconName: 'active-chat',
+                        iconSize: 24,
                         label: 'Add comment',
                         onPress: navigateToCreateComment,
                     },
                     {
                         iconName: 'compose',
+                        iconSize: 24,
                         label: 'Edit post',
                         onPress: () => {
                             setMenuVisible(false)
@@ -175,6 +177,7 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
                     },
                     {
                         iconName: 'close',
+                        iconSize: 24,
                         label: 'Remove post',
                         onPress: async () => {
                             const confirmed = await areYouSureDialog('Do you really want to remove this post?', 'It will be removed from the space for everyone. There’s no undo.')
@@ -219,8 +222,7 @@ export const ViewPostScreen = (props: {navigation: NavigationProp<'Home'>, route
                 ListHeaderComponent={<HeaderPlaceholder/>}
             />
             <FullscreenFloatingButton
-                iconName='chat_active'
-                iconSize={48}
+                iconName='active-chat'
                 onPress={navigateToCreateComment}
             />
         </>

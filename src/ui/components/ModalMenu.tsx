@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { useState } from 'react'
-import { View, Keyboard } from 'react-native'
+import { View, StatusBar, Platform } from 'react-native'
 import Modal from 'react-native-modal'
 
 import { RegularText } from './Text'
@@ -8,10 +7,10 @@ import { CustomIcon } from './CustomIcon'
 import { Colors, ComponentColors } from '../../styles'
 import { useSafeArea } from 'react-native-safe-area-context'
 import { TouchableView } from './TouchableView'
-import { asyncSleep } from '../../dateHelpers'
 
 interface MenuItemProps {
     iconName: string
+    iconSize: number
     label: string
     onPress: () => void
 }
@@ -26,7 +25,7 @@ const ModalMenuItem = (props: MenuItemProps) => (
         }}
         onPress={props.onPress}
     >
-        <View style={{width: 45}}><CustomIcon name={props.iconName} size={40} /></View>
+        <View style={{width: 40, alignItems: 'center', justifyContent: 'center'}}><CustomIcon name={props.iconName} size={props.iconSize} /></View>
         <RegularText style={{fontSize: 18}}>{props.label}</RegularText>
     </TouchableView>
 )
@@ -54,6 +53,14 @@ export const ModalMenu = (props: {
                 margin: 0,
             }}
         >
+            <StatusBar
+                // hidden={Platform.OS === 'ios' ? true : false}
+                // backgroundColor={'#4b4b4b'}
+                // backgroundColor='rgba(255, 255, 255, 0)'
+                barStyle='dark-content'
+                translucent={true}
+                // animated={true}
+            />
             <View style={{
                 position: 'absolute',
                 bottom: 0,
@@ -67,6 +74,7 @@ export const ModalMenu = (props: {
                         <React.Fragment key={`modal-menu-item-${index}`}>
                             <ModalMenuItem
                                 iconName={item.iconName}
+                                iconSize={item.iconSize}
                                 label={item.label}
                                 onPress={item.onPress}
                              />

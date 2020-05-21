@@ -133,7 +133,7 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
     const spaceId = space.id
     const dispatch = useDispatch()
     const rightButton = {
-        label: <CustomIcon name='settings' size={36} color={Colors.BLACK} />,
+        label: <CustomIcon name='cog' size={32} color={Colors.BLACK} />,
         onPress: () => setMenuVisible(true),
     }
     const navigateToCreatePost = () => {
@@ -154,21 +154,25 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
                 items={[
                     {
                         iconName: 'compose',
+                        iconSize: 28,
                         label: 'Create post',
                         onPress: navigateToCreatePost,
                     },
                     {
                         iconName: 'share',
+                        iconSize: 28,
                         label: 'Invite people',
                         onPress: () => {},
                     },
                     {
-                        iconName: 'user_group',
+                        iconName: 'people',
+                        iconSize: 22,
                         label: 'View members list',
                         onPress: () => {},
                     },
                     {
                         iconName: 'information',
+                        iconSize: 28,
                         label: 'About this space',
                         onPress: () => {
                             setMenuVisible(false)
@@ -177,6 +181,7 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
                     },
                     {
                         iconName: 'no',
+                        iconSize: 24,
                         label: 'Leave this space',
                         onPress: async () => {
                             const confirmed = await areYouSureDialog('Do you really want to leave this private space?', 'You’ll need to be invited again if you change your mind later.')
@@ -213,7 +218,6 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
             />
             <FloatingButton
                 iconName='compose'
-                iconSize={48}
                 onPress={navigateToCreatePost}
             />
         </>

@@ -40,7 +40,7 @@ export const SpaceEditor = (props: StateProps) => {
         }
     }
     const floatingButtonIconName = props.mode === 'create'
-        ? 'arrow2_right3'
+        ? 'right-arrow4'
         : 'check'
     return (
         <View style={{flex: 1, flexDirection: 'column', height: '100%'}}>
@@ -133,7 +133,6 @@ export const SpaceEditor = (props: StateProps) => {
             {isValid && props.onDonePressed != null &&
                 <FullscreenFloatingButton
                     iconName={floatingButtonIconName}
-                    iconSize={48}
                     onPress={onDonePressed}
                 />
             }

@@ -9,7 +9,7 @@ import SafeAreaView from 'react-native-safe-area-view'
 interface Props {
     onPress: () => void;
     iconName: string;
-    iconSize: number;
+    iconSize?: number;
     extraBottom?: number;
 }
 
@@ -21,12 +21,15 @@ const extraBottomStyle = (extraBottom?: number) => extraBottom != null
     : undefined
 ;
 
+const DEFAULT_ICON_SIZE = 36
+const iconSize = (size?: number) => size != null ? size : DEFAULT_ICON_SIZE
+
 const ActionButton = (props: Props) => (
     <TouchableView
         style={styles.floatingButton}
         onPress={props.onPress}
     >
-        <CustomIcon name={props.iconName} size={props.iconSize} color={Colors.BLACK} />
+        <CustomIcon name={props.iconName} size={iconSize(props.iconSize)} color={Colors.BLACK} />
     </TouchableView>
 )
 
@@ -82,5 +85,6 @@ const styles = StyleSheet.create({
             height: 0.5,
         },
         elevation: 1,
+        paddingTop: 5,
     },
 });

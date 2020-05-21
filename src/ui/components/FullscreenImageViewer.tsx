@@ -106,11 +106,11 @@ export const FullscreenImageViewer = (props: {
                 onPress={props.onCancel}
                 style={{
                     position: 'absolute',
-                    left: 0,
-                    top: safeArea.top,
+                    left: 10,
+                    top: safeArea.top + 10,
                 }}
             >
-                <CloseIcon size={48} color={Colors.WHITE}/>
+                <CloseIcon size={32} color={Colors.WHITE}/>
             </TouchableView>
         </ReactModal>
     )

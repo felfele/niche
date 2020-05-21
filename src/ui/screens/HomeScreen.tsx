@@ -75,7 +75,7 @@ export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
                     tabBarIcon: ({focused, color, size}) =>
                         <CustomIcon
                             name={'bell'}
-                            size={size + 12}
+                            size={size + 10}
                             color={color}
                         />,
                 }}
@@ -87,7 +87,7 @@ export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
                     tabBarIcon: ({focused, color, size}) =>
                         <CustomIcon
                             name={'windows'}
-                            size={size + 12}
+                            size={size + 10}
                             color={color}
                         />,
                 }}
@@ -99,7 +99,7 @@ export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
                     tabBarIcon: ({focused, color, size}) =>
                         <CustomIcon
                             name={'fingerprint'}
-                            size={size + 12}
+                            size={size + 10}
                             color={color}
                         />,
                 }}

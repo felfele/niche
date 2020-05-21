@@ -14,25 +14,21 @@ import { FloatingButton, FullscreenFloatingButton } from '../components/Floating
 import { NavigationProp } from '../../navigationTypes'
 import { ScreenHeader } from '../components/ScreenHeader'
 import { HeaderPlaceholder } from '../components/Placeholder'
-import { CloseIcon } from './CustomIcon'
+import { CloseIcon, CustomIcon } from './CustomIcon'
 import { useSafeArea } from 'react-native-safe-area-view'
+import { useKeyboard } from '@react-native-community/hooks'
 
 const PhotoWidget = (props: { onPressCamera: () => void, onPressInsert: () => void }) => {
-    const paddingBottom = useSafeArea().bottom
     return (
-        <View style={{
-            ...styles.photoWidget,
-            height: paddingBottom + PHOTO_WIDGET_HEIGHT,
-            paddingBottom,
-        }}
+        <View style={styles.photoWidget}
         >
             <TouchableOpacity
                 onPress={props.onPressCamera}
                 hitSlop={TOUCHABLE_VIEW_DEFAULT_HIT_SLOP}
             >
-                <Icon
+                <CustomIcon
                     name={'camera'}
-                    size={24}
+                    size={32}
                     color={Colors.BLACK}
                 />
             </TouchableOpacity>
@@ -40,9 +36,9 @@ const PhotoWidget = (props: { onPressCamera: () => void, onPressInsert: () => vo
                 onPress={props.onPressInsert}
                 hitSlop={TOUCHABLE_VIEW_DEFAULT_HIT_SLOP}
             >
-                <Icon
-                    name={'image-multiple'}
-                    size={24}
+                <CustomIcon
+                    name={'picture'}
+                    size={32}
                     color={Colors.BLACK}
                 />
             </TouchableOpacity>
@@ -65,6 +61,7 @@ export const PostEditor = (props: {
     const [images, setImages] = useState(props.images)
     const windowWidth = Dimensions.get('window').width
     const textEditorRef = React.useRef<TextInput>(null)
+    const keyboard = useKeyboard()
     const isPostingEnabled = text !== '' || images.length > 0
     const onAddImage = (image: ImageData) => {
         const updatedImages = [...images, image]
@@ -74,13 +71,14 @@ export const PostEditor = (props: {
     const rightButtonLabel = props.mode === 'create'
         ? 'Post'
         : 'Edit'
+    const paddingBottom = useSafeArea().bottom
     return (
-        <>
+        <View style={{flexDirection: 'column', height: '100%'}}>
             <ScreenHeader
                 title={props.title}
                 navigation={props.navigation}
                 leftButton={{
-                    label: <CloseIcon size={40} />,
+                    label: <CloseIcon size={36} />,
                     onPress: () => props.navigation.goBack(),
                 }}
                 rightButton={{
@@ -93,7 +91,9 @@ export const PostEditor = (props: {
             <KeyboardAvoidingView
                 enabled={Platform.OS === 'ios'}
                 behavior='padding'
-                style={styles.container}
+                style={{
+                    ...styles.container,
+                }}
             >
                 <ScrollView>
 
@@ -149,15 +149,15 @@ export const PostEditor = (props: {
                     />
                 }
             </KeyboardAvoidingView>
-            {isPostingEnabled &&
+            <View style={{height: paddingBottom, backgroundColor: Colors.WHITE}}></View>
+            {isPostingEnabled && !keyboard.keyboardShown &&
                 <FullscreenFloatingButton
                     iconName='share'
-                    iconSize={48}
                     onPress={() => props.onDonePress(text, images)}
                     extraBottom={PHOTO_WIDGET_HEIGHT}
                 />
             }
-        </>
+        </View>
     )
 }
 

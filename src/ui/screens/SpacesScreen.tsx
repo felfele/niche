@@ -40,7 +40,6 @@ export const SpacesScreen = (props: {navigation: NavigationProp<'Home'>}) => {
             />
             <FloatingButton
                 iconName='plus'
-                iconSize={48}
                 onPress={() => props.navigation.navigate('CreateSpace')}
             />
         </>
