@@ -64,7 +64,8 @@ export const HomeScreen = (props: {navigation: NavigationProp<'Home'>}) => {
                 activeTintColor: Colors.BLACK,
                 inactiveTintColor: Colors.LIGHTISH_GRAY,
                 style: {
-                    backgroundColor: ComponentColors.BACKGROUND_COLOR,
+                    backgroundColor: ComponentColors.TAB_BAR_COLOR,
+                    elevation: 1,
                 }
             }}
         >

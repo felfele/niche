@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
             width: 0,
             height: 0.5,
         },
-        elevation: 1,
+        elevation: 2,
         paddingTop: 5,
     },
 });

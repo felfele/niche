@@ -71,6 +71,7 @@ const PhotoGridWithViewer = (props: {
                     fontSize: 18,
                     fontWeight: 'bold',
                 }}
+                activeOpacity={1.0}
             />
         </>
     )
@@ -91,7 +92,7 @@ const PostCard = React.memo((props: {
                 width: 0,
                 height: 0.5,
             },
-            elevation: 0.5,
+            elevation: 1,
             padding: 9,
             marginHorizontal: 9,
             marginTop: 0,
