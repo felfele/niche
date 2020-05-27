@@ -31,30 +31,28 @@ const PhotoGridWithViewer = (props: {
     const [isImageViewer, setImageViewer] = useState(false)
     return (
         <>
-            {isImageViewer &&
-                <FullscreenImageViewer
-                    images={props.post.images}
-                    index={index}
-                    visible={isImageViewer}
-                    onCancel={() => setImageViewer(false)}
-                    menuItems={[
-                        {
-                            label: 'View post',
-                            onPress: () => {
-                                setImageViewer(false)
-                                props.onViewPost()
-                            },
+            <FullscreenImageViewer
+                images={props.post.images}
+                index={index}
+                visible={isImageViewer}
+                onCancel={() => setImageViewer(false)}
+                menuItems={[
+                    {
+                        label: 'View post',
+                        onPress: () => {
+                            setImageViewer(false)
+                            props.onViewPost()
                         },
-                        {
-                            label: 'Add comment',
-                            onPress: () => {
-                                setImageViewer(false)
-                                props.onAddComment()
-                            },
+                    },
+                    {
+                        label: 'Add comment',
+                        onPress: () => {
+                            setImageViewer(false)
+                            props.onAddComment()
                         },
-                    ]}
-                />
-            }
+                    },
+                ]}
+            />
             <PhotoGrid
                 source={props.post.images.map(image => getImageDataURI(image.location))}
                 width={windowWidth - 4 * 9}
