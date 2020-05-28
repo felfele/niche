@@ -1,6 +1,8 @@
 import * as React from 'react'
+import { useState, useEffect } from 'react'
 import { Dimensions, FlatList, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
+import Orientation from 'react-native-orientation-locker'
 // @ts-ignore
 import PhotoGrid from 'react-native-thumbnail-grid'
 
@@ -14,7 +16,6 @@ import { RegularText } from '../components/Text'
 import { TouchableView, ZERO_HIT_SLOP } from '../components/TouchableView'
 import { getImageDataURI } from '../components/ImageDataView'
 import { ModalMenu } from '../components/ModalMenu'
-import { useState } from 'react'
 import { CustomIcon } from '../components/CustomIcon'
 import { areYouSureDialog } from '../../dialogs'
 import { removeSpace } from '../../reducers'
@@ -29,25 +30,33 @@ const PhotoGridWithViewer = (props: {
 }) => {
     const [index, setIndex] = useState(0)
     const [isImageViewer, setImageViewer] = useState(false)
+    const showFullscreenImageViewer = () => {
+        setImageViewer(true)
+        // Orientation.unlockAllOrientations()
+    }
+    const hideFullscreenImageViewer = () => {
+        // Orientation.lockToPortrait()
+        setImageViewer(false)
+    }
     return (
         <>
             <FullscreenImageViewer
                 images={props.post.images}
                 index={index}
                 visible={isImageViewer}
-                onCancel={() => setImageViewer(false)}
+                onCancel={hideFullscreenImageViewer}
                 menuItems={[
                     {
                         label: 'View post',
                         onPress: () => {
-                            setImageViewer(false)
+                            hideFullscreenImageViewer()
                             props.onViewPost()
                         },
                     },
                     {
                         label: 'Add comment',
                         onPress: () => {
-                            setImageViewer(false)
+                            hideFullscreenImageViewer()
                             props.onAddComment()
                         },
                     },
@@ -60,7 +69,7 @@ const PhotoGridWithViewer = (props: {
                     const imageIndex = props.post.images.findIndex(image => getImageDataURI(image.location) === uri)
                     if (imageIndex !== -1) {
                         setIndex(imageIndex)
-                        setImageViewer(true)
+                        showFullscreenImageViewer()
                     }
                 }}
                 imageStyle={{

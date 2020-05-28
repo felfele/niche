@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { PersistGate } from 'redux-persist/integration/react'
 // @ts-ignore
 import { setCustomText } from 'react-native-global-props'
+import Orientation from 'react-native-orientation-locker';
 
 import configureStore from '../../store'
 import { RootStackNavigatorParams } from '../../navigationTypes'
@@ -22,6 +23,7 @@ import { AboutSpaceScreen } from './AboutSpaceScreen'
 import { CreateSpaceNavigator } from './create-space/CreateSpaceNavigator'
 
 setCustomText(defaultTextProps);
+Orientation.lockToPortrait()
 
 const App = () => {
     const Stack = createStackNavigator<RootStackNavigatorParams>()

@@ -1,6 +1,8 @@
 import * as React from 'react'
-import { Modal as ReactModal, View, Text, StatusBar, Platform, StyleProp, ViewStyle } from 'react-native'
+import { Modal as ReactModal, View, Text, StatusBar, Platform, StyleProp, ViewStyle, Dimensions } from 'react-native'
 import ImageViewer from 'react-native-image-zoom-viewer'
+import Orientation, { OrientationType } from 'react-native-orientation-locker'
+import Modal from 'react-native-modal'
 
 import { ImageData } from '../../models/ImageData'
 import { getImageDataURI } from './ImageDataView'
@@ -86,6 +88,18 @@ const TouchableIcon = (props: {
 
 )
 
+const ScreenAllOrientations = () => {
+    useEffect(() => {
+        console.log('ScreenAllOrientations', 'useEffect')
+        Orientation.unlockAllOrientations()
+        return () => {
+            console.log('ScreenAllOrientations', 'useEffect cleanup')
+            Orientation.lockToPortrait()
+        }
+    })
+    return null
+}
+
 export const FullscreenImageViewer = (props: {
     visible: boolean,
     index: number,
@@ -96,35 +110,76 @@ export const FullscreenImageViewer = (props: {
     if (!props.visible) {
         return null
     }
+    const orientation = useDeviceOrientation()
     const imageUrls = props.images.map(image => ({
         url: getImageDataURI(image.location),
         width: image.width,
         height: image.height,
     }))
     const safeArea = useSafeArea()
-    const orientation = useDeviceOrientation()
     const dimensions = useDimensions()
-    const [areControlsVisible, setControlsVisible] = useState(true)
+    const [areControlsVisible, setControlsVisible] = useState(orientation.portrait)
     const [index, setIndex] = useState(props.index)
+    const [deviceOrientation, setDeviceOrientation] = useState<'portrait' | 'landscape'>('portrait')
+    const [rotate, setRotate] = useState(0)
+    const [width, setWidth] = useState(dimensions.screen.width)
+    const [height, setHeight] = useState(dimensions.screen.height)
     const onLeft = () => setIndex(index - 1)
     const onRight = () => setIndex(index + 1)
     const hasLeftButton = index > 0
     const hasRightButton = index < imageUrls.length - 1
     useEffect(() => {
-        setIndex(props.index)
-    }, [props.index])
-    console.log('FullscreenImageViewer', {index, props, images: props.images})
+        Orientation.addDeviceOrientationListener(deviceOri => {
+            console.log('FullscreenImageViewer', 'device orientation', {deviceOri})
+            if (deviceOri === 'PORTRAIT' || deviceOri === 'PORTRAIT-UPSIDEDOWN') {
+                setDeviceOrientation('portrait')
+                setControlsVisible(true)
+                setRotate(0)
+                setWidth(dimensions.screen.width)
+                setHeight(dimensions.screen.height)
+            } else {
+                setDeviceOrientation('landscape')
+                setControlsVisible(false)
+                setRotate(90)
+                setWidth(dimensions.screen.height)
+                setHeight(dimensions.screen.width)
+            }
+        })
+    })
+    // useEffect(() => {
+    //     setIndex(props.index)
+    // }, [props.index])
+    // useEffect(() => {
+    //     if (orientation.landscape) {
+    //         setControlsVisible(false)
+    //     }
+    // }, [orientation])
+    console.log('FullscreenImageViewer', {orientation, dimensions, safeArea, props})
     return (
-        <ReactModal
-            visible={props.visible}
-            transparent={Platform.OS === 'ios' ? true : false}
-            animationType='fade'
+        <Modal
+            isVisible={props.visible}
+            // transparent={Platform.OS === 'ios' ? true : false}
+            // animationType='fade'
+            // supportedOrientations={['portrait', 'landscape']}
+            style={{
+                flex: 1,
+                margin: 0,
+                padding: 0,
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                backgroundColor: Colors.BLACK,
+                zIndex: 1000,
+            }}
         >
-            <StatusBar
+            {/* <StatusBar
                 hidden={Platform.OS === 'ios' ? true : false}
                 backgroundColor={Colors.BLACK}
                 animated={true}
             />
+            {/* <ScreenAllOrientations/> */}
             <ImageViewer
                 imageUrls={imageUrls}
                 enableSwipeDown={true}
@@ -141,10 +196,15 @@ export const FullscreenImageViewer = (props: {
                 }}
                 onClick={() => setControlsVisible(true)}
                 flipThreshold={dimensions.window.width}
+                style={{
+                    width: width,
+                    height: height,
+                    transform: [{ rotate: `${0}deg` }]
+                }}
             />
             {areControlsVisible &&
                 <>
-                    {orientation.portrait &&
+                    {deviceOrientation === 'portrait' &&
                         <BottomMenu
                             safeAreaBottom={safeArea.bottom}
                             items={props.menuItems}
@@ -157,7 +217,7 @@ export const FullscreenImageViewer = (props: {
                         onPress={props.onCancel}
                         style={{
                             position: 'absolute',
-                            left: 10,
+                            left: safeArea.left + 10,
                             top: safeArea.top + 10,
                             paddingLeft: 1,
                         }}
@@ -171,8 +231,8 @@ export const FullscreenImageViewer = (props: {
                             onPress={onLeft}
                             style={{
                                 position: 'absolute',
-                                left: 10,
-                                top: dimensions.window.height / 2,
+                                left: safeArea.left + 10,
+                                top: dimensions.screen.height / 2,
                             }}
                         />
                     }
@@ -185,14 +245,14 @@ export const FullscreenImageViewer = (props: {
                             onPress={onRight}
                             style={{
                                 position: 'absolute',
-                                right: 10,
-                                top: dimensions.window.height / 2,
+                                right: safeArea.right + 10,
+                                top: dimensions.screen.height / 2,
                             }}
                         />
                     }
 
                 </>
             }
-        </ReactModal>
+        </Modal>
     )
 }
