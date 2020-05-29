@@ -98,6 +98,11 @@ export const AccountScreen = (props: Props) => {
                     onPress={() => props.navigation.navigate('Home')}
                 />
                 <RowItem
+                    title='Feature switcher'
+                    buttonStyle='navigate'
+                    onPress={() => props.navigation.navigate('FeatureSwitcher')}
+                />
+                <RowItem
                     title='Debug'
                     buttonStyle='navigate'
                     onPress={() => props.navigation.navigate('Debug')}

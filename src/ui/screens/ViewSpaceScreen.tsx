@@ -1,8 +1,7 @@
 import * as React from 'react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Dimensions, FlatList, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-import Orientation from 'react-native-orientation-locker'
 // @ts-ignore
 import PhotoGrid from 'react-native-thumbnail-grid'
 
@@ -19,7 +18,7 @@ import { ModalMenu } from '../components/ModalMenu'
 import { CustomIcon } from '../components/CustomIcon'
 import { areYouSureDialog } from '../../dialogs'
 import { removeSpace } from '../../reducers'
-import { FullscreenImageViewer } from '../components/FullscreenImageViewer'
+import { FullscreenImageViewer, FullscreenImageViewerWithPhotoView } from '../components/FullscreenImageViewer'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -29,18 +28,18 @@ const PhotoGridWithViewer = (props: {
     onAddComment: () => void,
 }) => {
     const [index, setIndex] = useState(0)
+    const isNativeViewer = useSelector((state: State) => state.features.includes('native-viewer'))
+    const ImageViewer = isNativeViewer ? FullscreenImageViewerWithPhotoView : FullscreenImageViewer
     const [isImageViewer, setImageViewer] = useState(false)
     const showFullscreenImageViewer = () => {
         setImageViewer(true)
-        // Orientation.unlockAllOrientations()
     }
     const hideFullscreenImageViewer = () => {
-        // Orientation.lockToPortrait()
         setImageViewer(false)
     }
     return (
         <>
-            <FullscreenImageViewer
+            <ImageViewer
                 images={props.post.images}
                 index={index}
                 visible={isImageViewer}

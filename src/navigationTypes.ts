@@ -42,6 +42,7 @@ export type RootStackNavigatorParams = {
     AboutSpace: {
         spaceId: HexString,
     },
+    FeatureSwitcher: undefined,
 }
 
 export type NavigationProp<T extends keyof RootStackNavigatorParams> = StackNavigationProp<

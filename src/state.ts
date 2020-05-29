@@ -38,10 +38,13 @@ export interface Space {
     posts: Post[]
 }
 
+export type FeatureName = 'native-viewer'
+
 export interface State {
     identity: Identity
     contacts: ContactMap
     spaces: Space[]
+    features: FeatureName[]
 }
 
 export const defaultImage: ImageData = {
@@ -62,4 +65,5 @@ export const defaultState: State = {
     },
     contacts: {},
     spaces: [],
+    features: [],
 }

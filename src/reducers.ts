@@ -1,5 +1,5 @@
 import { combineReducers, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Identity, defaultState, State, ContactMap, Contact, Space, Post } from './state'
+import { Identity, defaultState, State, ContactMap, Contact, Space, Post, FeatureName } from './state'
 import { HexString } from './hex'
 import { ImageData } from './models/ImageData'
 
@@ -109,6 +109,21 @@ const spacesSlice = createSlice({
     }
 })
 
+const featuresSlice = createSlice({
+    name: 'features',
+    initialState: defaultState.features,
+    reducers: {
+        toggleFeature(state: string[], action: PayloadAction<FeatureName>) {
+            const featureIndex = state.findIndex(f => f === action.payload)
+            if (featureIndex === -1) {
+                state.push(action.payload)
+            } else {
+                state.splice(featureIndex, 1)
+            }
+        }
+    }
+})
+
 export const { setIdentity, clearIdentity } = identitySlice.actions
 export const { addContact, clearContacts } = contactsSlice.actions
 export const {
@@ -122,6 +137,7 @@ export const {
     updatePost,
     updateComment,
 } = spacesSlice.actions
+export const { toggleFeature } = featuresSlice.actions
 
 export const resetState = () => ({
     type: 'RESET-STATE',
@@ -131,6 +147,7 @@ const combinedReducers = combineReducers({
     identity: identitySlice.reducer,
     contacts: contactsSlice.reducer,
     spaces: spacesSlice.reducer,
+    features: featuresSlice.reducer,
 })
 
 const stateReducer = (state: RootState | undefined, action: PayloadAction<State>): RootState => {

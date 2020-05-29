@@ -10,6 +10,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { ViewSpaceScreen } from './ViewSpaceScreen'
 import { CustomIcon } from '../components/CustomIcon'
 import { DebugScreen } from './DebugScreen'
+import { FeatureSwitcherScreen } from './FeatureSwitcherScreen'
 
 const Tab = createBottomTabNavigator()
 
@@ -51,6 +52,11 @@ const AccountStackNavigator = () => {
                 name='Debug'
                 component={DebugScreen}
             />
+            <Stack.Screen
+                name='FeatureSwitcher'
+                component={FeatureSwitcherScreen}
+            />
+
         </Stack.Navigator>
     )
 
