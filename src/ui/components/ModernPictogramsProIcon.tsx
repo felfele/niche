@@ -275,10 +275,3 @@ const glyphMap = {
 const iconSet = createIconSet(glyphMap, 'Modern Pictograms Pro', 'ModernPictogramsPro.otf', 'v278');
 
 export default iconSet;
-
-export const Button = iconSet.Button;
-export const TabBarItem = iconSet.TabBarItem;
-export const TabBarItemIOS = iconSet.TabBarItemIOS;
-export const ToolbarAndroid = iconSet.ToolbarAndroid;
-export const getImageSource = iconSet.getImageSource;
-

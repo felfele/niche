@@ -15,6 +15,8 @@ import { showImagePicker } from '../../asyncImagePicker'
 import { ImageData } from '../../models/ImageData'
 import { ImageDataView, isImageLocationPath } from './ImageDataView'
 import { useKeyboard } from '@react-native-community/hooks'
+import { OverlayIcon } from './OverlayIcon'
+import { Button } from './Button'
 
 interface StateProps {
     navigation: NavigationProp<'Home'>
@@ -82,6 +84,7 @@ export const SpaceEditor = (props: StateProps) => {
                 >
                     { imageData != null && isImageLocationPath(imageData.location)
                     ?
+                        <>
                         <ImageDataView
                             source={imageData}
                             style={{
@@ -90,6 +93,18 @@ export const SpaceEditor = (props: StateProps) => {
                                 resizeMode: 'cover',
                             }}
                         />
+                        <OverlayIcon
+                            name='refresh'
+                            size={24}
+                            color='rgba(255, 255, 255, 0.9)'
+                            style={{
+                                position: 'absolute',
+                                right: 10,
+                                top: 10,
+                                paddingLeft: 1,
+                            }}
+                        />
+                        </>
                     :
                         <>
                             <View style={styles.coverImagePickerIconContainer}>
@@ -131,8 +146,20 @@ export const SpaceEditor = (props: StateProps) => {
                         ref={descriptionInputRef}
                     ></TextInput>
                 </View>
+                {props.mode === 'update' &&
+                    <Button
+                        label='VIEW MEMBERS LIST'
+                        onPress={() => {}}
+                        style={styles.viewMemberListButton}
+                    />
+                }
+
             </InputScrollView>
-            {isValid && props.onDonePressed != null && !keyboard.keyboardShown &&
+            {
+                props.mode === 'create' &&
+                isValid &&
+                props.onDonePressed != null &&
+                !keyboard.keyboardShown &&
                 <FullscreenFloatingButton
                     iconName={floatingButtonIconName}
                     onPress={onDonePressed}
@@ -214,5 +241,10 @@ const styles = StyleSheet.create({
         color: ComponentColors.TEXT_COLOR,
         height: 160,
     },
-
+    viewMemberListButton: {
+        marginTop: 18,
+        flexDirection: 'column',
+        alignItems: 'center',
+        alignSelf: 'center',
+    },
 });
