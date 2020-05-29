@@ -9,8 +9,10 @@ export const Colors = {
     LIGHT_GRAY: '#DDDDDD',
     LIGHTER_GRAY: '#EEEEEE',
     VERY_LIGHT_GRAY: '#F8F8F8',
-    BRAND_COLOR: '#1189C6',
     DARK_GRAY: '#4A4A4A',
+    BRAND_COLOR: '#1189C6',
+    BRAND_GREEN: '#34DFB6',
+    BRAND_BLUE: '#29235C',
 }
 
 export const ComponentColors = {

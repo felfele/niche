@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { StyleSheet, StyleProp, ViewStyle } from 'react-native'
+import { StyleSheet, StyleProp, ViewStyle, TextStyle } from 'react-native'
 
 import { TouchableView } from './TouchableView'
 import { BoldText, RegularText } from './Text'
@@ -9,6 +9,7 @@ interface Props {
     label: string
     onPress: () => void
     style?: StyleProp<ViewStyle>
+    textStyle?: StyleProp<TextStyle>
     enabled?: boolean
 }
 
