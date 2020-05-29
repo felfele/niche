@@ -10,7 +10,6 @@ import { ImageData } from '../../models/ImageData'
 interface StateProps {
     navigation: NavigationProp<'Home'>
     route: RouteProp<'AboutSpace'>
-    editable?: boolean
 }
 
 export const AboutSpaceScreen = (props: StateProps) => {
@@ -21,8 +20,10 @@ export const AboutSpaceScreen = (props: StateProps) => {
         return null
     }
     const dispatch = useDispatch()
+    const editable = true
     const onDonePressed = (name: string, description: string, coverImage: ImageData) => {
-        if (props.editable === true) {
+        console.log('AboutSpaceScreen', {props, name, space})
+        if (editable === true) {
             dispatch(updateSpace({spaceId: space.id, name, description, coverImage}))
         }
         props.navigation.goBack()
@@ -31,7 +32,7 @@ export const AboutSpaceScreen = (props: StateProps) => {
         <SpaceEditor
             title='About'
             mode='update'
-            editable={props.editable}
+            editable={editable}
             navigation={props.navigation}
             name={space.name}
             description={space.description}

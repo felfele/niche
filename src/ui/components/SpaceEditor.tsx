@@ -39,7 +39,7 @@ export const SpaceEditor = (props: StateProps) => {
     const descriptionInputRef = useRef<TextInput>(null)
     const keyboard = useKeyboard()
     const onDonePressed = () => {
-        if (imageData != null && props.onDonePressed != null && isValid) {
+        if (props.onDonePressed != null && isValid && imageData != null) {
             props.onDonePressed(name, description, imageData)
         }
     }
