@@ -9,6 +9,7 @@ import { GridCard, calculateGridCardSize } from '../components/GridCard';
 import { FloatingButton } from '../components/FloatingButton';
 import { useSelector } from 'react-redux';
 import { State } from '../../state';
+import { EmptyListPlaceholder } from '../components/EmptyListPlaceholder';
 
 export const SpacesScreen = (props: {navigation: NavigationProp<'Home'>}) => {
     const spaces = useSelector((state: State) => state.spaces)
@@ -37,6 +38,11 @@ export const SpacesScreen = (props: {navigation: NavigationProp<'Home'>}) => {
                 }}
                 ListFooterComponent={<TabBarPlaceholder color={ComponentColors.BACKGROUND_COLOR}/>}
                 ListHeaderComponent={<HeaderPlaceholder />}
+                ListEmptyComponent={<EmptyListPlaceholder
+                    title='Create your first space!'
+                    text='Spaces in Felfele are always private, only invited people can access.'
+                    explanation='E.g. “Kids photos”, “Ski trip” or “Yummy recipes”…'
+                />}
             />
             <FloatingButton
                 iconName='plus'

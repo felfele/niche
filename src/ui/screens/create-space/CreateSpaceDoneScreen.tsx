@@ -27,6 +27,7 @@ export const CreateSpaceDoneScreen = (props: StateProps) => {
         // in case you want to go back to the parent navigator:
         // https://reactnavigation.org/docs/navigation-prop/#dangerouslygetparent
         props.navigation.dangerouslyGetParent()?.goBack()
+        props.navigation.navigate('ViewSpace', {id})
     }
     return (
         <View style={{flex: 1, flexDirection: 'column', alignItems: 'center'}}>

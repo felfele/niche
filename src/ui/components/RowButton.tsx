@@ -9,7 +9,7 @@ import {
     ViewStyle,
     StyleProp,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from './ModernPictogramsProIcon';
 import { RegularText } from './Text';
 
 interface Props {
@@ -62,7 +62,7 @@ const RowButton = (props: Props) => {
                     }
                     {props.buttonStyle === 'navigate' &&
                     <Icon
-                        name='chevron-right'
+                        name='right-arrow2'
                         size={24}
                         color={Colors.DARK_GRAY}
                     />

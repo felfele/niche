@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { useState, useRef, useEffect } from 'react'
-import { Dimensions, FlatList, View, Animated } from 'react-native'
+import { useState } from 'react'
+import { Dimensions, FlatList, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { NavigationProp, RouteProp } from '../../navigationTypes'
@@ -18,7 +18,7 @@ import { areYouSureDialog } from '../../dialogs'
 import { removeSpace } from '../../reducers'
 import { FullscreenImageViewer, FullscreenImageViewerWithPhotoView } from '../components/FullscreenImageViewer'
 import { PhotoGrid } from '../components/PhotoGrid'
-import { Button, PrimaryButton } from '../components/Button'
+import { EmptyListPlaceholder } from '../components/EmptyListPlaceholder'
 
 const windowWidth = Dimensions.get('window').width
 
@@ -130,71 +130,6 @@ const PostCard = React.memo((props: {
     </TouchableView>
 ))
 
-// TODO add animation similar to this: https://codepen.io/shshaw/pen/MXvLzm
-const EmptySpacePlaceholder = (props: {}) => {
-    const width = Dimensions.get('screen').width
-
-    return (
-        <View style={{
-            flex: 1,
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: ComponentColors.BACKGROUND_COLOR,
-        }}>
-            <View style={{
-                marginTop: width / 4,
-                left: 0,
-                width: width + 40,
-                height: width + 40,
-                borderRadius: (width + 40) / 2,
-                justifyContent: 'center',
-                alignItems: 'center',
-                paddingHorizontal: 18 + 20,
-            }}>
-                <View style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    width: width,
-                    height: width,
-                }}>
-                    <View style={{
-                        position: 'absolute',
-                        left: 0,
-                        top: 0,
-                        width: width + 40,
-                        height: width + 40,
-                        borderRadius: width / 2,
-                        backgroundColor: Colors.BRAND_GREEN,
-                    }}></View>
-
-                </View>
-                <RegularText style={{
-                    color: Colors.BRAND_BLUE,
-                    fontSize: 34,
-                    paddingBottom: 18,
-                }}>Share a post</RegularText>
-                <RegularText style={{
-                    color: Colors.BRAND_BLUE,
-                    fontSize: 16,
-                    paddingBottom: 36,
-                }}>Everything you share is end-to-end encrypted, and visible only to the members of this space.</RegularText>
-                <PrimaryButton
-                    label='VIEW MEMBERS LIST'
-                    onPress={() => {}}
-                    style={{
-                        backgroundColor: Colors.BRAND_BLUE,
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        alignSelf: 'center',
-                    }}
-                />
-            </View>
-        </View>
-    )
-}
-
 export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, route: RouteProp<'ViewSpace'>}) => {
     const [isMenuVisible, setMenuVisible] = useState(false)
     const space = useSelector((state: State) =>
@@ -288,7 +223,12 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
                 keyExtractor={(item: any) => item.id}
                 ListFooterComponent={<TabBarPlaceholder color={ComponentColors.BACKGROUND_COLOR}/>}
                 ListHeaderComponent={<HeaderPlaceholder extraHeight={9} />}
-                ListEmptyComponent={<EmptySpacePlaceholder />}
+                ListEmptyComponent={<EmptyListPlaceholder
+                    title='Share a post'
+                    text='Everything you share is end-to-end encrypted, and visible only to the members of this space.'
+                    buttonText='VIEW MEMBERS LIST'
+                    onPress={() => {}}
+                />}
             />
             <FloatingButton
                 iconName='compose'

@@ -49,10 +49,8 @@
 		<string>NunitoSans-Bold.ttf</string>
 		<string>NunitoSans-Italic.ttf</string>
 		<string>NunitoSans-SemiBold.ttf</string>
-		<string>icomoon.ttf</string>
-		<string>MaterialIcons.ttf</string>
-		<string>MaterialCommunityIcons.ttf</string>
 		<string>ModernPictogramsPro.otf</string>
+		<string>YoungSerif-Regular.otf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
