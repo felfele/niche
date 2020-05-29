@@ -216,15 +216,16 @@ export const FullscreenImageViewer = (props: {
                         />
                     }
                     <TouchableIcon
-                        name='no2'
+                        name='no'
                         size={32}
-                        color='rgba(255, 255, 255, 0.7)'
+                        color='rgba(255, 255, 255, 0.9)'
                         onPress={onCancel}
                         style={{
                             position: 'absolute',
                             left: safeArea.left + 10,
                             top: safeArea.top + 10,
                             paddingLeft: 1,
+                            backgroundColor: 'rgba(0, 0, 0, 0)',
                         }}
                     />
 
