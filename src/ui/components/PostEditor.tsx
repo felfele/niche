@@ -1,9 +1,18 @@
 import * as React from 'react'
 import { useState } from 'react'
-import { KeyboardAvoidingView, Platform, Dimensions, TextInput, StyleSheet, View, TouchableOpacity, ScrollView } from 'react-native'
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons'
-// @ts-ignore
-import PhotoGrid from 'react-native-thumbnail-grid'
+import {
+    KeyboardAvoidingView,
+    Platform,
+    Dimensions,
+    TextInput,
+    StyleSheet,
+    View,
+    TouchableOpacity,
+    ScrollView,
+    Image,
+    ImageProps,
+    ImageSourcePropType,
+} from 'react-native'
 
 import { Colors } from '../../styles'
 import { getImageDataURI } from '../components/ImageDataView'
@@ -17,6 +26,8 @@ import { HeaderPlaceholder } from '../components/Placeholder'
 import { CloseIcon, CustomIcon } from './CustomIcon'
 import { useSafeArea } from 'react-native-safe-area-view'
 import { useKeyboard } from '@react-native-community/hooks'
+import { PhotoGrid } from './PhotoGrid'
+import { OverlayIcon } from './OverlayIcon'
 
 const PhotoWidget = (props: { onPressCamera: () => void, onPressInsert: () => void }) => {
     return (
@@ -67,6 +78,15 @@ export const PostEditor = (props: {
         const updatedImages = [...images, image]
         setImages(updatedImages)
     }
+    const onRemoveImage = (source: ImageSourcePropType) => {
+        const uri = (source as {uri: string}).uri
+        const imageIndex = images.findIndex(image => uri === getImageDataURI(image.location))
+        if (imageIndex >= 0) {
+            const updatedImages = [...images]
+            updatedImages.splice(imageIndex, 1)
+            setImages(updatedImages)
+        }
+    }
     const isPhotoWidgetEnabled = isEnabled(props.imagesEnabled)
     const rightButtonLabel = props.mode === 'create'
         ? 'Post'
@@ -95,15 +115,20 @@ export const PostEditor = (props: {
                     ...styles.container,
                 }}
             >
-                <ScrollView>
+                <ScrollView
+                    keyboardShouldPersistTaps='handled'
+                >
 
                     <PhotoGrid
                         source={images.map(image => getImageDataURI(image.location))}
                         width={windowWidth}
                         style={{
-                            paddingHorizontal: 9,
+                            paddingHorizontal: 0,
+                            margin: 0,
                         }}
                         imageStyle={{
+                            padding: 0,
+                            margin: 0,
                             borderWidth: 3,
                         }}
                         textStyles={{
@@ -111,6 +136,23 @@ export const PostEditor = (props: {
                             fontWeight: 'bold',
                         }}
                         onPressImage={() => {}}
+                        ImageComponent={(props: ImageProps) =>
+                            <>
+                                <Image {...props} />
+                                <OverlayIcon
+                                    name='no2'
+                                    size={32}
+                                    color='rgba(255, 255, 255, 0.9)'
+                                    onPress={() => onRemoveImage(props.source)}
+                                    style={{
+                                        position: 'absolute',
+                                        right: 10,
+                                        top: 10,
+                                        paddingLeft: 1,
+                                    }}
+                                />
+                            </>
+                        }
                     />
 
                     <TextInput

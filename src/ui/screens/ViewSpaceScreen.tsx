@@ -2,8 +2,6 @@ import * as React from 'react'
 import { useState } from 'react'
 import { Dimensions, FlatList, View } from 'react-native'
 import { useSelector, useDispatch } from 'react-redux'
-// @ts-ignore
-import PhotoGrid from 'react-native-thumbnail-grid'
 
 import { NavigationProp, RouteProp } from '../../navigationTypes'
 import { ScreenHeader } from '../components/ScreenHeader'
@@ -19,6 +17,7 @@ import { CustomIcon } from '../components/CustomIcon'
 import { areYouSureDialog } from '../../dialogs'
 import { removeSpace } from '../../reducers'
 import { FullscreenImageViewer, FullscreenImageViewerWithPhotoView } from '../components/FullscreenImageViewer'
+import { PhotoGrid } from '../components/PhotoGrid'
 
 const windowWidth = Dimensions.get('window').width
 

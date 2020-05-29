@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { View, Text, StatusBar, Platform, StyleProp, ViewStyle } from 'react-native'
+import { View, Text, StatusBar, Platform } from 'react-native'
 import ImageViewer from 'react-native-image-zoom-viewer'
 import Orientation from 'react-native-orientation-locker'
 import Modal from 'react-native-modal'
@@ -8,11 +8,11 @@ import PhotoView from "@merryjs/photo-viewer";
 import { ImageData } from '../../models/ImageData'
 import { getImageDataURI } from './ImageDataView'
 import { TouchableView } from './TouchableView'
-import { CustomIcon } from './CustomIcon'
 import { Colors } from '../../styles'
 import { useSafeArea } from 'react-native-safe-area-context'
 import { useDeviceOrientation, useDimensions } from '@react-native-community/hooks'
 import { useState, useEffect } from 'react'
+import { OverlayIcon } from './OverlayIcon'
 
 interface BottomMenuItem {
     label: string
@@ -63,30 +63,6 @@ const BottomMenu = (props: {safeAreaBottom: number, items: BottomMenuItem[]}) =>
             )}
         </View>
     </View>
-)
-
-const TouchableIcon = (props: {
-    onPress: () => void,
-    name: string,
-    color: string,
-    size: number,
-    style?: StyleProp<ViewStyle>,
-}) => (
-    <TouchableView
-        onPress={props.onPress}
-        style={[{
-            width: 30,
-            height: 30,
-            borderRadius: 15,
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            alignItems: 'center',
-            justifyContent: 'center',
-            paddingTop: 1,
-        }, props.style]}
-    >
-        <CustomIcon name={props.name} size={props.size} color={props.color} />
-    </TouchableView>
-
 )
 
 export const FullscreenImageViewerWithPhotoView = (props: {
@@ -215,7 +191,7 @@ export const FullscreenImageViewer = (props: {
                             items={props.menuItems}
                         />
                     }
-                    <TouchableIcon
+                    <OverlayIcon
                         name='no'
                         size={32}
                         color='rgba(255, 255, 255, 0.9)'
@@ -230,7 +206,7 @@ export const FullscreenImageViewer = (props: {
                     />
 
                     {hasLeftButton &&
-                        <TouchableIcon
+                        <OverlayIcon
                             name='left-arrow2'
                             size={32}
                             color='rgba(255, 255, 255, 0.7)'
@@ -244,7 +220,7 @@ export const FullscreenImageViewer = (props: {
                     }
 
                     {hasRightButton &&
-                        <TouchableIcon
+                        <OverlayIcon
                             name='right-arrow2'
                             size={32}
                             color='rgba(255, 255, 255, 0.7)'
