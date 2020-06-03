@@ -7,7 +7,7 @@ import { NavigationProp, RouteProp } from '../../navigationTypes'
 import { ScreenHeader } from '../components/ScreenHeader'
 import { HeaderPlaceholder, TabBarPlaceholder } from '../components/Placeholder'
 import { ComponentColors, Colors } from '../../styles'
-import { FloatingButton } from '../components/FloatingButton'
+import { FloatingButton, AnimatedFloatingButton } from '../components/FloatingButton'
 import { State, Post } from '../../state'
 import { RegularText } from '../components/Text'
 import { TouchableView, ZERO_HIT_SLOP } from '../components/TouchableView'
@@ -148,6 +148,9 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
         setMenuVisible(false)
         props.navigation.navigate('CreatePost', {spaceId: space.id})
     }
+    const CreateButton = space.posts.length === 0
+        ? AnimatedFloatingButton
+        : FloatingButton
     return (
         <>
             <ScreenHeader
@@ -230,7 +233,7 @@ export const ViewSpaceScreen = (props: {navigation: NavigationProp<'Home'>, rout
                     onPress={() => {}}
                 />}
             />
-            <FloatingButton
+            <CreateButton
                 iconName='compose'
                 onPress={navigateToCreatePost}
             />

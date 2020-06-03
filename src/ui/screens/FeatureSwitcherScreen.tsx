@@ -14,6 +14,7 @@ export const FeatureSwitcherScreen = (props: {navigation: NavigationProp<'Home'>
     const dispatch = useDispatch()
     const features = useSelector((state: State) => state.features)
     const isNativeViewer = features.includes('native-viewer')
+    const isAnimatedBlob = features.includes('animated-blob')
     return (
         <>
             <ScreenHeader
@@ -31,6 +32,13 @@ export const FeatureSwitcherScreen = (props: {navigation: NavigationProp<'Home'>
                     buttonStyle='switch'
                     switchState={isNativeViewer}
                     onSwitchValueChange={() => dispatch(toggleFeature('native-viewer'))}
+                />
+
+                <RowItem
+                    title='Animated blob'
+                    buttonStyle='switch'
+                    switchState={isAnimatedBlob}
+                    onSwitchValueChange={() => dispatch(toggleFeature('animated-blob'))}
                 />
 
                 <TabBarPlaceholder/>

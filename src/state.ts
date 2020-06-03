@@ -38,7 +38,7 @@ export interface Space {
     posts: Post[]
 }
 
-export type FeatureName = 'native-viewer'
+export type FeatureName = 'native-viewer' | 'animated-blob'
 
 export interface State {
     identity: Identity
